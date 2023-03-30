@@ -16,7 +16,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMakeModules/Modules)
 ###############################################################################
 
 # Valid applications and choices
-list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS COASTAL)
+list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS COASTALA COASTALS COASTAL-ALL)
 set(APP NONE CACHE BOOL "Application Name")
 if(NOT (APP IN_LIST VALID_APPS))
   message(FATAL_ERROR "${APP} is not a valid application.\nValid Applications are: ${VALID_APPS}")
@@ -35,6 +35,7 @@ set(CMEPS           OFF CACHE BOOL "Enable CMEPS")
 set(CDEPS           OFF CACHE BOOL "Enable CDEPS")
 set(NOAHMP          OFF CACHE BOOL "Enable NOAHMP")
 set(ADCIRC          OFF CACHE BOOL "Enable ADCIRC")
+set(SCHISM          OFF CACHE BOOL "Enable SCHISM")
 
 # Configure selected application specific components
 message("")
@@ -54,6 +55,7 @@ message("CDEPS ............ ${CDEPS}")
 message("CMEPS ............ ${CMEPS}")
 message("NOAHMP ........... ${NOAHMP}")
 message("ADCIRC ........... ${ADCIRC}")
+message("SCHISM ........... ${SCHISM}")
 
 ###############################################################################
 ### Build Options
@@ -195,7 +197,7 @@ if(WW3)
 endif()
 
 ###############################################################################
-### Marine Components [MOM6, HYCOM, CICE6, ADCIRC]
+### Marine Components [MOM6, HYCOM, CICE6, ADCIRC, SCHISM]
 ###############################################################################
 if(MOM6)
   add_subdirectory(MOM6-interface)
@@ -213,7 +215,11 @@ if(ADCIRC)
   add_subdirectory(ADCIRC-interface)
 endif()
 
-########################ADCIRC#######################################################
+if(SCHISM)
+  add_subdirectory(SCHISM-interface)
+endif()
+
+###############################################################################
 ### Mediator Components [CMEPS]
 ###############################################################################
 if(CMEPS)
@@ -316,6 +322,12 @@ if(ADCIRC)
   add_dependencies(ufs adcirc)
   list(APPEND _ufs_defs_private FRONT_ADCIRC=adc_cap)
   list(APPEND _ufs_libs_public adcirc)
+endif()
+
+if(SCHISM)
+  add_dependencies(ufs schism)
+  list(APPEND _ufs_defs_private FRONT_SCHISM=schism_nuopc_cap)
+  list(APPEND _ufs_libs_public schism)
 endif()
 
 target_compile_definitions(ufs PRIVATE "${_ufs_defs_private}")

@@ -48,5 +48,13 @@
   branch = develop
 [submodule "ADCIRC"]
   path = ADCIRC-interface/ADCIRC
-  url = https://github.com/adcirc/adcirc.git
+  url = https://github.com/adcirc/adcirc
   branch = development
+[submodule "SCHISM"]
+  path = SCHISM-interface/SCHISM
+  url = https://github.com/uturuncoglu/schism
+  branch = feature/coastal_app
+[submodule "SCHISM-ESMF"]
+  path = SCHISM-interface/SCHISM-ESMF
+  url = https://github.com/schism-dev/schism-esmf
+  branch = master
