@@ -23,7 +23,7 @@ function compute_petbounds_and_tasks() {
   # ATM is a special case since it is running on the sum of compute and io tasks.
   # CHM component and mediator are running on ATM compute tasks only.
 
-  if [[ $DATM_CDEPS = 'false' ]]; then
+  if [[ $DATM_CDEPS = 'false' && $FV3 = 'true' ]]; then
     if [[ ${ATM_compute_tasks:-0} -eq 0 ]]; then
       ATM_compute_tasks=$((INPES * JNPES * NTILES))
     fi
@@ -37,6 +37,7 @@ function compute_petbounds_and_tasks() {
 
   # ATM
   ATM_io_tasks=${ATM_io_tasks:-0}
+  echo "$ATM_compute_tasks $ATM_io_tasks"
   if [[ $((ATM_compute_tasks + ATM_io_tasks)) -gt 0 ]]; then
      atm_petlist_bounds="${n} $((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks - 1))"
      n=$((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks))

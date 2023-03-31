@@ -1,0 +1,5 @@
+ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/bctides.in .
+ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/hgrid.* .
+ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/manning.gr3 .
+ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/param.nml .
+ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/vgrid.in .

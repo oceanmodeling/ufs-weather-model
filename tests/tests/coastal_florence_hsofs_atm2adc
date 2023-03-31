@@ -8,8 +8,8 @@ export TEST_DESCR="Compare florence_shinnecock.atm2adc results with previous tru
 
 export CNTL_DIR=coastal_florence_hsofs_atm2adc
 
-export LIST_FILES="sfcf000.nc \
-                   sfcf021.nc"
+export LIST_FILES="maxele.63.nc \
+                   maxvel.63.nc"
 
 # deafult options
 export_coastal
@@ -31,6 +31,7 @@ export ITASKS=1
 export OUTPUT_HISTORY=.true.
 export WRITE_DOPOST=.false.
 export NUM_FILES=2
+export FILENAME_BASE="'atm' 'sfc'"
 export OUTPUT_GRID="'cubed_sphere_grid'"
 export OUTPUT_FILE="'netcdf'"
 export IDEFLATE=0

@@ -105,6 +105,7 @@ RUND="${RUNDIR}"
 # FV3_RUN could have multiple entry seperated by space
 for i in ${FV3_RUN:-fv3_run.IN}
 do
+  echo $i
   atparse < ${PATHRT}/fv3_conf/${i} >> fv3_run
 done
 

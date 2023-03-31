@@ -1,0 +1,43 @@
+#############################################
+####  NEMS Run-Time Configuration File  #####
+#############################################
+
+# ESMF #
+logKindFlag:            ESMF_LOGKIND_MULTI
+globalResourceControl:  true
+
+# EARTH #
+EARTH_component_list: OCN
+EARTH_attributes::
+  Verbosity = 0
+::
+
+# OCN #
+OCN_model:                      @[ocn_model]
+OCN_petlist_bounds:             @[ocn_petlist_bounds]
+OCN_omp_num_threads:            @[ocn_omp_num_threads]
+OCN_attributes::
+  Verbosity = 0
+  DumpFields = false
+  ProfileMemory = false
+  OverwriteSlice = true
+::
+
+# Run Sequence #
+runSeq::
+@@[coupling_interval_slow_sec]
+  OCN
+@
+::
+
+ALLCOMP_attributes::
+  start_type = startup
+  restart_dir = RESTART/
+  case_name = ufs.cpld
+  restart_n = 12
+  restart_option = nhours
+  restart_ymd = -999
+  stop_n = 24
+  stop_option = nhours
+  stop_ymd = -999
+::
