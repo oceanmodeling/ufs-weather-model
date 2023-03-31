@@ -1,0 +1,122 @@
+###############################################################################
+### Fortran compiler flags
+###############################################################################
+
+if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
+  set(CMAKE_Fortran_FLAGS "-g -fbacktrace")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -Waliasing -fcray-pointer -fconvert=big-endian -fno-range-check -fbacktrace")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -fcheck=bounds -ffpe-trap=invalid,zero,overflow,underflow" )
+  set(CMAKE_Fortran_LINK_FLAGS "")
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  set(CMAKE_Fortran_FLAGS "-g -traceback")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -sox")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -debug minimal -fp-model source")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -check -check noarg_temp_created -check nopointer -fpe0 -ftrapuv -init=snan,arrays")
+  set(CMAKE_Fortran_LINK_FLAGS "")
+  set(C_PREPROCESS_FLAG "-cpp")
+else()
+  message(WARNING "Fortran compiler with ID ${CMAKE_Fortran_COMPILER_ID} will be used with CMake default options")
+endif()
+
+###############################################################################
+### Set variables
+###############################################################################
+
+set(BLD_STANDALONE "OFF")
+
+if(NOT NO_PARMETIS)
+  set(PARMETIS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/src/ParMetis-4.0.3")
+  set(PARMETIS_VER ParMetis-4.0.3 CACHE STRING "Version and relative path to Parmetis library inside /src.") 
+  add_subdirectory(SCHISM/src/${PARMETIS_VER})
+  message(STATUS "PARMETIS_DIR: ${PARMETIS_DIR}")
+  message(STATUS "PARMETIS_VER: ${PARMETIS_VER}")
+endif()
+
+if(NetCDF_Fortran_FOUND)
+  get_filename_component(_root ${NetCDF_Fortran_INCLUDE_DIR}/.. ABSOLUTE)
+  set(NetCDF_FORTRAN_DIR ${_root})
+endif()
+
+if(NetCDF_C_FOUND)
+  get_filename_component(_root ${NetCDF_C_INCLUDE_DIR}/.. ABSOLUTE)
+  set(NetCDF_C_DIR ${_root})
+endif()
+
+set(NetCDFLIBS "${NetCDF_C_LIBRARIES} ${NetCDF_Fortran_LIBRARIES}")
+
+message(STATUS "NetCDF_FORTRAN_DIR: ${NetCDF_FORTRAN_DIR}")
+message(STATUS "NetCDF_C_DIR: ${NetCDF_C_DIR}")
+message(STATUS "NetCDFLIBS: ${NetCDFLIBS}") 
+
+###############################################################################
+### File lists and macros
+###############################################################################
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/cmake/modules")
+add_subdirectory(SCHISM/src)
+
+list(APPEND schism_nuopc_src_files
+  SCHISM-ESMF/src/schism/schism_nuopc_util.F90
+  SCHISM-ESMF/src/schism/schism_nuopc_cap.F90
+  SCHISM-ESMF/src/schism/schism_esmf_util.F90
+  SCHISM-ESMF/src/schism/schism_esmf_cap.F90
+  SCHISM-ESMF/src/schism/schism_bmi.F90
+)
+
+###############################################################################
+### Application
+###############################################################################
+
+# SCHISM
+add_library(schism STATIC ${schism_nuopc_src_files} $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:hydro>)
+set_target_properties(schism PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
+target_include_directories(schism PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
+list(APPEND schism_libs esmf NetCDF::NetCDF_Fortran)
+if(NOT NO_PARMETIS)
+  list(APPEND schism_libs parmetis)
+endif()
+target_link_libraries(schism PUBLIC ${schism_libs})
+
+# Sub-modules
+list(APPEND schism_modules
+  core
+  hydro) 
+#if(USE_WWM)
+#  list(APPEND schism_modules wwmIII)
+#endif()
+#if(USE_WW3)
+#  list(APPEND schism_modules ww3)
+#endif()
+#if(USE_COSINE)
+#  list(APPEND schism_modules cosine)
+#endif()
+
+foreach(ITEM ${schism_modules})
+  set_target_properties(${ITEM} PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
+  target_include_directories(${ITEM} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>)
+endforeach(ITEM)
+
+###############################################################################
+### Install
+###############################################################################
+
+list(APPEND schism_targets schism)
+if(NOT NO_PARMETIS)
+  list(APPEND schism_targets metis parmetis)
+endif()
+
+install(
+  TARGETS ${schism_targets}
+  EXPORT  schism-config
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  COMPONENT Library)
+
+install(
+  DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/SCHISM)
+
+install(
+  EXPORT schism-config
+  DESTINATION lib/cmake)
