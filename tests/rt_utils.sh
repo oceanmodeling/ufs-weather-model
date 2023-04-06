@@ -39,8 +39,8 @@ function compute_petbounds_and_tasks() {
   ATM_io_tasks=${ATM_io_tasks:-0}
   echo "$ATM_compute_tasks $ATM_io_tasks"
   if [[ $((ATM_compute_tasks + ATM_io_tasks)) -gt 0 ]]; then
-     atm_petlist_bounds="${n} $((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks - 1))"
-     n=$((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks))
+     atm_petlist_bounds="${n} $((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks*atm_omp_num_threads - 1))"
+     n=$((n + ATM_compute_tasks*atm_omp_num_threads + ATM_io_tasks*atm_omp_num_threads))
   fi
 
   # OCN
