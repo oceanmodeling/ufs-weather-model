@@ -225,7 +225,7 @@ endif(BUILD_UTILITIES)
 if(BUILD_ADCPREP)
   # main
   add_executable(adcprep ${adcprep_src_files})
-  set_target_properties(adcprep PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
+  set_target_properties(adcprep PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod2)
   set_target_properties(adcprep PROPERTIES COMPILE_FLAGS "${Fortran_LINELENGTH_FLAG} ${Fortran_COMPILER_SPECIFIC_FLAG}")
   target_compile_definitions(adcprep PRIVATE ${LOCAL_COMPILER_DEFINITIONS})
   target_include_directories(adcprep PRIVATE prep)
