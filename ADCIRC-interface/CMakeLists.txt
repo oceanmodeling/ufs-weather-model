@@ -144,12 +144,12 @@ endif()
 
 # Metis
 if(BUILD_ADCPREP)
-  add_library(metis STATIC ${metis_src_files})
-  target_include_directories(metis PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
-  set_target_properties(metis PROPERTIES EXCLUDE_FROM_ALL TRUE)
+  add_library(libmetis STATIC ${metis_src_files})
+  target_include_directories(libmetis PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
+  set_target_properties(libmetis PROPERTIES EXCLUDE_FROM_ALL TRUE)
   if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
     if(${CMAKE_C_COMPILER_VERSION} VERSION_GREATER 10 OR ${CMAKE_C_COMPILER_VERSION} VERSION_EQUAL 10)
-      set_target_properties(metis PROPERTIES COMPILE_FLAGS "-Wno-implicit-function-declaration")
+      set_target_properties(libmetis PROPERTIES COMPILE_FLAGS "-Wno-implicit-function-declaration")
     endif()
   endif()
 endif(BUILD_ADCPREP)
@@ -232,8 +232,8 @@ if(BUILD_ADCPREP)
   install(TARGETS adcprep RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
   # mkdir, version and metis
-  target_link_libraries(adcprep PUBLIC mkdir version metis)
-  add_dependencies(adcprep mkdir version metis)
+  target_link_libraries(adcprep PUBLIC mkdir version libmetis)
+  add_dependencies(adcprep mkdir version libmetis)
 
   # mpi support
   #add_mpi(adcprep)
