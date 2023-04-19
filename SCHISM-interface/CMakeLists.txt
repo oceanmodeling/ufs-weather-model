@@ -43,11 +43,15 @@ if(NetCDF_C_FOUND)
   set(NetCDF_C_DIR ${_root})
 endif()
 
-set(NetCDFLIBS "${NetCDF_C_LIBRARIES} ${NetCDF_Fortran_LIBRARIES}")
+set(NetCDFLIBS "${NetCDF_Fortran_LIBRARIES} ${NetCDF_C_LIBRARIES}")
 
 message(STATUS "NetCDF_FORTRAN_DIR: ${NetCDF_FORTRAN_DIR}")
 message(STATUS "NetCDF_C_DIR: ${NetCDF_C_DIR}")
-message(STATUS "NetCDFLIBS: ${NetCDFLIBS}") 
+message(STATUS "NetCDFLIBS: ${NetCDFLIBS}")
+
+if(NetCDF_PARALLEL)
+  set(HDF5_LIBRARIES ${NetCDF_C_LIBRARIES})
+endif() 
 
 ###############################################################################
 ### File lists and macros
