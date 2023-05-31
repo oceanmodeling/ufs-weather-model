@@ -1,3 +1,5 @@
+mkdir INPUT RESTART
+
 ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/bctides.in .
 ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/hgrid.* .
 ln -sf @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/manning.gr3 .

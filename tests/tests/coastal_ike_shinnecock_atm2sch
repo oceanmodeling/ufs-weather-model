@@ -68,18 +68,24 @@ export mapalgo=redist
 export dtlimit=1.5
 
 # pes
-export ATM_compute_tasks=4
-export OCN_tasks=4
+export ATM_compute_tasks=3
+export OCN_tasks=3
 
 # configuration
 export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export med_model=cmeps
+export med_petlist_bounds="0 2"
+export med_omp_num_threads=1
 export atm_model=datm
-export atm_petlist_bounds="0 3"
+export atm_petlist_bounds="0 2"
 export atm_omp_num_threads=1
 export ocn_model=schism
-export ocn_petlist_bounds="0 3"
+export ocn_petlist_bounds="0 2"
 export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
-
+export RESTART_N=12
+export RUNTYPE=startup
+export CPLMODE=coastal
+export meshloc=element
 # input files
 export FV3_RUN="coastal_datm_atmmesh.IN coastal_schism_run.IN"
