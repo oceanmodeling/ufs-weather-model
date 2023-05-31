@@ -13,9 +13,7 @@ export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000001_1.nc \
                    outputs/schout_000001_2.nc \
                    outputs/schout_000002_1.nc \
-                   outputs/schout_000002_2.nc \
-                   outputs/schout_000003_1.nc \
-                   outputs/schout_000003_2.nc"
+                   outputs/schout_000002_2.nc"
 
 # deafult options
 export_coastal
