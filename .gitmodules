@@ -58,3 +58,7 @@
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/uturuncoglu/schism-esmf
   branch = master
+[submodule "FVCOM"]
+  path = FVCOM-interface/FVCOM
+  url = https://github.com/pvelissariou1/FVCOM.git
+  branch = main

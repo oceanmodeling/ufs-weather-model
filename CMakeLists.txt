@@ -16,7 +16,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMakeModules/Modules)
 ###############################################################################
 
 # Valid applications and choices
-list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS COASTALA COASTALS COASTAL-ALL)
+list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS COASTALA COASTALF COASTALS COASTAL-ALL)
 set(APP NONE CACHE BOOL "Application Name")
 if(NOT (APP IN_LIST VALID_APPS))
   message(FATAL_ERROR "${APP} is not a valid application.\nValid Applications are: ${VALID_APPS}")
@@ -35,6 +35,7 @@ set(CMEPS           OFF CACHE BOOL "Enable CMEPS")
 set(CDEPS           OFF CACHE BOOL "Enable CDEPS")
 set(NOAHMP          OFF CACHE BOOL "Enable NOAHMP")
 set(ADCIRC          OFF CACHE BOOL "Enable ADCIRC")
+set(FVCOM           OFF CACHE BOOL "Enable FVCOM")
 set(SCHISM          OFF CACHE BOOL "Enable SCHISM")
 
 # Configure selected application specific components
@@ -55,6 +56,7 @@ message("CDEPS ............ ${CDEPS}")
 message("CMEPS ............ ${CMEPS}")
 message("NOAHMP ........... ${NOAHMP}")
 message("ADCIRC ........... ${ADCIRC}")
+message("FVCOM ............ ${FVCOM}")
 message("SCHISM ........... ${SCHISM}")
 
 ###############################################################################
@@ -236,6 +238,10 @@ if(ADCIRC)
   add_subdirectory(ADCIRC-interface)
 endif()
 
+if(FVCOM)
+  add_subdirectory(FVCOM-interface)
+endif()
+
 if(SCHISM)
   add_subdirectory(SCHISM-interface)
 endif()
@@ -343,6 +349,12 @@ if(ADCIRC)
   add_dependencies(ufs adcirc)
   list(APPEND _ufs_defs_private FRONT_ADCIRC=adc_cap)
   list(APPEND _ufs_libs_public adcirc)
+endif()
+
+if(FVCOM)
+  add_dependencies(ufs fvcom)
+  list(APPEND _ufs_defs_private FRONT_FVCOM=fvcom_cap)
+  list(APPEND _ufs_libs_public fvcom)
 endif()
 
 if(SCHISM)

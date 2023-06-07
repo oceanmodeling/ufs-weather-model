@@ -63,6 +63,9 @@
       use FRONT_ADCIRC,     only: ADCIRC_SS => SetServices
 #endif
 #ifdef FRONT_SCHISM
+      use FRONT_FVCOM,      only: FVCOM_SS => SetServices
+#endif
+#ifdef FRONT_SCHISM
       use FRONT_SCHISM,     only: SCHISM_SS => SetServices
 #endif
 #ifdef FRONT_CDEPS_DOCN
@@ -402,6 +405,14 @@
 #ifdef FRONT_ADCIRC
           if (trim(model) == "adcirc") then
             call NUOPC_DriverAddComp(driver, trim(prefix), ADCIRC_SS, &
+              SetVM, info=info, petList=petList, comp=comp, rc=rc)
+            if (ChkErr(rc,__LINE__,u_FILE_u)) return
+            found_comp = .true.
+          end if
+#endif
+#ifdef FRONT_FVCOM
+          if (trim(model) == "fvcom") then
+            call NUOPC_DriverAddComp(driver, trim(prefix), FVCOM_SS, &
               SetVM, info=info, petList=petList, comp=comp, rc=rc)
             if (ChkErr(rc,__LINE__,u_FILE_u)) return
             found_comp = .true.
