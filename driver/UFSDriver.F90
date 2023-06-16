@@ -62,7 +62,7 @@
 #ifdef FRONT_ADCIRC
       use FRONT_ADCIRC,     only: ADCIRC_SS => SetServices
 #endif
-#ifdef FRONT_SCHISM
+#ifdef FRONT_FVCOM
       use FRONT_FVCOM,      only: FVCOM_SS => SetServices
 #endif
 #ifdef FRONT_SCHISM
