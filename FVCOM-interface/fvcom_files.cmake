@@ -99,7 +99,7 @@ list(APPEND fvcom_mods_files
   FVCOM/src/mod_vector_projection.F)
 
 list(APPEND fvcom_modsw_files
-  #FVCOM/src/mod_main_wave.F
+  FVCOM/src/mod_main_wave.F
   FVCOM/src/swmod1.F
   FVCOM/src/swmod2.F
   FVCOM/src/swmod3.F
@@ -110,7 +110,7 @@ list(APPEND fvcom_modsw_files
   FVCOM/src/mod_bbl.F)
 
 list(APPEND fvcom_main_files
-  #FVCOM/srcfvcom.F
+  #FVCOM/src/fvcom.F
   FVCOM/src/genmap.F
   FVCOM/src/tge.F
   FVCOM/src/longshore_flow.F
@@ -189,7 +189,7 @@ list(APPEND fvcom_mainw_files
   FVCOM/src/swanpre1.F
   FVCOM/src/swanpre2.F
   FVCOM/src/swanser.F
-  #FVCOM/src/swanmain.F
+  FVCOM/src/swanmain.F
   FVCOM/src/swancom1.F
   FVCOM/src/swancom2.F
   FVCOM/src/swancom3.F
@@ -200,3 +200,29 @@ list(APPEND fvcom_mainw_files
 list(APPEND fvcom_bio_files
   FVCOM/src/mod_bio_3D.F
   FVCOM/src/mod_onedtide.F)
+
+list(APPEND fvcom_nuopc_files
+  FVCOM/nuopc/fvcom_cap.F90
+  FVCOM/nuopc/fvcom_mod.F90
+  FVCOM/nuopc/mod_driver.F90
+  FVCOM/nuopc/namelist_esmf.F90
+  FVCOM/nuopc/nuopc_fvcom.F90)
+
+list(APPEND julian_files
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/dates.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/fjulian.for
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/fjulian.inc
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/format.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/fortran.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/fortran.h
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/fstrings.for
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/juldates.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/julian.h
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/leapsecs.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/parse.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/ringlib.h
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/rlerrors.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/rlmemory.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/seconds.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/tai_et.c
+  ${CMAKE_CURRENT_BINARY_DIR}/julian/utc_tai.c)
