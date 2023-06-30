@@ -1,0 +1,67 @@
+#############################################
+####  NEMS Run-Time Configuration File  #####
+#############################################
+
+# ESMF #
+logKindFlag:            ESMF_LOGKIND_MULTI
+globalResourceControl:  true
+
+# EARTH #
+EARTH_component_list: ATM OCN
+EARTH_attributes::
+  Verbosity = 0
+::
+
+# ATM #
+ATM_model:                      @[atm_model]
+ATM_petlist_bounds:             @[atm_petlist_bounds]
+ATM_omp_num_threads:            @[atm_omp_num_threads]
+ATM_attributes::
+  Verbosity = 0
+  DumpFields = false
+  ProfileMemory = false
+  OverwriteSlice = true
+::
+
+# OCN #
+OCN_model:                      @[ocn_model]
+OCN_petlist_bounds:             @[ocn_petlist_bounds]
+OCN_omp_num_threads:            @[ocn_omp_num_threads]
+OCN_attributes::
+  Verbosity = 0
+  DumpFields = false
+  ProfileMemory = false
+  OverwriteSlice = true
+::
+
+# Run Sequence # 
+runSeq::
+@@[coupling_interval_slow_sec]
+  ATM -> OCN :remapMethod=bilinear:unmappedaction=ignore:zeroregion=select:srcTermProcessing=0:termOrder:srcseq
+  ATM
+  OCN
+@
+::
+
+ALLCOMP_attributes::
+  ScalarFieldCount = 3
+  ScalarFieldIdxGridNX = 1
+  ScalarFieldIdxGridNY = 2
+  ScalarFieldIdxNextSwCday = 3
+  ScalarFieldName = cpl_scalars
+  start_type = @[RUNTYPE] 
+  restart_dir = RESTART/
+  case_name = ufs.cpld
+  restart_n = @[RESTART_N]
+  restart_option = nhours
+  restart_ymd = -999
+  orb_eccen = 1.e36
+  orb_iyear = 2000
+  orb_iyear_align = 2000
+  orb_mode = fixed_year
+  orb_mvelp = 1.e36
+  orb_obliq = 1.e36
+  stop_n = @[FHMAX]
+  stop_option = nhours
+  stop_ymd = -999
+::

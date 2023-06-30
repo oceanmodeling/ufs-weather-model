@@ -60,5 +60,5 @@
   branch = master
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
-  url = https://github.com/uturuncoglu/FVCOM.git
-  branch = hotfix/ufs
+  url = https://github.com/pvelissariou1/FVCOM.git
+  branch = main

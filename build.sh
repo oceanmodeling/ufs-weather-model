@@ -18,4 +18,5 @@ cd ${BUILD_DIR}
 cmake ${UFS_MODEL_DIR} ${CMAKE_FLAGS}
 # Turn off OpenMP threading for parallel builds
 # to avoid exhausting the number of user processes
-OMP_NUM_THREADS=1 make -j ${BUILD_JOBS:-4} VERBOSE=${BUILD_VERBOSE:-}
+#OMP_NUM_THREADS=1 make -j ${BUILD_JOBS:-4} VERBOSE=${BUILD_VERBOSE:-}
+OMP_NUM_THREADS=1 make -j ${BUILD_JOBS:-1} VERBOSE=${BUILD_VERBOSE:-}

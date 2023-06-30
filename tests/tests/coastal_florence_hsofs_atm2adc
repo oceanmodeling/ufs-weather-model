@@ -25,6 +25,7 @@ export FHROT=0
 export DT_ATMOS=720
 export RESTART_INTERVAL=0
 export QUILTING=.true.
+export QUILTING_RESTART=.false.
 export WRITE_GROUP=1
 export WRTTASK_PER_GROUP=6
 export ITASKS=1
@@ -36,6 +37,8 @@ export OUTPUT_GRID="'cubed_sphere_grid'"
 export OUTPUT_FILE="'netcdf'"
 export IDEFLATE=0
 export NBITS=0
+export ICHUNK2D=0
+export JCHUNK2D=0
 export ICHUNK3D=0
 export JCHUNK3D=0
 export KCHUNK3D=0
@@ -65,7 +68,8 @@ export ATM_compute_tasks=16
 export OCN_tasks=499
 
 # configuration
-export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export MODEL_CONFIGURE=model_configure.IN
+export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn_conn.IN
 export atm_model=datm
 export atm_petlist_bounds="0 15"
 export atm_omp_num_threads=1
@@ -73,6 +77,9 @@ export ocn_model=adcirc
 export ocn_petlist_bounds="16 514"
 export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
+export RESTART_N=12
+export RUNTYPE=startup
+export CPLMODE=coastal
 
 # input files
 export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"

@@ -79,7 +79,8 @@ set_target_properties(fvcom PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_
 set_target_properties(fvcom PROPERTIES COMPILE_FLAGS "${Fortran_LINELENGTH_FLAG}")
 set_target_properties(fvcom PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(fvcom PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
-target_link_libraries(fvcom PRIVATE metis julian fproj proj esmf NetCDF::NetCDF_Fortran)
+target_link_libraries(fvcom PRIVATE metis julian proj fproj esmf NetCDF::NetCDF_Fortran)
+target_link_libraries(fvcom PRIVATE proj esmf NetCDF::NetCDF_Fortran)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 ###############################################################################
@@ -90,10 +91,7 @@ include(ExternalProject)
 
 # extract tar files
 list(APPEND deps
-  julian
-  proj
-  fproj
-  metis-5.1.0)
+  julian)
 
 foreach(dep ${deps})
   if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${dep})
@@ -107,34 +105,56 @@ endforeach()
 
 # install proj
 ExternalProject_Add(proj_bld
+  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/proj.tgz
   SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj
+  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj
+  BUILD_IN_SOURCE 1
   CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/proj/configure
-    --prefix=${CMAKE_CURRENT_BINARY_DIR}
-  BUILD_COMMAND ${MAKE})
+    --prefix=<INSTALL_DIR>
+  #  --includedir=${CMAKE_CURRENT_BINARY_DIR}/include
+  UPDATE_COMMAND "")
+  #INSTALL_COMMAND make install)
+  #BUILD_COMMAND ${MAKE})
 add_library(proj STATIC IMPORTED)
 add_dependencies(fvcom proj_bld)
-target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
-set_property(TARGET proj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libproj.a)
+target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/proj/include)
+set_property(TARGET proj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/proj/lib/libproj.a)
 
 # install fproj
 ExternalProject_Add(fproj_bld
+  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/fproj.tgz
   SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/fproj
+  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/fproj
+  BUILD_IN_SOURCE 1
+  BUILD_ALWAYS
   CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/fproj/configure
-    CPPFLAGS=-DIFORT
-    --prefix=${CMAKE_CURRENT_BINARY_DIR}
-    --with-proj4=${CMAKE_CURRENT_BINARY_DIR}
-  BUILD_COMMAND ${MAKE})
+    --prefix=<INSTALL_DIR>
+    --exec-prefix=<INSTALL_DIR>
+    --with-proj4=${CMAKE_CURRENT_BINARY_DIR}/proj
+    CPPFLAGS=-DIFORT\ -I${CMAKE_CURRENT_BINARY_DIR}/fproj
+  DEPENDS proj
+  UPDATE_COMMAND "")
+  #  CPPFLAGS=-DIFORT\ -I${CMAKE_CURRENT_BINARY_DIR}/include
+  #INSTALL_COMMAND make install)
+  #BUILD_COMMAND ${MAKE} install)
 add_library(fproj STATIC IMPORTED)
+add_dependencies(fproj_bld proj)
 add_dependencies(fvcom fproj_bld)
-set_property(TARGET fproj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libfproj4.a)
+set_property(TARGET fproj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/fproj/lib/libfproj4.a)
+#set_property(TARGET fproj PROPERTY INTERFACE_LINK_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/lib/libfproj4.a)
+#set_property(TARGET fproj PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_BINARY_DIR}/include)
+
+ExternalProject_Add_StepDependencies(fproj_bld install proj_bld)
 
 # install julian
 add_library(julian STATIC ${julian_files})
+add_dependencies(fvcom julian)
 set_target_properties(julian PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/julian)
 
 # install metis
 ExternalProject_Add(metis_bld
+  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/metis.tgz
   SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis
   INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}
   BUILD_IN_SOURCE TRUE

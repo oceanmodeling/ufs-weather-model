@@ -43,6 +43,8 @@ export OUTPUT_GRID="'cubed_sphere_grid'"
 export OUTPUT_FILE="'netcdf'"
 export IDEFLATE=0
 export NBITS=0
+export ICHUNK2D=0
+export JCHUNK2D=0
 export ICHUNK3D=0
 export JCHUNK3D=0
 export KCHUNK3D=0
@@ -57,6 +59,7 @@ export ATM_compute_tasks=0
 export OCN_tasks=4
 
 # configuration
+export MODEL_CONFIGURE=model_configure.IN
 export NEMS_CONFIGURE=nems.configure.coastal_ocn.IN
 export ocn_model=schism
 export ocn_petlist_bounds="0 3"
