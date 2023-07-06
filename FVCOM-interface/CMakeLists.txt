@@ -79,9 +79,11 @@ set_target_properties(fvcom PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_
 set_target_properties(fvcom PROPERTIES COMPILE_FLAGS "${Fortran_LINELENGTH_FLAG}")
 set_target_properties(fvcom PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(fvcom PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
-target_link_libraries(fvcom PRIVATE metis julian proj fproj esmf NetCDF::NetCDF_Fortran)
+target_link_libraries(fvcom PRIVATE metis julian fproj proj esmf NetCDF::NetCDF_Fortran)
 target_link_libraries(fvcom PRIVATE proj esmf NetCDF::NetCDF_Fortran)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/proj/include)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/fproj/include)
 
 ###############################################################################
 ### Install dependencies
@@ -111,12 +113,11 @@ ExternalProject_Add(proj_bld
   BUILD_IN_SOURCE 1
   CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/proj/configure
     --prefix=<INSTALL_DIR>
-  #  --includedir=${CMAKE_CURRENT_BINARY_DIR}/include
+    --enable-shared=no
+    --without-mutex
   UPDATE_COMMAND "")
-  #INSTALL_COMMAND make install)
-  #BUILD_COMMAND ${MAKE})
 add_library(proj STATIC IMPORTED)
-add_dependencies(fvcom proj_bld)
+add_dependencies(fvcom proj_bld proj)
 target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/proj/include)
 set_property(TARGET proj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/proj/lib/libproj.a)
 
@@ -132,19 +133,13 @@ ExternalProject_Add(fproj_bld
     --exec-prefix=<INSTALL_DIR>
     --with-proj4=${CMAKE_CURRENT_BINARY_DIR}/proj
     CPPFLAGS=-DIFORT\ -I${CMAKE_CURRENT_BINARY_DIR}/fproj
-  DEPENDS proj
+  BUILD_COMMAND make -j 1
+  DEPENDS proj_bld proj
   UPDATE_COMMAND "")
-  #  CPPFLAGS=-DIFORT\ -I${CMAKE_CURRENT_BINARY_DIR}/include
-  #INSTALL_COMMAND make install)
-  #BUILD_COMMAND ${MAKE} install)
 add_library(fproj STATIC IMPORTED)
-add_dependencies(fproj_bld proj)
-add_dependencies(fvcom fproj_bld)
+add_dependencies(fvcom fproj_bld fproj)
+target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/fproj/include)
 set_property(TARGET fproj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/fproj/lib/libfproj4.a)
-#set_property(TARGET fproj PROPERTY INTERFACE_LINK_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/lib/libfproj4.a)
-#set_property(TARGET fproj PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_BINARY_DIR}/include)
-
-ExternalProject_Add_StepDependencies(fproj_bld install proj_bld)
 
 # install julian
 add_library(julian STATIC ${julian_files})
