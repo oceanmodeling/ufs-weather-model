@@ -1,5 +1,6 @@
 list(APPEND adcirc_src_files
   ADCIRC/src/sizes.F
+  ADCIRC/src/constants.F
   ADCIRC/thirdparty/KDTREE2/kdtree2.F
   ADCIRC/src/global.F
   ADCIRC/src/boundaries.F
@@ -41,6 +42,7 @@ list(APPEND adcirc_src_files
 
 list(APPEND padcirc_src_files
   ADCIRC/src/sizes.F
+  ADCIRC/src/constants.F
   ADCIRC/thirdparty/KDTREE2/kdtree2.F
   ADCIRC/src/global.F
   ADCIRC/src/boundaries.F
@@ -158,6 +160,7 @@ list(APPEND swan2parallel_src_files
 
 list(APPEND padcswan1_src_files
   ADCIRC/src/sizes.F
+  ADCIRC/src/constants.F
   ADCIRC/thirdparty/KDTREE2/kdtree2.F
   ADCIRC/src/global.F
   ADCIRC/src/boundaries.F
@@ -205,6 +208,7 @@ list(APPEND padcswan_src_files
 
 list(APPEND adcprep_src_files
   ADCIRC/src/sizes.F
+  ADCIRC/src/constants.F
   ADCIRC/thirdparty/KDTREE2/kdtree2.F
   ADCIRC/src/global.F
   ADCIRC/src/boundaries.F
