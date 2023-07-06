@@ -1,6 +1,8 @@
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/fort.* .
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/max*.nc .
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/metis_graph.txt .
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/min*.nc .
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/partmesh.txt .
-ln -sf @[INPUTDATA_ROOT]/coastal_florence_hsofs_atm2adc/PE* .
+mkdir INPUT RESTART
+
+cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/fort.* .
+cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/max*.nc .
+cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/metis_graph.txt .
+cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/min*.nc .
+cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/partmesh.txt .
+cp -r @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/PE* .
