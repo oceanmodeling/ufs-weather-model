@@ -1008,6 +1008,7 @@ export STREAM_VECTORS="Sa_u:Sa_v"
 export stream_variables="\"slmsksfc Sa_mask\" \"DSWRF Faxa_swdn\" \"DLWRF Faxa_lwdn\" \"vbdsf_ave Faxa_swvdr\" \"vddsf_ave Faxa_swvdf\" \"nbdsf_ave Faxa_swndr\" \"nddsf_ave Faxa_swndf\" \"u10m Sa_u10m\" \"v10m Sa_v10m\" \"hgt_hyblev1 Sa_z\" \"psurf Sa_pslv\" \"tmp_hyblev1 Sa_tbot\" \"spfh_hyblev1 Sa_shum\" \"ugrd_hyblev1 Sa_u\" \"vgrd_hyblev1 Sa_v\" \"q2m Sa_q2m\" \"t2m Sa_t2m\" \"pres_hyblev1 Sa_pbot\" \"precp Faxa_rain\" \"fprecp Faxa_snow\""
 export mapalgo=bilinear
 export dtlimit=1.0
+export STREAM_OFFSET=0
 
 # MOM6 defaults; 1 degree
 export MOM_INPUT=MOM_input_template_100
