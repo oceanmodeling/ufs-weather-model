@@ -66,6 +66,7 @@ export stream_files="\"INPUT_DATM/Ike_CFSR.nc\""
 export stream_variables="\"U_GRD_L103 Sa_u10m\" \"V_GRD_L103 Sa_v10m\" \"PRMSL_L101 Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5
+export STREAM_OFFSET=0
 
 # pes
 export ATM_compute_tasks=3

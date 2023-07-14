@@ -62,6 +62,7 @@ export stream_files="\"INPUT_DATM/Florence_CFS.nc\""
 export stream_variables="\"U_GRD_L103 Sa_u10m\" \"V_GRD_L103 Sa_v10m\" \"PRES_L1 Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5
+export STREAM_OFFSET=0
 
 # pes
 export ATM_compute_tasks=16
