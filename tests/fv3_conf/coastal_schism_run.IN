@@ -1,7 +1,7 @@
-mkdir INPUT RESTART
+mkdir RESTART
 
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/bctides.in .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/hgrid.* .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/manning.gr3 .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/param.nml .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_sch/vgrid.in .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/bctides.in .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/hgrid.* .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/manning.gr3 .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/param.nml .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/vgrid.in .
