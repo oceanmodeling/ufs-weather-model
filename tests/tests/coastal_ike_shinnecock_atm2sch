@@ -54,8 +54,6 @@ export IAU_OFFSET=0
 
 # datm
 export DATM_CDEPS=true
-export HURR="Ike"
-export CPL_CONF="atm2sch"
 export atm_datamode="ATMMESH"
 export MESH_ATM="INPUT_DATM/wind_atm_fin_ch_time_vec_ESMFmesh.nc"
 export ATM_NX_GLB=101
@@ -68,6 +66,10 @@ export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5
 export STREAM_OFFSET=0
+
+# datm/ocean
+export HURR="Ike"
+export CPL_CONF="atm2sch"
 
 # pes
 export ATM_compute_tasks=3

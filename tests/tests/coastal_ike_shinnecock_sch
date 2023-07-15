@@ -54,6 +54,10 @@ export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
 
+# ocean
+export HURR="Ike"
+export CPL_CONF="sch"
+
 # pes
 export ATM_compute_tasks=0
 export OCN_tasks=4
