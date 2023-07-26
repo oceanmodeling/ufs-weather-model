@@ -1,8 +1,8 @@
-mkdir INPUT RESTART
+mkdir RESTART
 
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/bound.nc .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/fort.55 .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/inlet.msh .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/mod_def.* .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/nest.inlet .
-cp @[INPUTDATA_ROOT]/coastal_ike_shinnecock_ww3/ww3_* .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/bound.nc .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/fort.55 .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/inlet.msh .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.inlet .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/ww3_* .
