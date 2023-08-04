@@ -5,3 +5,7 @@ cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/inlet.msh .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/ww3_* .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mesh.shinnecock.cdf5.nc .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
+if [[ $CPL_CONF == 'ww3' ]]; then
+  cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.inlet .
+  cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/wind.inlet .
+fi

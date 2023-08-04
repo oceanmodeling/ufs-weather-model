@@ -63,7 +63,7 @@ export mapalgo=redist
 export dtlimit=1.5
 export STREAM_OFFSET=0
 
-# datm/ocean
+# datm/wav
 export HURR="Ike"
 export CPL_CONF="atm2ww3"
 
