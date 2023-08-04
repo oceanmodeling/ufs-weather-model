@@ -1,8 +1,7 @@
-mkdir RESTART
+mkdir INPUT RESTART
 
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/bound.nc .
-cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/fort.55 .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/inlet.msh .
-cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
-cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.inlet .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/ww3_* .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mesh.shinnecock.cdf5.nc .
+cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
