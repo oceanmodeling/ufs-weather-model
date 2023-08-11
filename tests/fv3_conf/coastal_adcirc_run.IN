@@ -1,8 +1,8 @@
 mkdir INPUT RESTART
 
-cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/fort.* .
-cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/max*.nc .
-cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/metis_graph.txt .
-cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/min*.nc .
-cp    @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/partmesh.txt .
-cp -r @[INPUTDATA_ROOT]/coastal_florence_hsofs_adc/PE* .
+cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/fort.* .
+cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/max*.nc .
+cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/metis_graph.txt .
+cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/min*.nc .
+cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/partmesh.txt .
+cp -r @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/PE* .
