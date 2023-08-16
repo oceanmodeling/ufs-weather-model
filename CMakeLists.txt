@@ -16,7 +16,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMakeModules/Modules)
 ###############################################################################
 
 # Valid applications and choices
-list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATMWM ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS CSTLA CSTLF CSTLS CSTLW CSTLSW CSTL-ALL)
+list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATMWM ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS CSTLA CSTLF CSTLR CSTLS CSTLW CSTLSW CSTL-ALL)
 set(APP NONE CACHE BOOL "Application Name")
 if(NOT (APP IN_LIST VALID_APPS))
   message(FATAL_ERROR "${APP} is not a valid application.\nValid Applications are: ${VALID_APPS}")
@@ -37,6 +37,7 @@ set(NOAHMP          OFF CACHE BOOL "Enable NOAHMP")
 set(ADCIRC          OFF CACHE BOOL "Enable ADCIRC")
 set(FVCOM           OFF CACHE BOOL "Enable FVCOM")
 set(SCHISM          OFF CACHE BOOL "Enable SCHISM")
+set(ROMS            OFF CACHE BOOL "Enable ROMS")
 
 # Configure selected application specific components
 message("")
@@ -58,6 +59,7 @@ message("NOAHMP ........... ${NOAHMP}")
 message("ADCIRC ........... ${ADCIRC}")
 message("FVCOM ............ ${FVCOM}")
 message("SCHISM ........... ${SCHISM}")
+message("ROMS ............. ${ROMS}")
 
 ###############################################################################
 ### Build Options
@@ -225,7 +227,7 @@ if(WW3)
 endif()
 
 ###############################################################################
-### Marine Components [MOM6, HYCOM, CICE6, ADCIRC, SCHISM]
+### Marine Components [MOM6, HYCOM, CICE6, ADCIRC, SCHISM, ROMS]
 ###############################################################################
 if(MOM6)
   add_subdirectory(MOM6-interface)
@@ -249,6 +251,10 @@ endif()
 
 if(SCHISM)
   add_subdirectory(SCHISM-interface)
+endif()
+
+if(ROMS)
+  add_subdirectory(ROMS)
 endif()
 
 ###############################################################################
@@ -366,6 +372,12 @@ if(SCHISM)
   add_dependencies(ufs schism)
   list(APPEND _ufs_defs_private FRONT_SCHISM=schism_nuopc_cap)
   list(APPEND _ufs_libs_public schism)
+endif()
+
+if(ROMS)
+  add_dependencies(ufs roms)
+  list(APPEND _ufs_defs_private FRONT_ROMS=esmf_roms_mod)
+  list(APPEND _ufs_libs_public roms)
 endif()
 
 target_compile_definitions(ufs PRIVATE "${_ufs_defs_private}")
