@@ -254,7 +254,7 @@ if(SCHISM)
 endif()
 
 if(ROMS)
-  add_subdirectory(ROMS)
+  add_subdirectory(ROMS-interface)
 endif()
 
 ###############################################################################
