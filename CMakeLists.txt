@@ -375,8 +375,8 @@ if(SCHISM)
 endif()
 
 if(ROMS)
-  add_dependencies(ufs roms)
-  list(APPEND _ufs_defs_private FRONT_ROMS=esmf_roms_mod)
+  add_dependencies(ufs ROMS_static)
+  list(APPEND _ufs_defs_private FRONT_ROMS=cmeps_roms_mod)
   list(APPEND _ufs_libs_public roms)
 endif()
 
