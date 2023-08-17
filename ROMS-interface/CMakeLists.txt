@@ -82,7 +82,7 @@ endif()
 if(ROMS_APP STREQUAL "IRENE")
   add_definitions(-DWIND_MINUS_CURRENT)
   add_definitions(-DESMF_LIB)
-  add_definitions(-DMODEL_COUPLING)
+  #add_definitions(-DMODEL_COUPLING)
   #add_definitions(-DDATA_COUPLING)
   #add_definitions(-DWRF_COUPLING)
   #add_definitions(-DWRF_TIMEAVG)
@@ -94,7 +94,7 @@ if(ROMS_APP STREQUAL "IRENE")
 endif()
 
 ###############################################################################
-### Build
+### Add iclude directories and ROMS project 
 ###############################################################################
 
 if (ESMF_FOUND)
@@ -103,9 +103,21 @@ endif()
 
 add_subdirectory(ROMS)
 
-string( TOLOWER "${LIBTYPE}" libtype )
-if (${libtype} STREQUAL "shared")
-  target_link_libraries(ROMS_shared PUBLIC esmf)
-elseif (${libtype} STREQUAL "static")
-  target_link_libraries(ROMS_static PUBLIC esmf)
-endif()
+target_include_directories(ROMS_static PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/ROMS/modules>
+                                        $<INSTALL_INTERFACE:mod>)
+
+###############################################################################
+### Install
+###############################################################################
+
+install(
+  TARGETS ROMS_static 
+  EXPORT  roms-config
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  COMPONENT Library)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod DESTINATION ${CMAKE_INSTALL_PREFIX}/ROMS)
+
+install(EXPORT      roms-config
+        DESTINATION lib/cmake)

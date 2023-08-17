@@ -377,7 +377,7 @@ endif()
 if(ROMS)
   add_dependencies(ufs ROMS_static)
   list(APPEND _ufs_defs_private FRONT_ROMS=cmeps_roms_mod)
-  list(APPEND _ufs_libs_public roms)
+  list(APPEND _ufs_libs_public ROMS_static)
 endif()
 
 target_compile_definitions(ufs PRIVATE "${_ufs_defs_private}")

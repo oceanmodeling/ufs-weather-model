@@ -69,7 +69,7 @@
       use FRONT_SCHISM,     only: SCHISM_SS => SetServices
 #endif
 #ifdef FRONT_ROMS
-      use FRONT_ROMS,       only: ROMS_SS => SetServices
+      use FRONT_ROMS,       only: ROMS_SS => ROMS_SetServices
 #endif
 #ifdef FRONT_CDEPS_DOCN
       use FRONT_CDEPS_DOCN, only: DOCN_SS  => SetServices
