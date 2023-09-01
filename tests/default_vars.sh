@@ -1321,4 +1321,6 @@ export CPLICE=.false.
 export CPLWAV=.false.
 export CPLWAV2ATM=.false.
 export CPLLND=.false.
+
+export casename='ufs.cpld'
 }

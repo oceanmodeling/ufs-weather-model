@@ -1,0 +1,87 @@
+###############################################################################
+#
+# FVCOM coupled coastal_scituateharbor_atm2fvc configuration
+#
+###############################################################################
+
+export TEST_DESCR="Compare coastal_scituateharbor_atm2fvc results with previous trunk version"
+
+export CNTL_DIR=coastal_scituateharbor_atm2fvc
+
+export LIST_FILES="OUTPUT/sci_0001.nc \
+                   OUTPUT/sci_restart_0001.nc"
+
+# deafult options
+export_coastal
+
+# model_configure
+export SYEAR=2022
+export SMONTH=06
+export SDAY=21
+export SHOUR=00
+export FHMAX=72
+export FHROT=0
+# not used
+export DT_ATMOS=720
+export RESTART_INTERVAL=0
+export QUILTING=.true.
+export QUILTING_RESTART=.false.
+export WRITE_GROUP=1
+export WRTTASK_PER_GROUP=6
+export ITASKS=1
+export OUTPUT_HISTORY=.true.
+export WRITE_DOPOST=.false.
+export NUM_FILES=2
+export FILENAME_BASE="'atm' 'sfc'"
+export OUTPUT_GRID="'cubed_sphere_grid'"
+export OUTPUT_FILE="'netcdf'"
+export IDEFLATE=0
+export NBITS=0
+export ICHUNK2D=0
+export JCHUNK2D=0
+export ICHUNK3D=0
+export JCHUNK3D=0
+export KCHUNK3D=0
+export IMO=384
+export JMO=190
+export WRITE_NSFLIP=.false.
+export OUTPUT_FH="12 -1"
+export IAU_OFFSET=0
+
+# datm
+export DATM_CDEPS=true
+export atm_datamode="ATMMESH"
+export MESH_ATM="INPUT_DATM/sciww3_forcing_STR_ESMFmesh_cdf5.nc"
+export ATM_NX_GLB=101
+export ATM_NY_GLB=101
+export EXPORT_ALL=.true.
+export FILENAME_BASE='atmmesh.'
+export STREAM_VECTORS="null"
+export stream_files="\"INPUT_DATM/sciww3_forcing_STR.nc\""
+export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
+export mapalgo=redist
+export dtlimit=1.5
+export STREAM_OFFSET=0
+
+# datm/ocean
+export HURR="Sci"
+export CPL_CONF="atm2fvc"
+
+# pes
+export ATM_compute_tasks=12
+export OCN_tasks=12
+
+# configuration
+export MODEL_CONFIGURE=model_configure.IN
+export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export med_model=cmeps
+export atm_model=datm
+export ocn_model=fvcom
+export coupling_interval_slow_sec=3600
+export casename=sci
+export RESTART_N=12
+export RUNTYPE=startup
+export CPLMODE=coastal
+export meshloc=element
+# input files
+export FV3_RUN="coastal_datm_atmmesh.IN coastal_fvcom_run.IN"
