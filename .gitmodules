@@ -62,7 +62,3 @@
   path = FVCOM-interface/FVCOM
   url = https://github.com/pvelissariou1/FVCOM.git
   branch = main
-[submodule "ROMS"]
-  path = ROMS-interface/ROMS
-  url = https://github.com/myroms/roms
-  branch = develop
