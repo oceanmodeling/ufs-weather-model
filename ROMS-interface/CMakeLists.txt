@@ -50,7 +50,6 @@ set(MY_HEADER_DIR ${ROMS_APP_DIR})
 set(MY_CPP_FLAGS ANALYTICAL_DIR='${ROMS_APP_DIR}';HEADER_DIR='${ROMS_APP_DIR}';ROOT_DIR='${ROMS_SRC_DIR}';MPI)
 set(LIBTYPE STATIC)
 set(ROMS_EXECUTABLE OFF)
-#set(MPI ON)
 
 #------------------------------------------------------------------------------
 # Set netcdf variables
