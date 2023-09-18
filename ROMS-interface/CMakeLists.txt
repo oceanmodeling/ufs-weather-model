@@ -50,7 +50,6 @@ set(MY_HEADER_DIR ${ROMS_APP_DIR})
 set(MY_CPP_FLAGS ANALYTICAL_DIR='${ROMS_APP_DIR}';HEADER_DIR='${ROMS_APP_DIR}';ROOT_DIR='${ROMS_SRC_DIR}';MPI)
 set(LIBTYPE STATIC)
 set(ROMS_EXECUTABLE OFF)
-#set(MPI ON)
 
 #------------------------------------------------------------------------------
 # Set netcdf variables
@@ -88,12 +87,12 @@ endif()
 if(ROMS_APP STREQUAL "IRENE")
   add_definitions(-DWIND_MINUS_CURRENT)
   add_definitions(-DESMF_LIB)
+  add_definitions(-DMODEL_COUPLING)
   add_definitions(-DFRC_COUPLING)
   add_definitions(-DROMS_STDOUT)
   add_definitions(-DVERIFICATION)
   add_definitions(-DCOLLECT_ALLREDUCE)
   add_definitions(-DOUT_DOUBLE)
-  add_definitions(-DMETADATA_REPORT)
 endif()
 
 ###############################################################################

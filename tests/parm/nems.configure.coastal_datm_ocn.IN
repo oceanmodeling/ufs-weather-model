@@ -46,6 +46,7 @@ OCN_attributes::
   ProfileMemory = false
   OverwriteSlice = true
   meshloc = @[meshloc]
+  CouplingConfig = @[coupling_config]
 ::
 
 # Run Sequence # 

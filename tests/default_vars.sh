@@ -1323,4 +1323,6 @@ export CPLWAV2ATM=.false.
 export CPLLND=.false.
 
 export casename='ufs.cpld'
+export meshloc=element
+export coupling_config=none
 }
