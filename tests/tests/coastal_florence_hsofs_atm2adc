@@ -1,15 +1,21 @@
 ###############################################################################
 #
-#  ADCIRC standalone florence_shinnecock.atm2adc configuration
+#  ADCIRC standalone florence_shinnecock_atm2adc configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare florence_shinnecock.atm2adc results with previous trunk version"
+export TEST_DESCR="Compare florence_shinnecock_atm2adc results with previous trunk version"
 
 export CNTL_DIR=coastal_florence_hsofs_atm2adc
 
-export LIST_FILES="maxele.63.nc \
-                   maxvel.63.nc"
+export LIST_FILES="fort.74.nc \
+                   fort.73.nc \
+                   fort.64.nc \
+                   fort.63.nc \
+                   fort.61.nc \
+                   ufs.cpld.cpl.hi.2018-09-07-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-08-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-09-00000.nc"
 
 # deafult options
 export_coastal
@@ -19,7 +25,7 @@ export SYEAR=2018
 export SMONTH=09
 export SDAY=07
 export SHOUR=00
-export FHMAX=3
+export FHMAX=6
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -50,7 +56,6 @@ export IAU_OFFSET=0
 
 # datm
 export DATM_CDEPS=true
-export HURR="Florence"
 export atm_datamode="ATMMESH"
 export MESH_ATM="INPUT_DATM/Florence_CFS_ESMFmesh.nc"
 export ATM_NX_GLB=264
@@ -69,6 +74,7 @@ export ATM_compute_tasks=16
 export OCN_tasks=499
 
 # configuration
+export HURR="Florence"
 export MODEL_CONFIGURE=model_configure.IN
 export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn_conn.IN
 export atm_model=datm
