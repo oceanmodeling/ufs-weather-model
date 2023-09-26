@@ -1,14 +1,12 @@
 mkdir INPUT RESTART
 
 if [[ $HURR == IRENE ]]; then
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/era5_IRENE_ESMFmesh.nc INPUT/.
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/irene_roms_grid_ESMFmesh.nc INPUT/.
+   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/mesh_esmf/era5_IRENE_ESMFmesh.nc INPUT/.
+   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/mesh_esmf/irene_roms_grid_rho_ESMFmesh.nc INPUT/.
    cp @[INPUTDATA_ROOT]/ROMS/$HURR/Data/FRC/era5_IRENE.nc INPUT/.
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/datm_in .
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/datm.streams .
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/roms_cdeps_era5.yaml .
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/roms_irene.in .
-   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/rbl4dvar.in .
+   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/roms_cmeps_era5.yaml .
+   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/roms_irene.in.ufs roms_irene.in
+   cp @[INPUTDATA_ROOT]/ROMS/$HURR/Coupling/$CPL_CONF/rbl4dvar.in.ufs rbl4dvar.in
    cp @[INPUTDATA_ROOT]/ROMS/$HURR/Data/OBS/irene_obs_20110827.nc .
    cp @[INPUTDATA_ROOT]/ROMS/$HURR/Data/ROMS/irene_roms_grid.nc .
    cp @[INPUTDATA_ROOT]/ROMS/$HURR/Data/ROMS/irene_roms_ini_20110827_06.nc .

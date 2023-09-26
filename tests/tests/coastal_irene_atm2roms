@@ -6,7 +6,7 @@
 
 export TEST_DESCR="Compare coastal_irene_atm2roms results with previous trunk version"
 
-export CNTL_DIR=coastal_ike_shinnecock_atm2sch
+export CNTL_DIR=coastal_irene_atm2roms
 
 export LIST_FILES="irene_avg.nc \
                    irene_his.nc \
@@ -50,11 +50,24 @@ export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
 
 # datm, namelist files are provided by ROMS testing repository
-export DATM_CDEPS=false
+export DATM_CDEPS=true
+export DATM_STREAM_CONFIGURE=datm.streams.multi.coastal.IN
+export atm_datamode="ATMMESH"
+export MESH_ATM="INPUT/irene_roms_grid_rho_ESMFmesh.nc"
+export MESH_STREAM="INPUT/era5_IRENE_ESMFmesh.nc"
+export ATM_NX_GLB=242
+export ATM_NY_GLB=106
+export EXPORT_ALL=.true.
+export FILENAME_BASE='atmmesh.'
+export STREAM_VECTORS="null"
+export stream_files="INPUT/era5_IRENE.nc"
+export mapalgo=redist
+export dtlimit=1.5
+export STREAM_OFFSET=-3600
 
 # datm/ocean
 export HURR="IRENE"
-export CPL_CONF="roms_cdeps"
+export CPL_CONF="roms_data_cmeps"
 
 # pes
 export ATM_compute_tasks=12
@@ -76,6 +89,6 @@ export coupling_interval_slow_sec=60
 export RESTART_N=12
 export RUNTYPE=startup
 export CPLMODE=coastal
-export coupling_config=roms_cdeps_era5.yaml
+export coupling_config=roms_cmeps_era5.yaml
 # input files
 export FV3_RUN="coastal_roms_run.IN"

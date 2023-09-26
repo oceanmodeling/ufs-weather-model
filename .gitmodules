@@ -64,5 +64,5 @@
   branch = main
 [submodule "ROMS"]
   path = ROMS-interface/ROMS
-  url = https://github.com/uturuncoglu/roms
-  branch = feature/coastal_app
+  url = https://github.com/myroms/roms
+  branch = develop
