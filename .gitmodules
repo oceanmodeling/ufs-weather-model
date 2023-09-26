@@ -4,8 +4,8 @@
   branch = develop
 [submodule "WW3"]
   path = WW3
-  url = https://github.com/uturuncoglu/WW3
-  branch = feature/coastal_app
+  url = https://github.com/oceanmodeling/WW3
+  branch = feature/coastalapp
 [submodule "stochastic_physics"]
   path = stochastic_physics
   url = https://github.com/NOAA-PSL/stochastic_physics
@@ -16,7 +16,7 @@
   branch = develop
 [submodule "CMEPS"]
   path = CMEPS-interface/CMEPS
-  url = https://github.com/uturuncoglu/CMEPS
+  url = https://github.com/oceanmodeling/CMEPS
   branch = feature/coastalapp
 [submodule "HYCOM"]
   path = HYCOM-interface/HYCOM
@@ -32,7 +32,7 @@
   branch = emc/develop
 [submodule "CDEPS"]
   path = CDEPS-interface/CDEPS
-  url = https://github.com/uturuncoglu/CDEPS
+  url = https://github.com/oceanmodeling/CDEPS
   branch = feature/coastalapp
 [submodule "GOCART"]
   path = GOCART
