@@ -4,8 +4,8 @@
   branch = develop
 [submodule "WW3"]
   path = WW3
-  url = https://github.com/uturuncoglu/WW3
-  branch = feature/coastal_app
+  url = https://github.com/oceanmodeling/WW3
+  branch = feature/coastalapp
 [submodule "stochastic_physics"]
   path = stochastic_physics
   url = https://github.com/NOAA-PSL/stochastic_physics
@@ -16,8 +16,8 @@
   branch = develop
 [submodule "CMEPS"]
   path = CMEPS-interface/CMEPS
-  url = https://github.com/uturuncoglu/CMEPS
-  branch = feature/coastal_app
+  url = https://github.com/oceanmodeling/CMEPS
+  branch = feature/coastalapp
 [submodule "HYCOM"]
   path = HYCOM-interface/HYCOM
   url = https://github.com/NOAA-EMC/HYCOM-src
@@ -32,7 +32,7 @@
   branch = emc/develop
 [submodule "CDEPS"]
   path = CDEPS-interface/CDEPS
-  url = https://github.com/uturuncoglu/CDEPS
+  url = https://github.com/oceanmodeling/CDEPS
   branch = feature/coastalapp
 [submodule "GOCART"]
   path = GOCART
@@ -64,8 +64,9 @@
   branch = main
 [submodule "ROMS"]
   path = ROMS-interface/ROMS
-  url = https://github.com/uturuncoglu/roms
-  branch = feature/coastal_app
+  url = https://github.com/myroms/roms
+  branch = develop
 [submodule "PAHM-interface/PAHM"]
-	path = PAHM-interface/PAHM
-	url = https://github.com/noaa-ocs-modeling/PaHM.git
+  path = PAHM-interface/PAHM
+  url = https://github.com/noaa-ocs-modeling/PaHM.git
+  branch = main

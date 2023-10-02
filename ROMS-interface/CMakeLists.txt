@@ -67,12 +67,6 @@ set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR})
 ###############################################################################
 
 #------------------------------------------------------------------------------
-# UFS
-add_definitions(-DCMEPS)
-add_definitions(-DCDEPS)
-add_definitions(-DMASKING)
-
-#------------------------------------------------------------------------------
 # Bulk flux
 set(BULK_FLUX OFF CACHE BOOL "Use ROMS provided bulk flux algorithm.")
 if (BULK_FLUX)
@@ -80,14 +74,16 @@ if (BULK_FLUX)
   add_definitions(-DCOOL_SKIN)
   add_definitions(-DEMINUSP)
   add_definitions(-DLONGWAVE_OUT)
+  add_definitions(-DWIND_MINUS_CURRENT)
 endif()
 
 #------------------------------------------------------------------------------
-# Coupling
+# ROMS Coupling
+add_definitions(-DCMEPS)
+add_definitions(-DCDEPS)
+
 if(ROMS_APP STREQUAL "IRENE")
-  add_definitions(-DWIND_MINUS_CURRENT)
   add_definitions(-DESMF_LIB)
-  add_definitions(-DMODEL_COUPLING)
   add_definitions(-DFRC_COUPLING)
   add_definitions(-DROMS_STDOUT)
   add_definitions(-DVERIFICATION)
