@@ -41,6 +41,12 @@ if(WET_DRY)
   add_definitions(-DWET_DRY)
 endif()
 
+# air pressure as focing
+set(AIR_PRESSURE OFF CACHE BOOL "Use surface air pressure for forcing.")
+if(AIR_PRESSURE)
+  add_definitions(-DAIR_PRESSURE)
+endif()
+
 # parallelization
 if(MPI)
   add_definitions(-DMULTIPROCESSOR)
@@ -61,8 +67,13 @@ add_definitions(-DPROJ)
 # activate coupling
 add_definitions(-DFVCOM_COUPLED)
 
-# wave current interaction
-#add_definitions(-DWAVE_CURRENT_INTERACTION)
+# netcdf
+if(NetCDF_FOUND)
+  add_definitions(-DUSE_NETCDF4)
+  if(NetCDF_PARALLEL)
+    add_definitions(-DPIO)
+  endif()
+endif()
 
 ###############################################################################
 ### File lists and macros

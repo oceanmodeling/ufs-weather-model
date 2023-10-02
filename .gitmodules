@@ -60,8 +60,8 @@
   branch = master
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
-  url = https://github.com/pvelissariou1/FVCOM.git
-  branch = main
+  url = https://github.com/oceanmodeling/FVCOM
+  branch = feature/coastalapp
 [submodule "ROMS"]
   path = ROMS-interface/ROMS
   url = https://github.com/myroms/roms
