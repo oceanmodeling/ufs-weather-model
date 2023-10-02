@@ -38,6 +38,7 @@ set(ADCIRC          OFF CACHE BOOL "Enable ADCIRC")
 set(FVCOM           OFF CACHE BOOL "Enable FVCOM")
 set(SCHISM          OFF CACHE BOOL "Enable SCHISM")
 set(ROMS            OFF CACHE BOOL "Enable ROMS")
+set(PAHM            OFF CACHE BOOL "Enable PAHM")
 
 # Configure selected application specific components
 message("")
@@ -60,6 +61,7 @@ message("ADCIRC ........... ${ADCIRC}")
 message("FVCOM ............ ${FVCOM}")
 message("SCHISM ........... ${SCHISM}")
 message("ROMS ............. ${ROMS}")
+message("PAHM ............. ${PAHM}")
 
 ###############################################################################
 ### Build Options
@@ -190,6 +192,10 @@ endif()
 ###############################################################################
 if(FV3)
   add_subdirectory(FV3)
+endif()
+
+if(PAHM)
+  add_subdirectory(PAHM-interface)
 endif()
 
 ###############################################################################
@@ -378,6 +384,12 @@ if(ROMS)
   add_dependencies(ufs ROMS_static)
   list(APPEND _ufs_defs_private FRONT_ROMS=cmeps_roms_mod)
   list(APPEND _ufs_libs_public ROMS_static)
+endif()
+
+if(PAHM)
+  add_dependencies(ufs pahm)
+  list(APPEND _ufs_defs_private FRONT_PAHM=pahm_cap)
+  list(APPEND _ufs_libs_public pahm)
 endif()
 
 target_compile_definitions(ufs PRIVATE "${_ufs_defs_private}")

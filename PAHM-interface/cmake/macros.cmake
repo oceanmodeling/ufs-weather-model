@@ -1,7 +1,9 @@
-# adds netcdf support
-macro(add_netcdf TARGET)
+###========================================
+### Macros for NetCDF
+###========================================
+macro(addNetCDF TARGET)
   if(NetCDF_Fortran_FOUND)
-    target_compile_definitions(${TARGET} PRIVATE ADCNETCDF)
+    target_compile_definitions(${TARGET} PRIVATE NETCDF)
     if(NetCDF4_FOUND)
       target_compile_definitions(${TARGET} PRIVATE HAVE_NETCDF4)
       target_compile_definitions(${TARGET} PRIVATE NETCDF_CAN_DEFLATE)
