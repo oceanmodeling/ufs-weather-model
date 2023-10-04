@@ -16,7 +16,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMakeModules/Modules)
 ###############################################################################
 
 # Valid applications and choices
-list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATMWM ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS CSTLA CSTLF CSTLR CSTLS CSTLW CSTLSW CSTLFW CSTL-ALL)
+list(APPEND VALID_APPS ATM ATMAERO ATMAQ ATMW ATMWM ATML LND S2S S2SA S2SW S2SWA S2SWAL HAFS HAFSW HAFS-ALL NG-GODAS CSTLA CSTLF CSTLR CSTLS CSTLW CSTLSW CSTL-ALL)
 set(APP NONE CACHE BOOL "Application Name")
 if(NOT (APP IN_LIST VALID_APPS))
   message(FATAL_ERROR "${APP} is not a valid application.\nValid Applications are: ${VALID_APPS}")
@@ -38,6 +38,7 @@ set(ADCIRC          OFF CACHE BOOL "Enable ADCIRC")
 set(FVCOM           OFF CACHE BOOL "Enable FVCOM")
 set(SCHISM          OFF CACHE BOOL "Enable SCHISM")
 set(ROMS            OFF CACHE BOOL "Enable ROMS")
+set(PAHM            OFF CACHE BOOL "Enable PAHM")
 
 # Configure selected application specific components
 message("")
@@ -60,6 +61,7 @@ message("ADCIRC ........... ${ADCIRC}")
 message("FVCOM ............ ${FVCOM}")
 message("SCHISM ........... ${SCHISM}")
 message("ROMS ............. ${ROMS}")
+message("PAHM ............. ${PAHM}")
 
 ###############################################################################
 ### Build Options
@@ -154,7 +156,7 @@ if(FMS)
   find_package(FMS 2022.04 REQUIRED COMPONENTS R4 R8)
   if(APP MATCHES "^(HAFSW)$")
     add_library(fms ALIAS FMS::fms_r4)
-  elseif (APP MATCHES "^(S2S|S2SA|S2SW|S2SWA|S2SWAL|NG-GODAS|CSTLA|CSTLF|CSTLR|CSTLS|CSTLW|CSTLSW|CSTLFW|CSTL-ALL)$")
+  elseif (APP MATCHES "^(S2S|S2SA|S2SW|S2SWA|S2SWAL|NG-GODAS|CSTLA|CSTLF|CSTLR|CSTLS|CSTLW|CSTLSW|CSTLP|CSTLSP|CSTLSPW|CSTL-ALL)$")
     add_library(fms ALIAS FMS::fms_r8)
   endif()
   if(APP MATCHES "^(ATM|ATMAERO|ATMAQ|ATMWM|ATMW|ATML|LND|HAFS|HAFS-ALL)$")
@@ -190,6 +192,10 @@ endif()
 ###############################################################################
 if(FV3)
   add_subdirectory(FV3)
+endif()
+
+if(PAHM)
+  add_subdirectory(PAHM-interface)
 endif()
 
 ###############################################################################
@@ -378,6 +384,12 @@ if(ROMS)
   add_dependencies(ufs ROMS_static)
   list(APPEND _ufs_defs_private FRONT_ROMS=cmeps_roms_mod)
   list(APPEND _ufs_libs_public ROMS_static)
+endif()
+
+if(PAHM)
+  add_dependencies(ufs pahm)
+  list(APPEND _ufs_defs_private FRONT_PAHM=pahm_cap)
+  list(APPEND _ufs_libs_public pahm)
 endif()
 
 target_compile_definitions(ufs PRIVATE "${_ufs_defs_private}")

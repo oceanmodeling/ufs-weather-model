@@ -71,6 +71,9 @@
 #ifdef FRONT_ROMS
       use FRONT_ROMS,       only: ROMS_SS => ROMS_SetServices
 #endif
+#ifdef FRONT_PAHM
+      use FRONT_PAHM,       only: PAHM_SS => SetServices
+#endif
 #ifdef FRONT_CDEPS_DOCN
       use FRONT_CDEPS_DOCN, only: DOCN_SS  => SetServices
 #endif
@@ -432,6 +435,14 @@
 #ifdef FRONT_ROMS
           if (trim(model) == "roms") then
             call NUOPC_DriverAddComp(driver, trim(prefix), ROMS_SS, &
+              SetVM, info=info, petList=petList, comp=comp, rc=rc)
+            if (ChkErr(rc,__LINE__,u_FILE_u)) return
+            found_comp = .true.
+          end if
+#endif
+#ifdef FRONT_PAHM
+          if (trim(model) == "pahm") then
+            call NUOPC_DriverAddComp(driver, trim(prefix), PAHM_SS, &
               SetVM, info=info, petList=petList, comp=comp, rc=rc)
             if (ChkErr(rc,__LINE__,u_FILE_u)) return
             found_comp = .true.
