@@ -13,8 +13,6 @@
 ###############################################################################
 ### Configure Application Components
 ###############################################################################
-string(TOUPPER ${APP} APP)
-
 if(APP MATCHES "^(ATM|ATMW|ATMWM|ATMAQ|ATML)$")
   set(FMS        ON  CACHE BOOL "Enable FMS"                 FORCE)
   set(FV3        ON  CACHE BOOL "Enable FV3"                 FORCE)
@@ -101,80 +99,32 @@ if(APP MATCHES "^(LND)$")
   set(FMS        ON  CACHE BOOL "Enable FMS"                 FORCE)
 endif()
 
-
-######################################
-### Coastal Application Components ###
-######################################
-
-##########
-### ADCIRC APPS/TESTS: Use CDEPS/CMEPS, ADCIRC, PAHM, WW3
-#list(APPEND CSTL_ADC_APPS CSTLA CSTLPA CSTLAW CSTLPAW CSTL-ALL)
-
-##########
-### FVCOM APPS/TESTS: Use CDEPS/CMEPS, FVCOM, WW3
-#list(APPEND CSTL_FVC_APPS CSTLF CSTLFW CSTL-ALL)
-
-##########
-### ROMS APPS/TESTS: Use CDEPS/CMEPS, ROMS, CICE, WW3
-#list(APPEND CSTL_ROM_APPS CSTLR CSTLRW CSTLRC CSTLRCW CSTL-ALL)
-
-##########
-### SCHISM APPS/TESTS: Use CDEPS/CMEPS, SCHISM, PAHM(internal/external), CICE?, WW3
-#list(APPEND CSTL_SCH_APPS CSTLS CSTLPS CSTLSW CSTLPSW CSTL-ALL)
-
-##########
-### PAHM APPS/TESTS: Use CMEPS, with ADCIRC, SCHISM, WW3
-#list(APPEND CSTL_PAM_APPS CSTLP CSTLPA CSTLPAW CSTLPS CSTLPSW CSTL-ALL)
-
-##########
-### WW3 APPS/TESTS: Use CDEPS/CMEPS, with ADCIRC, FVCOM, SCHISM, ROMS
-#list(APPEND CSTL_WW3_APPS CSTLW CSTLAW CSTLPAW CSTLFW CSTLSW CSTLRW CSTLRCW CSTLSW CSTLPSW CSTL-ALL)
-
-##########
-### ALL APPS/TESTS (COMBINE EVERYTHING TOGETHER)
-#list(APPEND CSTL_ALL_APPS  ${CSTL_ADC_APPS} ${CSTL_FVC_APPS} ${CSTL_ROM_APPS} ${CSTL_SCH_APPS} ${CSTL_PAM_APPS} ${CSTL_WW3_APPS} CSTL-ALL)
-#list(REMOVE_DUPLICATES CSTL_ALL_APPS)
-
-
-if(APP IN_LIST CSTL_ALL_APPS)
+if(APP MATCHES "^(CSTLA|CSTLPA|CSTLAW|CSTLPAW|CSTLF|CSTLFW|CSTLR|CSTLRW|CSTLRC|CSTLRCW|CSTLS|CSTLPS|CSTLSW|CSTLPSW|CSTLP|CSTLW|CSTL-ALL)$")
   set(CMEPS      ON  CACHE BOOL "Enable CMEPS"               FORCE)
   set(CDEPS      ON  CACHE BOOL "Enable CDEPS"               FORCE)
-
-  ### ADCIRC
-  if(APP IN_LIST CSTL_ADC_APPS)
+  if(APP MATCHES "^(CSTLA|CSTLPA|CSTLAW|CSTLPAW|CSTL-ALL)$")
     set(ADCIRC   ON  CACHE BOOL "Enable ADCIRC"              FORCE)
     message("Configuring UFS app in COASTAL with ADCIRC model")
   endif()
-
-  ### FVCOM
-  if(APP IN_LIST CSTL_FVC_APPS)
+  if(APP MATCHES "^(CSTLF|CSTLFW|CSTL-ALL)$")
     set(FVCOM    ON  CACHE BOOL "Enable FVCOM"               FORCE)
     message("Configuring UFS app in COASTAL with FVCOM model")
   endif()
-
-  ### ROMS
-  if(APP IN_LIST CSTL_ROM_APPS)
+  if(APP MATCHES "^(CSTLR|CSTLRW|CSTLRC|CSTLRCW|CSTL-ALL)$")
     set(ROMS     ON  CACHE BOOL "Enable ROMS"                FORCE)
     message("Configuring UFS app in COASTAL with ROMS model")
   endif()
-
-  ### SCHISM
-  if(APP IN_LIST CSTL_SCH_APPS)
+  if(APP MATCHES "^(CSTLS|CSTLPS|CSTLSW|CSTLPSW|CSTL-ALL)$")
     set(SCHISM   ON  CACHE BOOL "Enable SCHISM"              FORCE)
     message("Configuring UFS app in COASTAL with SCHISM model")
   endif()
-
-  ### PAHM
-  if(APP IN_LIST CSTL_PAM_APPS)
+  if(APP MATCHES "^(CSTLP|CSTLPA|CSTLPAW|CSTLPS|CSTLPSW|CSTL-ALL)$")
     set(PAHM   ON  CACHE BOOL "Enable PAHM"              FORCE)
     message("Configuring UFS app in COASTAL with PAHM model")
   endif()
-
-  ### WW3
-  if(APP IN_LIST CSTL_WW3_APPS)
+  if(APP MATCHES "^(CSTLW|CSTLAW|CSTLPAW|CSTLFW|CSTLSW|CSTLRW|CSTLRCW|CSTLSW|CSTLPSW|CSTL-ALL)$")
     set(WW3      ON  CACHE BOOL "Enable WAVEWATCH III"       FORCE)
     message("Configuring UFS app in HAFS with Waves mode")
   endif()
-
   set(FMS        ON  CACHE BOOL "Enable FMS"                 FORCE)
 endif()
