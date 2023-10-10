@@ -57,7 +57,7 @@ endif(PRECISION_8BYTE)
 
 #P.V This COUPLED blocked should be removed because we always build a coupled system here
 # User option for coupling
-set(COUPLED OFF CACHE BOOL "Build NUOPC cap for coupling.")
+set(COUPLED ON CACHE BOOL "Build NUOPC cap for coupling.")
 if(COUPLED)
   set(src_files ${src_files} ${pahm_nuopc_src_files})
 endif()
