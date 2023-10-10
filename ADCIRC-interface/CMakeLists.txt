@@ -29,6 +29,7 @@ set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${ADCIRC_Extra_FORTRAN_FLAGS}")
 
 include("adcirc_files.cmake")
 include("cmake/macros.cmake")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/ADCIRC-interface/cmake/modules)
 
 ###############################################################################
 ### Options
@@ -144,12 +145,15 @@ endif()
 
 # Metis
 if(BUILD_ADCPREP)
-  add_library(libmetis STATIC ${metis_src_files})
-  target_include_directories(libmetis PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
-  set_target_properties(libmetis PROPERTIES EXCLUDE_FROM_ALL TRUE)
-  if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-    if(${CMAKE_C_COMPILER_VERSION} VERSION_GREATER 10 OR ${CMAKE_C_COMPILER_VERSION} VERSION_EQUAL 10)
-      set_target_properties(libmetis PROPERTIES COMPILE_FLAGS "-Wno-implicit-function-declaration")
+  find_package(METIS)
+  if(NOT METIS_FOUND)
+    add_library(libmetis STATIC ${metis_src_files})
+    target_include_directories(libmetis PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
+    set_target_properties(libmetis PROPERTIES EXCLUDE_FROM_ALL TRUE)
+    if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
+      if(${CMAKE_C_COMPILER_VERSION} VERSION_GREATER 10 OR ${CMAKE_C_COMPILER_VERSION} VERSION_EQUAL 10)
+        set_target_properties(libmetis PROPERTIES COMPILE_FLAGS "-Wno-implicit-function-declaration")
+      endif()
     endif()
   endif()
 endif(BUILD_ADCPREP)
@@ -232,11 +236,16 @@ if(BUILD_ADCPREP)
   install(TARGETS adcprep RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
   # mkdir, version and metis
-  target_link_libraries(adcprep PUBLIC mkdir version libmetis)
-  add_dependencies(adcprep mkdir version libmetis)
-
-  # mpi support
-  #add_mpi(adcprep)
+  if(METIS_FOUND)
+	  target_link_libraries(adcprep PRIVATE metis)
+    target_link_directories(adcprep PRIVATE ${METIS_LIBRARY_DIR})
+    target_include_directories(adcprep PRIVATE ${METIS_INCLUDE_DIR})
+  else()
+    target_link_libraries(adcprep PUBLIC libmetis)
+    add_dependencies(adcprep libmetis)
+  endif()
+  target_link_libraries(adcprep PUBLIC mkdir version)
+  add_dependencies(adcprep mkdir version)
 
   # netcdf support
   add_netcdf(adcprep)
