@@ -29,7 +29,6 @@ set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${ADCIRC_Extra_FORTRAN_FLAGS}")
 
 include("adcirc_files.cmake")
 include("cmake/macros.cmake")
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/ADCIRC-interface/cmake/modules)
 
 ###############################################################################
 ### Options

@@ -12,8 +12,8 @@
   branch = master
 [submodule "CMakeModules"]
   path = CMakeModules
-  url = https://github.com/NOAA-EMC/CMakeModules
-  branch = develop
+  url = https://github.com/oceanmodeling/CMakeModules
+  branch = feature/coastal_app
 [submodule "CMEPS"]
   path = CMEPS-interface/CMEPS
   url = https://github.com/oceanmodeling/CMEPS
