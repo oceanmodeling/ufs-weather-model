@@ -1,5 +1,5 @@
 list(APPEND pahm_exe_src_files
-   PAHM/src/version.F90
+   PAHM/version.F90
    PAHM/src/sizes.F90
    PAHM/src/global.F90
    PAHM/src/messages.F90
@@ -18,7 +18,7 @@ list(APPEND pahm_exe_src_files
 )
 
 list(APPEND pahm_lib_src_files
-   PAHM/src/version.F90
+   PAHM/version.F90
    PAHM/src/sizes.F90
    PAHM/src/global.F90
    PAHM/src/messages.F90
