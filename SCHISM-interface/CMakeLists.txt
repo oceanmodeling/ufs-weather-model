@@ -35,12 +35,15 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/SCHISM-interface/SCHISM/cmake/
 set(BLD_STANDALONE "OFF")
 
 if(NOT NO_PARMETIS)
+  # find parmetis
   find_package(ParMETIS) 
   if(ParMETIS_FOUND)
     set(PARMETIS_DIR $ENV{PARMETIS_ROOT})
     set(PARMETIS_VER "ParMetis-${PARMETIS_VERSION}")
-    set(METIS_DIR $ENV{METIS_ROOT})
-    find_library(METIS_LIB NAMES libmetis.a libmetis.so HINTS ${METIS_DIR} PATH_SUFFIXES lib)
+    # find metis
+    find_package(METIS)
+    message(STATUS "METIS_LIBRARY_DIR: ${METIS_LIBRARY_DIR}")
+    message(STATUS "METIS_INCLUDE_DIR: ${METIS_INCLUDE_DIR}")
   else()
     set(PARMETIS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/src/ParMetis-4.0.3")
     set(PARMETIS_VER ParMetis-4.0.3 CACHE STRING "Version and relative path to Parmetis library inside /src.") 
@@ -97,13 +100,17 @@ set_target_properties(schism PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT
 target_include_directories(schism PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
 list(APPEND schism_libs esmf)
 if(NOT NO_PARMETIS)
-  if(ParMETIS_FOUND)
-    target_link_directories(schism PUBLIC ${PARMETIS_DIR}/lib)
-    target_link_directories(schism PUBLIC ${METIS_DIR}/lib)
-  endif()
   list(APPEND schism_libs parmetis metis)
 endif()
 target_link_libraries(schism PUBLIC ${schism_libs})
+if(ParMETIS_FOUND)
+  target_link_directories(schism PUBLIC ${PARMETIS_DIR}/lib)
+endif()
+if(METIS_FOUND)
+  message(INFO ${METIS_LIBRARY_DIR})
+  target_link_directories(schism PUBLIC ${METIS_LIBRARY_DIR})
+  target_include_directories(schism PUBLIC ${METIS_INCLUDE_DIR})
+endif()
 
 # Sub-modules
 list(APPEND schism_modules

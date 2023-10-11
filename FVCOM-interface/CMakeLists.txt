@@ -158,16 +158,23 @@ set_target_properties(julian PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT
 target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/julian)
 
 # install metis
-ExternalProject_Add(metis_bld
-  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/metis.tgz
-  SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis
-  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}
-  BUILD_IN_SOURCE TRUE
-  CMAKE_ARGS 
-    -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DGKLIB_PATH:PATH=<SOURCE_DIR>/GKlib)
-add_library(metis STATIC IMPORTED)
-add_dependencies(fvcom metis_bld)
-set_property(TARGET metis PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libmetis.a)
+find_package(METIS)
+if(METIS_FOUND)
+  target_link_libraries(fvcom PUBLIC metis)
+  target_link_directories(fvcom PUBLIC ${METIS_LIBRARY_DIR})
+  target_include_directories(fvcom PUBLIC ${METIS_INCLUDE_DIR})
+else()
+  ExternalProject_Add(metis_bld
+    URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/metis.tgz
+    SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis
+    INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}
+    BUILD_IN_SOURCE TRUE
+    CMAKE_ARGS 
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DGKLIB_PATH:PATH=<SOURCE_DIR>/GKlib)
+  add_library(metis STATIC IMPORTED)
+  add_dependencies(fvcom metis_bld)
+  set_property(TARGET metis PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libmetis.a)
+endif()
 
 ###############################################################################
 ### Install

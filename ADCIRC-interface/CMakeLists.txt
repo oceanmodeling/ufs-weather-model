@@ -236,9 +236,9 @@ if(BUILD_ADCPREP)
 
   # mkdir, version and metis
   if(METIS_FOUND)
-    target_link_libraries(adcprep PRIVATE metis)
-    target_link_directories(adcprep PRIVATE ${METIS_LIBRARY_DIR})
-    target_include_directories(adcprep PRIVATE ${METIS_INCLUDE_DIR})
+    target_link_libraries(adcprep PUBLIC metis)
+    target_link_directories(adcprep PUBLIC ${METIS_LIBRARY_DIR})
+    target_include_directories(adcprep PUBLIC ${METIS_INCLUDE_DIR})
   else()
     target_link_libraries(adcprep PUBLIC libmetis)
     add_dependencies(adcprep libmetis)
