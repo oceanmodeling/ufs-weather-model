@@ -6,7 +6,7 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
   set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -fcheck=bounds -ffpe-trap=invalid,zero,overflow,underflow" )
   set(CMAKE_Fortran_LINK_FLAGS "")
-  set(Fortran_LINELENGTH_FLAG "-ffixed-line-length-none")
+  set(Fortran_LINELENGTH_FLAG "-ffixed-line-length-none -ffree-form")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -debug minimal -fp-model source")
   set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -check -check noarg_temp_created -check nopointer -fpe0 -ftrapuv -init=snan,arrays")
@@ -91,10 +91,6 @@ set_target_properties(fvcom PROPERTIES COMPILE_FLAGS "${Fortran_LINELENGTH_FLAG}
 set_target_properties(fvcom PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(fvcom PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
 target_link_libraries(fvcom PRIVATE metis julian fproj proj esmf NetCDF::NetCDF_Fortran)
-target_link_libraries(fvcom PRIVATE proj esmf NetCDF::NetCDF_Fortran)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/proj/include)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/fproj/include)
 
 ###############################################################################
 ### Install dependencies
@@ -117,20 +113,30 @@ foreach(dep ${deps})
 endforeach()
 
 # install proj
-ExternalProject_Add(proj_bld
-  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/proj.tgz
-  SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj
-  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj
-  BUILD_IN_SOURCE 1
-  CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/proj/configure
-    --prefix=<INSTALL_DIR>
-    --enable-shared=no
-    --without-mutex
-  UPDATE_COMMAND "")
-add_library(proj STATIC IMPORTED)
-add_dependencies(fvcom proj_bld proj)
-target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/proj/include)
-set_property(TARGET proj PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/proj/lib/libproj.a)
+find_package(PROJ)
+if(PROJ_FOUND)
+  target_link_directories(fvcom PUBLIC ${PROJ_STATIC_LIBRARY_DIR})
+  set(fproj_deps PROJ)
+else()
+  set(PROJ_ROOT ${CMAKE_CURRENT_BINARY_DIR}/proj)
+  set(PROJ_LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj/lib)
+  set(PROJ_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/proj/include)
+  ExternalProject_Add(proj_bld
+    URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/proj.tgz
+    SOURCE_DIR ${PROJ_ROOT}
+    INSTALL_DIR ${PROJ_ROOT}
+    BUILD_IN_SOURCE 1
+    CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/proj/configure
+      --prefix=<INSTALL_DIR>
+      --enable-shared=no
+      --without-mutex
+    UPDATE_COMMAND "")
+  add_library(proj STATIC IMPORTED)
+  add_dependencies(fvcom proj_bld proj)
+  target_include_directories(fvcom PRIVATE ${PROJ_INCLUDE_DIR})
+  set_property(TARGET proj PROPERTY IMPORTED_LOCATION ${PROJ_LIBRARY_DIR}/libproj.a)
+  set(fproj_deps proj_bld proj)
+endif()
 
 # install fproj
 ExternalProject_Add(fproj_bld
@@ -142,10 +148,10 @@ ExternalProject_Add(fproj_bld
   CONFIGURE_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/fproj/configure
     --prefix=<INSTALL_DIR>
     --exec-prefix=<INSTALL_DIR>
-    --with-proj4=${CMAKE_CURRENT_BINARY_DIR}/proj
+    --with-proj4=${PROJ_ROOT}
     CPPFLAGS=-DIFORT\ -I${CMAKE_CURRENT_BINARY_DIR}/fproj
   BUILD_COMMAND make -j 1
-  DEPENDS proj_bld proj
+  DEPENDS ${fproj_deps}
   UPDATE_COMMAND "")
 add_library(fproj STATIC IMPORTED)
 add_dependencies(fvcom fproj_bld fproj)
@@ -159,16 +165,23 @@ set_target_properties(julian PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT
 target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/julian)
 
 # install metis
-ExternalProject_Add(metis_bld
-  URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/metis.tgz
-  SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis
-  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}
-  BUILD_IN_SOURCE TRUE
-  CMAKE_ARGS 
-    -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DGKLIB_PATH:PATH=<SOURCE_DIR>/GKlib)
-add_library(metis STATIC IMPORTED)
-add_dependencies(fvcom metis_bld)
-set_property(TARGET metis PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libmetis.a)
+find_package(METIS)
+if(METIS_FOUND)
+  target_link_directories(fvcom PUBLIC ${METIS_LIBRARY_DIR})
+  target_include_directories(fvcom PUBLIC ${METIS_INCLUDE_DIR})
+else()
+  ExternalProject_Add(metis_bld
+    URL ${CMAKE_CURRENT_SOURCE_DIR}/FVCOM/libs/metis.tgz
+    SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis
+    INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}
+    BUILD_IN_SOURCE TRUE
+    CMAKE_ARGS 
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DGKLIB_PATH:PATH=<SOURCE_DIR>/GKlib)
+  add_library(metis STATIC IMPORTED)
+  add_dependencies(fvcom metis_bld)
+  target_include_directories(fvcom PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/metis/include)
+  set_property(TARGET metis PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lib/libmetis.a)
+endif()
 
 ###############################################################################
 ### Install

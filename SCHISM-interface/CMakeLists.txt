@@ -5,12 +5,15 @@
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   set(CMAKE_Fortran_FLAGS "-g -fbacktrace")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -Waliasing -fcray-pointer -fconvert=big-endian -fno-range-check -fbacktrace")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -ffree-line-length-512")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
   set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -fcheck=bounds -ffpe-trap=invalid,zero,overflow,underflow" )
   set(CMAKE_Fortran_LINK_FLAGS "")
+  set(C_PREPROCESS_FLAG "-cpp")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(CMAKE_Fortran_FLAGS "-g -traceback")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -sox")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -free")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -debug minimal -fp-model source")
   set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -check -check noarg_temp_created -check nopointer -fpe0 -ftrapuv -init=snan,arrays")
   set(CMAKE_Fortran_LINK_FLAGS "")
@@ -20,15 +23,32 @@ else()
 endif()
 
 ###############################################################################
+### Add module directory
+###############################################################################
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/SCHISM-interface/SCHISM/cmake/modules)
+
+###############################################################################
 ### Set variables
 ###############################################################################
 
 set(BLD_STANDALONE "OFF")
 
 if(NOT NO_PARMETIS)
-  set(PARMETIS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/src/ParMetis-4.0.3")
-  set(PARMETIS_VER ParMetis-4.0.3 CACHE STRING "Version and relative path to Parmetis library inside /src.") 
-  add_subdirectory(SCHISM/src/${PARMETIS_VER})
+  # find parmetis
+  find_package(ParMETIS) 
+  if(ParMETIS_FOUND)
+    set(PARMETIS_DIR $ENV{PARMETIS_ROOT})
+    set(PARMETIS_VER "ParMetis-${PARMETIS_VERSION}")
+    # find metis
+    find_package(METIS)
+    message(STATUS "METIS_LIBRARY_DIR: ${METIS_LIBRARY_DIR}")
+    message(STATUS "METIS_INCLUDE_DIR: ${METIS_INCLUDE_DIR}")
+  else()
+    set(PARMETIS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/src/ParMetis-4.0.3")
+    set(PARMETIS_VER ParMetis-4.0.3 CACHE STRING "Version and relative path to Parmetis library inside /src.") 
+    add_subdirectory(SCHISM/src/${PARMETIS_VER})
+  endif()
   message(STATUS "PARMETIS_DIR: ${PARMETIS_DIR}")
   message(STATUS "PARMETIS_VER: ${PARMETIS_VER}")
 endif()
@@ -78,11 +98,19 @@ list(APPEND schism_nuopc_src_files
 add_library(schism STATIC ${schism_nuopc_src_files} $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:hydro>)
 set_target_properties(schism PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(schism PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
-list(APPEND schism_libs esmf NetCDF::NetCDF_Fortran)
+list(APPEND schism_libs esmf)
 if(NOT NO_PARMETIS)
-  list(APPEND schism_libs parmetis)
+  list(APPEND schism_libs parmetis metis)
 endif()
 target_link_libraries(schism PUBLIC ${schism_libs})
+if(ParMETIS_FOUND)
+  target_link_directories(schism PUBLIC ${PARMETIS_DIR}/lib)
+endif()
+if(METIS_FOUND)
+  message(INFO ${METIS_LIBRARY_DIR})
+  target_link_directories(schism PUBLIC ${METIS_LIBRARY_DIR})
+  target_include_directories(schism PUBLIC ${METIS_INCLUDE_DIR})
+endif()
 
 # Sub-modules
 list(APPEND schism_modules
@@ -100,7 +128,9 @@ endforeach(ITEM)
 
 list(APPEND schism_targets schism)
 if(NOT NO_PARMETIS)
-  list(APPEND schism_targets metis parmetis)
+  if (NOT ParMETIS_FOUND)
+    list(APPEND schism_targets metis parmetis)
+  endif()
 endif()
 
 install(
