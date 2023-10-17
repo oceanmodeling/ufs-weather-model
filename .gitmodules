@@ -67,5 +67,5 @@
   url = https://github.com/myroms/roms
   branch = develop
 [submodule "PAHM-interface/PAHM"]
-	path = PAHM-interface/PAHM
-	url = https://github.com/noaa-ocs-modeling/PaHM.git
+  path = PAHM-interface/PAHM
+  url = https://github.com/noaa-ocs-modeling/PaHM
