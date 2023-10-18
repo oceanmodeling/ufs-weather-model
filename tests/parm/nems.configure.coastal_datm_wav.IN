@@ -46,7 +46,10 @@ WAV_attributes::
   ProfileMemory = false
   merge_import = .false.
   mesh_wav = mesh.shinnecock.cdf5.nc
-  multigrid = true
+  multigrid = false
+  gridded_netcdfout = true
+  diro = "."
+  logfile = wav.log
 ::
 
 # Run Sequence # 

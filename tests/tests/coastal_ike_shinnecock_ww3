@@ -8,7 +8,10 @@ export TEST_DESCR="Compare ike_shinnecock_ww3 results with previous trunk versio
 
 export CNTL_DIR=coastal_ike_shinnecock_ww3
 
-export LIST_FILES="fort.53"
+export LIST_FILES="20080905.000000.out_grd.ww3.nc \
+                   20080906.000000.out_grd.ww3.nc \
+                   20080905.000000.restart.ww3 \
+                   20080906.000000.restart.ww3"
 
 # deafult options
 export_coastal

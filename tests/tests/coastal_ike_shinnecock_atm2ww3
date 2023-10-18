@@ -8,7 +8,11 @@ export TEST_DESCR="Compare ike_shinnecock_atm2ww3 results with previous trunk ve
 
 export CNTL_DIR=coastal_ike_shinnecock_atm2ww3
 
-export LIST_FILES="ufs.cpld.cpl.hi.2008-09-05-00000.nc \
+export LIST_FILES="20080905.000000.out_grd.ww3.nc \
+                   20080906.000000.out_grd.ww3.nc \
+                   20080905.000000.restart.ww3 \
+                   20080906.000000.restart.ww3 \
+                   ufs.cpld.cpl.hi.2008-09-05-00000.nc \
                    ufs.cpld.cpl.hi.2008-09-06-00000.nc"
 
 # deafult options
