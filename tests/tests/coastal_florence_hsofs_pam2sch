@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# SCHISM standalone sandy_shinnecock_sch_pam configuration
+# SCHISM+PAHM florence_hsofs_pam2sch configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare sandy_shinnecock_sch_pam results with previous trunk version"
+export TEST_DESCR="Compare florence_hsofs_pam2sch results with previous trunk version"
 
-export CNTL_DIR=coastal_sandy_shinnecock_sch_pam
+export CNTL_DIR=coastal_florence_hsofs_pam2sch
 
 export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000000_2.nc \
@@ -21,12 +21,12 @@ export LIST_FILES="outputs/schout_000000_1.nc \
 export_coastal
 
 # model_configure
-export SYEAR=2012
-export SMONTH=10
-export SDAY=24
+export SYEAR=2018
+export SMONTH=09
+export SDAY=02
 export SHOUR=00
 export FHMAX=24  # One day for testing
-#export FHMAX=168 # Full simulation for the hurricane period
+#export FHMAX=264 # Full simulation for the hurricane period
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -56,20 +56,30 @@ export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
 
 # ocean
-export HURR="Sandy"
-export CPL_CONF="sch_pam"
+export HURR="Florence"
+export CPL_CONF="pam2sch"
 
 # pes
-export ATM_compute_tasks=0
-export OCN_tasks=4
+export ATM_compute_tasks=1
+export OCN_tasks=11
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export NEMS_CONFIGURE=nems.configure.coastal_ocn.IN
+export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export med_model=cmeps
+export med_petlist_bounds="0 11"
+export med_omp_num_threads=1
+export atm_model=pahm
+export atm_petlist_bounds="0 0"
+export atm_omp_num_threads=1
 export ocn_model=schism
-export ocn_petlist_bounds="0 3"
+export ocn_petlist_bounds="1 11"
 export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
+export RESTART_N=12
+export RUNTYPE=startup
+export CPLMODE=coastal
+export meshloc=element
 
 # input files
-export FV3_RUN="coastal_schism_pam_run.IN"
+export FV3_RUN="coastal_hsofs_pahm2schism_run.IN"
