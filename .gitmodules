@@ -48,7 +48,7 @@
   branch = develop
 [submodule "ADCIRC"]
   path = ADCIRC-interface/ADCIRC
-  url = https://github.com/uturuncoglu/adcirc
+  url = https://github.com/oceanmodeling/adcirc
   branch = feature/coastal_app
 [submodule "SCHISM"]
   path = SCHISM-interface/SCHISM

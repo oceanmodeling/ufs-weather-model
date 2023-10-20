@@ -3,7 +3,7 @@ macro(add_mpi TARGET)
   if(MPI)
     target_include_directories(${TARGET} PRIVATE ${MPI_Fortran_INCLUDE_PATH})
     target_compile_definitions(${TARGET} PRIVATE CMPI)
-    target_link_libraries(${TARGET} ${MPI_Fortran_LIBRARIES})
+    #target_link_libraries(${TARGET} ${MPI_Fortran_LIBRARIES})
   endif()
 endmacro()
 
