@@ -38,7 +38,10 @@ list(APPEND adcirc_src_files
   ADCIRC/src/driver.F
   ADCIRC/src/sponge_layer.F
   ADCIRC/src/quadrature.F
-  ADCIRC/src/couple2baroclinic3D.F)
+  ADCIRC/src/internaltide.F
+  ADCIRC/src/gl2loc_mapping.F
+  ADCIRC/src/couple2baroclinic3D.F
+  ADCIRC/src/subgridLookup.F)
 
 list(APPEND padcirc_src_files
   ADCIRC/src/sizes.F
@@ -82,7 +85,10 @@ list(APPEND padcirc_src_files
   ADCIRC/src/driver.F
   ADCIRC/src/sponge_layer.F
   ADCIRC/src/quadrature.F
-  ADCIRC/src/couple2baroclinic3D.F)
+  ADCIRC/src/internaltide.F
+  ADCIRC/src/gl2loc_mapping.F
+  ADCIRC/src/couple2baroclinic3D.F
+  ADCIRC/src/subgridLookup.F)
 
 list(APPEND swan1parallel_src_files
   ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/swan_parallel_source/swmod1.f
@@ -244,7 +250,10 @@ list(APPEND adcprep_src_files
   ADCIRC/prep/machdep.F
   ADCIRC/src/sponge_layer.F
   ADCIRC/src/quadrature.F
-  ADCIRC/src/couple2baroclinic3D.F)
+  ADCIRC/src/couple2baroclinic3D.F
+  ADCIRC/src/gl2loc_mapping.F
+  ADCIRC/src/internaltide.F
+  ADCIRC/src/subgridLookup.F)
 
 list(APPEND util_src_files
   ADCIRC/util/adccmp.F
