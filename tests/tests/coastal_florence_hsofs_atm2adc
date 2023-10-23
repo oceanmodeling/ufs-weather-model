@@ -81,6 +81,7 @@ export OCN_tasks=149
 export HURR="Florence"
 export MODEL_CONFIGURE=model_configure.IN
 export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export med_model=cmeps
 export atm_model=datm
 export ocn_model=adcirc
 export coupling_interval_slow_sec=3600
