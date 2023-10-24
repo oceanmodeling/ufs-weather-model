@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#  ADCIRC standalone florence_shinnecock_atm2adc configuration
+# ADCIRC standalone florence_shinnecock_atm2adc configuration
 #
 ###############################################################################
 
@@ -78,7 +78,6 @@ export ATM_compute_tasks=16
 export OCN_tasks=149
 
 # configuration
-export HURR="Florence"
 export MODEL_CONFIGURE=model_configure.IN
 export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
 export med_model=cmeps
@@ -88,6 +87,7 @@ export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup
 export CPLMODE=coastal
+export meshloc=element
 
 # input files
 export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"

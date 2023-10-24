@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# SCHISM coupled ike_shinnecock_atm2adc configuration
+# ADCIRC coupled ike_shinnecock_atm2adc configuration
 #
 ###############################################################################
 
@@ -88,5 +88,6 @@ export RESTART_N=12
 export RUNTYPE=startup
 export CPLMODE=coastal
 export meshloc=element
+
 # input files
 export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"
