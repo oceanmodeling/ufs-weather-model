@@ -33,7 +33,6 @@
 
 #define ATM_PRESS
  
-
 /* Basic numerics options */
 
 #define UV_U3HADVECTION
@@ -43,7 +42,9 @@
 
 /* Outputs */
 
-#define AVERAGES
+#define AVERAGES           /* time-averaged output data */
+#define OUT_DOUBLE         /* double precision output */
+#define VERIFICATION       /* extract values at observations locations */
 
 /* Surface and bottom boundary conditions */
 
@@ -52,6 +53,15 @@
 #define SOLAR_SOURCE       /* solar shortwave distributed over water column */
 #define ANA_BSFLUX
 #define ANA_BTFLUX
+
+/* Bulk flux surface boundary layer options */
+
+#ifdef BULK_FLUXES
+# define COOL_SKIN
+# define EMINUSP
+# define LONGWAVE_OUT
+# define WIND_MINUS_CURRENT
+#endif
 
 /* Vertical subgridscale turbulence closure */
 
@@ -77,3 +87,12 @@
 #ifdef UV_TIDES
 # define ADD_M2OBC         /* Tide data is added to OBC from HYCOM */
 #endif
+
+/* ESMF Coupling */
+
+#ifdef CMEPS
+# define ESMF_LIB
+# define FRC_COUPLING
+# define ROMS_STDOUT
+#endif
+
