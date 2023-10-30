@@ -1,0 +1,93 @@
+###############################################################################
+#
+# SCHISM coupled ike_shinnecock_atm2sch configuration
+#
+###############################################################################
+
+export TEST_DESCR="Compare ike_shinnecock_atm2sch results with previous trunk version"
+
+export CNTL_DIR=coastal_ike_shinnecock_atm2sch
+
+export LIST_FILES="outputs/schout_000000_1.nc \
+                   outputs/schout_000000_2.nc \
+                   outputs/schout_000001_1.nc \
+                   outputs/schout_000001_2.nc \
+                   outputs/schout_000002_1.nc \
+                   outputs/schout_000002_2.nc"
+
+# deafult options
+export_coastal
+
+# model_configure
+export SYEAR=2008
+export SMONTH=08
+export SDAY=23
+export SHOUR=00
+export FHMAX=24
+export FHROT=0
+# not used
+export DT_ATMOS=720
+export RESTART_INTERVAL=0
+export QUILTING=.true.
+export QUILTING_RESTART=.false.
+export WRITE_GROUP=1
+export WRTTASK_PER_GROUP=6
+export ITASKS=1
+export OUTPUT_HISTORY=.true.
+export WRITE_DOPOST=.false.
+export NUM_FILES=2
+export FILENAME_BASE="'atm' 'sfc'"
+export OUTPUT_GRID="'cubed_sphere_grid'"
+export OUTPUT_FILE="'netcdf'"
+export IDEFLATE=0
+export NBITS=0
+export ICHUNK2D=0
+export JCHUNK2D=0
+export ICHUNK3D=0
+export JCHUNK3D=0
+export KCHUNK3D=0
+export IMO=384
+export JMO=190
+export WRITE_NSFLIP=.false.
+export OUTPUT_FH="12 -1"
+export IAU_OFFSET=0
+
+# datm
+export DATM_CDEPS=true
+export atm_datamode="ATMMESH"
+export MESH_ATM="INPUT_DATM/wind_atm_fin_ch_time_vec_ESMFmesh.nc"
+export ATM_NX_GLB=101
+export ATM_NY_GLB=101
+export EXPORT_ALL=.true.
+export FILENAME_BASE='atmmesh.'
+export STREAM_VECTORS="null"
+export stream_files="\"INPUT_DATM/wind_atm_fin_ch_time_vec_STR_fixed.nc\""
+export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
+export mapalgo=redist
+export dtlimit=1.5
+export STREAM_OFFSET=0
+
+# datm/ocean
+export HURR="Ike"
+export CPL_CONF="atm2sch2wav"
+
+# pes
+export ATM_compute_tasks=3
+export OCN_tasks=3
+export WAV_tasks=11
+
+# configuration
+export MODEL_CONFIGURE=model_configure.IN
+export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn_wav.IN
+export med_model=cmeps
+export atm_model=datm
+export ocn_model=schism
+export wav_model=ww3
+export coupling_interval_slow_sec=3600
+export RESTART_N=12
+export RUNTYPE=startup
+export CPLMODE=coastal
+export meshloc=element
+
+# input files
+export FV3_RUN="coastal_datm_atmmesh.IN coastal_schism_run.IN coastal_ww3_run.IN"

@@ -1,18 +1,14 @@
-mkdir RESTART
+if [ ! -d "RESTART" ]; then
+  mkdir RESTART
+fi
 
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.in .
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/hgrid.* .
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.gr3 .
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/param.nml .
-if [[ ! test -f @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/msource.th ]]; then
-  cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/msource.th .
-fi
-if [[ ! test -f @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/vsink.th ]]; then
-  cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/vsink.th .
-fi
-if [[ ! test -f @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/vsource.th ]]; then
-  cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/vsource.th .
-fi
-if [[ ! test -f @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/elev.ic ]]; then
-  cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/elev.ic .
-fi
+
+for IFILE in @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.in; do
+  if [ -f "$IFILE" ]; then
+    cp $IFILE .
+  fi
+done
