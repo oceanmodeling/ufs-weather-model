@@ -1,0 +1,10 @@
+cp @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/hurricane-track.dat .
+cp @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/pahm_control.in .
+
+if [[ $CPL_CONF == *'adc'* ]]; then
+   ln -sf fort.14 pahm_mesh.dat
+fi
+
+if [[ $CPL_CONF == *'sch'* ]]; then
+   ln -sf hgrid.ll pahm_mesh.dat
+fi

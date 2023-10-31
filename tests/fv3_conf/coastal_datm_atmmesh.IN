@@ -1,4 +1,6 @@
-mkdir -p INPUT_DATM
+if [ ! -d "INPUT_DATM" ]; then
+  mkdir INPUT_DATM
+fi
 
 cd INPUT_DATM
 rsync -arv @[INPUTDATA_ROOT]/DATM_ATMMESH_input_data/$HURR/* .

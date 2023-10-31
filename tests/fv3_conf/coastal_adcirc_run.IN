@@ -1,7 +1,12 @@
-mkdir INPUT RESTART
+if [ ! -d "INPUT" ]; then
+  mkdir INPUT
+fi
+if [ ! -d "RESTART" ]; then
+  mkdir RESTART
+fi
 
-cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/fort.* .
-cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/max*.nc .
-cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/min*.nc .
-cp    @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/partmesh.txt .
+cp @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/fort.* .
+cp @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/max*.nc .
+cp @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/min*.nc .
+cp @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/partmesh.txt .
 cp -r @[INPUTDATA_ROOT]/ADCIRC/$HURR/$CPL_CONF/PE* .
