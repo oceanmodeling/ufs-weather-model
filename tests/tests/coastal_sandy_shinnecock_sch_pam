@@ -72,4 +72,4 @@ export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
 
 # input files
-export FV3_RUN="coastal_schism_pam_run.IN"
+export FV3_RUN="coastal_pahm_run.IN coastal_schism_run.IN"

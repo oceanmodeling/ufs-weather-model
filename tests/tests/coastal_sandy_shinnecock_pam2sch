@@ -78,4 +78,4 @@ export RUNTYPE=startup
 export CPLMODE=coastal
 
 # input files
-export FV3_RUN="coastal_pahm2schism_run.IN"
+export FV3_RUN="coastal_pahm_run.IN coastal_schism_run.IN"
