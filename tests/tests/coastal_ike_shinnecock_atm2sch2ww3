@@ -74,7 +74,7 @@ export CPL_CONF="atm2sch2wav"
 # pes
 export ATM_compute_tasks=8
 export OCN_tasks=8
-export WAV_tasks=32
+export WAV_tasks=64
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
