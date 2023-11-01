@@ -23,7 +23,7 @@ export SYEAR=2008
 export SMONTH=08
 export SDAY=23
 export SHOUR=00
-export FHMAX=24
+export FHMAX=120
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -72,9 +72,9 @@ export HURR="Ike"
 export CPL_CONF="atm2sch2wav"
 
 # pes
-export ATM_compute_tasks=3
-export OCN_tasks=3
-export WAV_tasks=11
+export ATM_compute_tasks=8
+export OCN_tasks=8
+export WAV_tasks=32
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
