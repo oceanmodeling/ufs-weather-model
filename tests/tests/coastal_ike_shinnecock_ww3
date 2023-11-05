@@ -49,6 +49,9 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
+if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
+  ZSTANDARD_LEVEL=5
+fi
 
 # wav
 export HURR="Ike"
@@ -60,7 +63,7 @@ export WAV_tasks=12
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export NEMS_CONFIGURE=nems.configure.coastal_wav.IN
+export UFS_CONFIGURE=ufs.configure.coastal_wav.IN
 export wav_model=ww3
 export wav_petlist_bounds="0 11"
 export wav_omp_num_threads=1
