@@ -51,6 +51,9 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
+if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
+  ZSTANDARD_LEVEL=5
+fi
 
 # datm
 export DATM_CDEPS=true
@@ -78,7 +81,7 @@ export WAV_tasks=64
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn_wav.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
 export med_model=cmeps
 export atm_model=datm
 export ocn_model=schism
