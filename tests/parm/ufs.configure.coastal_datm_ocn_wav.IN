@@ -48,7 +48,6 @@ OCN_attributes::
   OverwriteSlice = true
   meshloc = @[meshloc]
   CouplingConfig = @[coupling_config]
-  dbug = false
 ::
 
 # WAV #
