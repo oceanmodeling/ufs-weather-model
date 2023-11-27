@@ -62,7 +62,7 @@ export OCN_tasks=4
 # configuration
 export HURR="Sandy"
 export MODEL_CONFIGURE=model_configure.IN
-export NEMS_CONFIGURE=nems.configure.coastal_datm_ocn.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn.IN
 export med_model=cmeps
 export med_petlist_bounds="0 4"
 export med_omp_num_threads=1

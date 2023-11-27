@@ -1,13 +1,23 @@
+if [ ! -d "outputs" ]; then
+  mkdir outputs
+fi
+
 if [ ! -d "RESTART" ]; then
   mkdir RESTART
 fi
 
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.in .
-cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/hgrid.* .
+cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.ll .
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.gr3 .
 cp @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/param.nml .
 
-for IFILE in @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.in; do
+for IFILE in @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.ic; do
+  if [ -f "$IFILE" ]; then
+    cp $IFILE .
+  fi
+done
+
+for IFILE in @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.th; do
   if [ -f "$IFILE" ]; then
     cp $IFILE .
   fi

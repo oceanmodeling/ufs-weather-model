@@ -1,5 +1,8 @@
 cp @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/hurricane-track.dat .
-cp @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/pahm_control.in .
+
+if [ -f @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/pahm_control.in ]; then
+   cp @[INPUTDATA_ROOT]/PAHM/$HURR/$CPL_CONF/pahm_control.in .
+fi
 
 if [[ $CPL_CONF == *'adc'* ]]; then
    ln -sf fort.14 pahm_mesh.dat
