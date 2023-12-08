@@ -48,7 +48,7 @@ if(AIR_PRESSURE)
 endif()
 
 # parallelization
-if(MPI)
+if(MPI_Fortran_FOUND)
   add_definitions(-DMULTIPROCESSOR)
 endif()
 
