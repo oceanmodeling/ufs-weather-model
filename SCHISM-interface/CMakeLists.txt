@@ -95,7 +95,11 @@ list(APPEND schism_nuopc_src_files
 ###############################################################################
 
 # SCHISM
-add_library(schism STATIC ${schism_nuopc_src_files} $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:hydro>)
+if(USE_WWM)
+  add_library(schism STATIC ${schism_nuopc_src_files} $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:hydro> $<TARGET_OBJECTS:wwmIII>)
+else(USE_WWM)
+  add_library(schism STATIC ${schism_nuopc_src_files} $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:hydro>)
+endif(USE_WWM)
 set_target_properties(schism PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(schism PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod> $<INSTALL_INTERFACE:mod>)
 list(APPEND schism_libs esmf)
