@@ -1327,6 +1327,8 @@ export CPLICE=.false.
 export CPLWAV=.false.
 export CPLWAV2ATM=.false.
 export CPLLND=.false.
+export HISTORY_FILE_ON_NATIVE_GRID=.false.
+export QUANTIZE_NSD=0
 
 export casename='ufs.cpld'
 export meshloc=element

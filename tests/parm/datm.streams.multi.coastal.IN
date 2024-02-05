@@ -1,4 +1,4 @@
-stream_info:               @[FILENAME_BASE].01 @[FILENAME_BASE].02
+stream_info:               @[FILENAME_BASE]01 @[FILENAME_BASE]02
 
 taxmode01:                 limit
 mapalgo01:                 bilinear
