@@ -64,7 +64,7 @@
   branch = feature/coastalapp
 [submodule "ROMS"]
   path = ROMS-interface/ROMS
-  url = https://github.com/myroms/roms
+  url = https://github.com/oceanmodeling/roms
   branch = develop
 [submodule "PAHM-interface/PAHM"]
   path = PAHM-interface/PAHM
