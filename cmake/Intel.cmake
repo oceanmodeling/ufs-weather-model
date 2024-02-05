@@ -1,6 +1,10 @@
 set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -g -traceback -fpp -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -nowarn -sox -align array64byte -qno-opt-dynamic-align")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qno-opt-dynamic-align -sox -fp-model source")
 
+if(CMAKE_Platform STREQUAL "derecho.intel")
+  set(CMAKE_Fortran_LINK_FLAGS "-Wl,--copy-dt-needed-entries")
+endif()
+
 if(NOT 32BIT)
     set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -real-size 64")
 endif()
@@ -25,6 +29,7 @@ else()
     elseif(SIMDMULTIARCH)
         set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -axSSE4.2,CORE-AVX2")
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -axSSE4.2,CORE-AVX2")
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -mcmodel=medium")
     elseif(AVX)
         set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -march=core-avx-i")
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=core-avx-i")

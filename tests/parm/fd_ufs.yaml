@@ -72,12 +72,12 @@
      #-----------------------------------
      #
      - standard_name: Faxa_swdn
-       alias: mean_down_sw_flx
+       alias: inst_down_sw_flx
        canonical_units: W m-2
        description: atmosphere export -  mean downward SW heat flux
      #
      - standard_name: Faxa_lwdn
-       alias: mean_down_lw_flx
+       alias: inst_down_lw_flx
        canonical_units: W m-2
        description: atmosphere export - mean downward LW heat flux
      #
@@ -92,6 +92,7 @@
        description: atmosphere export
      #
      - standard_name: Faxa_rainl
+       alias: inst_prec_rate_large
        canonical_units: kg m-2 s-1
        description: atmosphere export
      #
@@ -101,35 +102,37 @@
        description: atmosphere export
      #
      - standard_name: Faxa_snowc
+       alias: inst_fprec_rate_conv
        canonical_units: kg m-2 s-1
        description: atmosphere export
      #
      - standard_name: Faxa_snowl
+       alias: inst_fprec_rate_large
        canonical_units: kg m-2 s-1
        description: atmosphere export
      #
      - standard_name: Faxa_swnet
-       alias: mean_net_sw_flx
+       alias: inst_net_sw_flx
        canonical_units: W m-2
        description: atmosphere export
      #
      - standard_name: Faxa_swndf
-       alias: mean_down_sw_ir_dif_flx
+       alias: inst_down_sw_ir_dif_flx
        canonical_units: W m-2
        description: atmosphere export - mean surface downward nir diffuse flux
      #
      - standard_name: Faxa_swndr
-       alias: mean_down_sw_ir_dir_flx
+       alias: inst_down_sw_ir_dir_flx
        canonical_units: W m-2
        description: atmosphere export - mean surface downward nir direct flux
      #
      - standard_name: Faxa_swvdf
-       alias: mean_down_sw_vis_dif_flx
+       alias: inst_down_sw_vis_dif_flx
        canonical_units: W m-2
        description: atmosphere export - mean surface downward uv+vis diffuse flux
      #
      - standard_name: Faxa_swvdr
-       alias: mean_down_sw_vis_dir_flx
+       alias: inst_down_sw_vis_dir_flx
        canonical_units: W m-2
        description: atmosphere export - mean surface downward uv+visvdirect flux
      #
@@ -196,16 +199,6 @@
        canonical_units: m s-1
        description: atmosphere export - bottom layer meridional wind
      #
-     - standard_name: Sa_ua
-       alias: inst_zonal_wind_height_lowest_from_phys
-       canonical_units: m s-1
-       description: atmosphere export - bottom layer zonal wind
-     #
-     - standard_name: Sa_va
-       alias: inst_merid_wind_height_lowest_from_phys
-       canonical_units: m s-1
-       description: atmosphere export - bottom layer meridional wind
-     #
      - standard_name: Sa_wspd
        alias: inst_wind_speed_height_lowest
        canonical_units: m s-1
@@ -222,28 +215,32 @@
        description: atmosphere export - topographic height
      #
      - standard_name: Faxa_taux
-       alias: mean_zonal_moment_flx_atm
+       alias: inst_zonal_moment_flx
+     - standard_name: Faxa_taux
+       alias: inst_zonal_moment_flx_atm
        canonical_units: N m-2
        description: atmosphere export- zonal component of momentum flux
      #
      - standard_name: Faxa_tauy
-       alias: mean_merid_moment_flx_atm
+       alias: inst_merid_moment_flx
+     - standard_name: Faxa_tauy
+       alias: inst_merid_moment_flx_atm
        canonical_units: N m-2
        description: atmosphere export - meridional component of momentum flux
      #
      - standard_name: Faxa_lwnet
        canonical_units: W m-2
-       alias: mean_net_lw_flx
+       alias: inst_net_lw_flx
        description: atmosphere export - mean net longwave flux from atm
      #
      - standard_name: Faxa_sen
        canonical_units: W m-2
-       alias: mean_sensi_heat_flx
+       alias: inst_sensi_heat_flx
        description: atmosphere export - sensible heat flux
      #
      - standard_name : Faxa_evap
        canonical_units: kg m-2 s-1
-       alias: mean_evap_rate
+       alias: inst_evap_rate
        description: atmosphere export - latent heat flux conversion
      #
      - standard_name: Faxx_evap
@@ -251,7 +248,7 @@
        description: atmosphere import
      #
      - standard_name: Faxa_lat
-       alias: mean_laten_heat_flx
+       alias: inst_laten_heat_flx
        canonical_units: W m-2
        description: atmosphere export - latent heat flux
      #
@@ -746,13 +743,13 @@
        canonical_units: kg m-2 s-1
      - standard_name: mean_prec_rate_conv
        canonical_units: kg m-2 s-1
-     - standard_name: inst_down_lw_flx
+     - standard_name: mean_down_lw_flx
        canonical_units: W m-2
      - standard_name: inst_net_lw_flx
        canonical_units: W m-2
-     - standard_name: inst_down_sw_flx
+     - standard_name: mean_down_sw_flx
        canonical_units: W m-2
-     - standard_name: inst_net_sw_flx
+     - standard_name: mean_net_sw_flx
        canonical_units: W m-2
      - standard_name: inst_net_sw_ir_dir_flx
        canonical_units: W m-2
@@ -762,19 +759,23 @@
        canonical_units: W m-2
      - standard_name: inst_net_sw_vis_dif_flx
        canonical_units: W m-2
-     - standard_name: inst_down_sw_ir_dif_flx
+     - standard_name: mean_down_sw_ir_dif_flx
        canonical_units: W m-2
-     - standard_name: inst_down_sw_ir_dir_flx
+     - standard_name: mean_down_sw_ir_dir_flx
        canonical_units: W m-2
-     - standard_name: inst_down_sw_vis_dif_flx
+     - standard_name: mean_down_sw_vis_dif_flx
        canonical_units: W m-2
-     - standard_name: inst_down_sw_vis_dir_flx
+     - standard_name: mean_down_sw_vis_dir_flx
        canonical_units: W m-2
      - standard_name: inst_surface_height
        canonical_units: m
-     - standard_name: inst_zonal_moment_flx
+     - standard_name: mean_zonal_moment_flx_atm
        canonical_units: N m-2
-     - standard_name: inst_merid_moment_flx
+     - standard_name: mean_merid_moment_flx_atm
+       canonical_units: N m-2
+     - standard_name: inst_zonal_moment_flx_atm
+       canonical_units: N m-2
+     - standard_name: inst_merid_moment_flx_atm
        canonical_units: N m-2
      - standard_name: inst_sensi_heat_flx
        canonical_units: N m-2
@@ -845,10 +846,6 @@
        canonical_units: tbd
      - standard_name: inst_surface_roughness
        canonical_units: tbd
-     - standard_name: inst_zonal_moment_flx
-       canonical_units: N m-2
-     - standard_name: inst_merid_moment_flx
-       canonical_units: N m-2
      - standard_name: inst_laten_heat_flx
        canonical_units: W m-2
      - standard_name: inst_sensi_heat_flx
@@ -1118,9 +1115,11 @@
        canonical_units: index
        description: soil type
      #
-     - standard_name: vfrac
+     - standard_name: Sa_vfrac
        canonical_units: frac
        description: areal fractional cover of green vegetation
+     - standard_name: Sa_vfrac
+       alias: vfrac
      #
      - standard_name: stc
        canonical_units: K
@@ -1138,9 +1137,11 @@
        canonical_units: ratio
        description: fm at 10m - Ratio of sigma level 1 wind and 10m wind
      #
-     - standard_name: zorl
+     - standard_name: Sa_zorl
        canonical_units: cm
        description: composite surface roughness in cm
+     - standard_name: Sa_zorl
+       alias: zorl
      #
      - standard_name: t2m
        canonical_units: K
@@ -1151,6 +1152,7 @@
      #-----------------------------------
      #
      - standard_name: Sl_lfrac
+       alias: land_fraction
        canonical_units: 1
        description: land export
      #
@@ -1166,12 +1168,67 @@
        canonical_units: 1
        description: AOD
      #
+     - standard_name: Sl_sfrac
+       alias: inst_snow_area_fraction_lnd
+       canonical_units: 1
+       description: land export 
+     #
+     - standard_name: Sl_tref
+       alias: inst_temp_height2m_lnd
+       canonical_units: K
+       description: mediator export to glc - no levation classes
+     #
+     - standard_name: Sl_qref
+       alias: inst_spec_humid_height2m_lnd
+       canonical_units: kg kg-1
+       description: land export
+     #
+     - standard_name: Sl_q
+       alias: inst_spec_humid_lnd
+       canonical_units: kg kg-1
+       description: land export
+     #
      - standard_name: Fall_lat
-       alias: mean_laten_heat_flx_lnd_to_atm
-       canonical_units: W m-2
+       alias: inst_laten_heat_flx_lnd
+       canonical_units: kg kg-1 m s-1
        description: land export to atm - atm/lnd latent heat flux
      #
      - standard_name: Fall_sen
-       alias: mean_sensi_heat_flx_lnd_to_atm
-       canonical_units: W m-2
+       alias: inst_sensi_heat_flx_lnd
+       canonical_units: K m s-1
        description: land export to atm - atm/lnd sensible heat flux
+     #
+     - standard_name: Fall_evap
+       alias: inst_potential_laten_heat_flx_lnd
+       canonical_units: W m-2
+       description: land export
+     #
+     - standard_name: Fall_gflx 
+       alias: inst_upward_heat_flux_lnd
+       canonical_units: W m-2
+       description: land export
+     #
+     - standard_name: Fall_roff
+       alias: inst_runoff_rate_lnd
+       canonical_units: kg m-2 s-1
+       description: land export
+     #
+     - standard_name: Fall_soff
+       alias: inst_subsurface_runoff_rate_lnd
+       canonical_units: kg m-2 s-1
+       description: land export
+     #
+     - standard_name: Sl_cmm
+       alias: inst_drag_wind_speed_for_momentum
+       canonical_units: m s-1
+       description: land export
+     #
+     - standard_name: Sl_chh
+       alias: inst_drag_mass_flux_for_heat_and_moisture 
+       canonical_units: kg m-2 s-1
+       description: land export
+     #
+     - standard_name: Sl_zvfun
+       alias: inst_func_of_roughness_length_and_vfrac
+       canonical_units: 1
+       description: land export
