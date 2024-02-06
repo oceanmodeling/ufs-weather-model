@@ -1334,6 +1334,7 @@ export CPLICE=.false.
 export CPLWAV=.false.
 export CPLWAV2ATM=.false.
 export CPLLND=.false.
+export CDEPS_INLINE=.false.
 export HISTORY_FILE_ON_NATIVE_GRID=.false.
 export QUANTIZE_NSD=0
 
