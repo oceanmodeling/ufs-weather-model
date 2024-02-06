@@ -52,11 +52,11 @@
   branch = feature/coastal_app
 [submodule "SCHISM"]
   path = SCHISM-interface/SCHISM
-  url = https://github.com/uturuncoglu/schism
+  url = https://github.com/oceanmodeling/schism
   branch = feature/coastal_app
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
-  url = https://github.com/uturuncoglu/schism-esmf
+  url = https://github.com/oceanmodeling/schism-esmf
   branch = master
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
