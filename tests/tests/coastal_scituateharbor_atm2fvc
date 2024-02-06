@@ -53,14 +53,15 @@ fi
 
 # datm
 export DATM_CDEPS=true
+export DATM_STREAM_CONFIGURE=datm.streams.coastal.IN
 export atm_datamode="ATMMESH"
-export MESH_ATM="INPUT_DATM/sciww3_forcing_STR_ESMFmesh_cdf5.nc"
+export MESH_ATM="sciww3_forcing_STR_ESMFmesh_cdf5.nc"
 export ATM_NX_GLB=101
 export ATM_NY_GLB=101
 export EXPORT_ALL=.true.
 export FILENAME_BASE='atmmesh.'
 export STREAM_VECTORS="null"
-export stream_files="\"INPUT_DATM/sciww3_forcing_STR.nc\""
+export stream_files="\"INPUT/sciww3_forcing_STR.nc\""
 export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5

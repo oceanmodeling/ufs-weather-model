@@ -1,5 +1,12 @@
-mkdir INPUT OUTPUT
-mkdir RESTART
+if [ ! -d "INPUT" ]; then
+  mkdir INPUT 
+fi
+if [ ! -d "OUTPUT" ]; then
+  mkdir OUTPUT
+fi
+if [ ! -d "RESTART" ]; then
+  mkdir RESTART
+fi
 
 cp @[INPUTDATA_ROOT]/FVCOM/$HURR/$CPL_CONF/sci_cor.dat INPUT/.
 cp @[INPUTDATA_ROOT]/FVCOM/$HURR/$CPL_CONF/sci_dep.dat INPUT/.
