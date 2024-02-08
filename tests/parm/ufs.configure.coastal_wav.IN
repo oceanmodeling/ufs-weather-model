@@ -26,6 +26,7 @@ WAV_attributes::
   gridded_netcdfout = true
   diro = "."
   logfile = wav.log   
+  standalone = @[WAV_STANDALONE]
 ::
 
 # Run Sequence # 

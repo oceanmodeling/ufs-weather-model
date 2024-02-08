@@ -14,4 +14,6 @@ cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
 if [[ $CPL_CONF == 'ww3' ]]; then
   cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.inlet .
   cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/wind.inlet .
+  # this is required for standalone ww3 configuration
+  ln -sf wind.inlet wind.ww3
 fi
