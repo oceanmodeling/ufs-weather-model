@@ -22,8 +22,6 @@ list(APPEND cdeps_share_files
   CDEPS/share/shr_string_mod.F90
   CDEPS/share/shr_sys_mod.F90
   CDEPS/share/shr_timer_mod.F90
-  CDEPS/share/shr_file_mod.F90
-  CDEPS/share/shr_nl_mod.F90
 )
 
 list(APPEND cdeps_streams_files
@@ -50,7 +48,7 @@ list(APPEND cdeps_datm_files
   CDEPS/datm/datm_datamode_gfs_mod.F90
   CDEPS/datm/datm_datamode_gfs_hafs_mod.F90
   CDEPS/datm/datm_datamode_jra_mod.F90
-  CDEPS/datm/datm_datamode_simple_mod.F90
+  #CDEPS/datm/datm_datamode_simple_mod.F90
   CDEPS/datm/datm_datamode_atmmesh_mod.F90
 )
 
