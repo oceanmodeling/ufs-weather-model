@@ -1,19 +1,29 @@
 ###############################################################################
 #
-# SCHISM coupled ike_shinnecock_atm2sch configuration
+# SCHISM coupled ike_shinnecock_atm2sch2ww3 configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare ike_shinnecock_atm2sch results with previous trunk version"
+export TEST_DESCR="Compare ike_shinnecock_atm2sch2ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_ike_shinnecock_atm2sch
+export CNTL_DIR=coastal_ike_shinnecock_atm2sch2ww3_intel
 
 export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000000_2.nc \
                    outputs/schout_000001_1.nc \
                    outputs/schout_000001_2.nc \
                    outputs/schout_000002_1.nc \
-                   outputs/schout_000002_2.nc"
+                   outputs/schout_000002_2.nc \
+                   20080824.000000.out_grd.ww3.nc \
+                   20080825.000000.out_grd.ww3.nc \
+                   20080826.000000.out_grd.ww3.nc \
+                   20080827.000000.out_grd.ww3.nc \
+                   20080828.000000.out_grd.ww3.nc \
+                   ufs.cpld.cpl.hi.2008-08-24-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-25-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-26-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-27-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-28-00000.nc"
 
 # deafult options
 export_coastal
