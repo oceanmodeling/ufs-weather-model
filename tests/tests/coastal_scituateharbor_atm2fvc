@@ -9,7 +9,10 @@ export TEST_DESCR="Compare coastal_scituateharbor_atm2fvc results with previous 
 export CNTL_DIR=coastal_scituateharbor_atm2fvc
 
 export LIST_FILES="OUTPUT/sci_0001.nc \
-                   OUTPUT/sci_restart_0001.nc"
+                   OUTPUT/sci_restart_0001.nc \
+                   sci.cpl.hi.2022-06-22-00000.nc \
+                   sci.cpl.hi.2022-06-23-00000.nc \
+                   sci.cpl.hi.2022-06-24-00000.nc"
 
 # deafult options
 export_coastal
