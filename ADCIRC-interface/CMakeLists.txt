@@ -159,9 +159,14 @@ endif(BUILD_ADCPREP)
 
 # Version
 add_library(version OBJECT ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/version_cmake.F)
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC/scripts/adcirc_version.py)
+  set(GEN_VER_CMD ./adcirc_version.py --create-version-file --directory ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC)
+else()
+  set(GEN_VER_CMD ./adcircVersion.sh ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC)
+endif()
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/version_cmake.F
-  COMMAND ./adcircVersion.sh ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC
+  COMMAND ${GEN_VER_CMD}
   COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC/version.F
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/version_cmake.F
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ADCIRC/scripts
