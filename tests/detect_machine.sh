@@ -91,6 +91,11 @@ case $(hostname -f) in
   
   login01.expanse.sdsc.edu) MACHINE_ID=expanse ;; ### expanse1
   login02.expanse.sdsc.edu) MACHINE_ID=expanse ;; ### expanse2
+
+  login1.frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera1  
+  login2.frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera2  
+  login3.frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera3  
+  login4.frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera4
   
 esac
 

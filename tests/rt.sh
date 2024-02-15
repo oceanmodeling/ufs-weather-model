@@ -522,6 +522,20 @@ elif [[ $MACHINE_ID = expanse ]]; then
   PTMP=$dprefix/stmp2
   SCHEDULER=slurm
 
+elif [[ $MACHINE_ID = frontera ]]; then
+
+  export PYTHONPATH=
+  ECFLOW_START=
+  QUEUE=flex
+  COMPILE_QUEUE=flex
+  PARTITION=
+  dprefix=$SCRATCH/frontera
+  DISKNM=/work2/01118/tg803972/frontera/RT
+  STMP=$dprefix
+  PTMP=$dprefix
+  SCHEDULER=slurm
+  MPIEXEC=ibrun
+  MPIEXECOPTS=
 
 else
   die "Unknown machine ID, please edit detect_machine.sh file"
@@ -661,6 +675,10 @@ if [[ $ROCOTO == true ]]; then
     QUEUE=normal
     COMPILE_QUEUE=normal
     ROCOTO_SCHEDULER=slurm
+  elif [[ $MACHINE_ID = frontera ]]; then
+    QUEUE=flex
+    COMPILE_QUEUE=flex
+    ROCOTO_SCHEDULER=slurm
   else
     die "Rocoto is not supported on this machine $MACHINE_ID"
   fi
@@ -735,6 +753,8 @@ EOF
     QUEUE=normal
   elif [[ $MACHINE_ID = derecho ]]; then
     QUEUE=main
+  elif [[ $MACHINE_ID = frontera ]]; then
+    QUEUE=flex
   else
     die "ecFlow is not supported on this machine $MACHINE_ID"
   fi
