@@ -53,7 +53,7 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
-if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
+if [[ " hera orion hercules gaea jet frontera " =~ " ${MACHINE_ID} " ]] ; then
   ZSTANDARD_LEVEL=5
 fi
 
