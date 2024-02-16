@@ -82,6 +82,10 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/cmake/modules")
 add_subdirectory(SCHISM/src)
 
+if(BUILD_TOOLS)
+  add_subdirectory(SCHISM/src/Utility)
+endif()
+
 list(APPEND schism_nuopc_src_files
   SCHISM-ESMF/src/schism/schism_nuopc_util.F90
   SCHISM-ESMF/src/schism/schism_nuopc_cap.F90
