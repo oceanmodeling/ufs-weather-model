@@ -57,7 +57,8 @@
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/oceanmodeling/schism-esmf
-  branch = master
+  #branch = master
+  branch = hotfix/ocean_mask
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
   url = https://github.com/oceanmodeling/FVCOM
