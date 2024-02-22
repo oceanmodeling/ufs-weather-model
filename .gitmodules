@@ -53,7 +53,7 @@
 [submodule "SCHISM"]
   path = SCHISM-interface/SCHISM
   url = https://github.com/oceanmodeling/schism
-  branch = feature/coastal_app
+  branch = hotfix/out_wave_forcing
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/oceanmodeling/schism-esmf
