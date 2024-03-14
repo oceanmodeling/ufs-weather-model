@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# WW3 coupled ike_shinnecock_ww3 configuration
+# WW3 coupled idealized_shinnecock_ww3 configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare ike_shinnecock_ww3 results with previous trunk version"
+export TEST_DESCR="Compare idealized_shinnecock_ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_ike_shinnecock_ww3
+export CNTL_DIR=coastal_idealized_shinnecock_ww3
 
 export LIST_FILES="20080905.000000.out_grd.ww3.nc \
                    20080906.000000.out_grd.ww3.nc \
@@ -54,7 +54,7 @@ if [[ " hera orion hercules gaea jet frontera " =~ " ${MACHINE_ID} " ]] ; then
 fi
 
 # wav
-export HURR="Ike"
+export HURR="Idealized"
 export CPL_CONF="ww3"
 export WAV_STANDALONE=.true.
 

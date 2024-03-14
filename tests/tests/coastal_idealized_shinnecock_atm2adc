@@ -1,19 +1,21 @@
 ###############################################################################
 #
-# WW3 coupled ike_shinnecock_atm2ww3 configuration
+# ADCIRC coupled idealized_shinnecock_atm2adc configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare ike_shinnecock_atm2ww3 results with previous trunk version"
+export TEST_DESCR="Compare idealized_shinnecock_atm2adc results with previous trunk version"
 
-export CNTL_DIR=coastal_ike_shinnecock_atm2ww3
+export CNTL_DIR=coastal_idealized_shinnecock_atm2adc
 
-export LIST_FILES="20080905.000000.out_grd.ww3.nc \
-                   20080906.000000.out_grd.ww3.nc \
-                   20080905.000000.restart.ww3 \
-                   20080906.000000.restart.ww3 \
+export LIST_FILES="fort.74.nc \
+                   fort.73.nc \
+                   fort.64.nc \
+                   fort.63.nc \
+                   fort.61.nc \
+                   ufs.cpld.cpl.hi.2008-09-04-43200.nc \
                    ufs.cpld.cpl.hi.2008-09-05-00000.nc \
-                   ufs.cpld.cpl.hi.2008-09-06-00000.nc"
+                   ufs.cpld.cpl.hi.2008-09-05-43200.nc"
 
 # deafult options
 export_coastal
@@ -22,7 +24,7 @@ export_coastal
 export SYEAR=2008
 export SMONTH=09
 export SDAY=04
-export SHOUR=12
+export SHOUR=00
 export FHMAX=36
 export FHROT=0
 # not used
@@ -71,29 +73,25 @@ export mapalgo=redist
 export dtlimit=1.5
 export STREAM_OFFSET=0
 
-# datm/wav
-export HURR="Ike"
-export CPL_CONF="atm2ww3"
+# datm/ocean
+export HURR="Idealized"
+export CPL_CONF="atm2adc"
 
 # pes
-export ATM_compute_tasks=12
-export WAV_tasks=12
+export ATM_compute_tasks=11
+export OCN_tasks=11
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export UFS_CONFIGURE=ufs.configure.coastal_datm_wav.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn.IN
 export med_model=cmeps
-export med_petlist_bounds="0 11"
-export med_omp_num_threads=1
 export atm_model=datm
-export atm_petlist_bounds="0 11"
-export atm_omp_num_threads=1
-export wav_model=ww3
-export wav_petlist_bounds="0 11"
-export wav_omp_num_threads=1
+export ocn_model=adcirc
 export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup
 export CPLMODE=coastal
+export meshloc=element
+
 # input files
-export FV3_RUN="coastal_datm_atmmesh.IN coastal_ww3_run.IN"
+export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"
