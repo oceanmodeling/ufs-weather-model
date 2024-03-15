@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# SCHISM coupled florence_hsofs_atm2sch2ww3 configuration
+# SCHISM coupled sandy_shinnecock_atm2sch2ww3 configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare florence_hsofs_atm2sch2ww3 results with previous trunk version"
+export TEST_DESCR="Compare sandy_shinnecock_atm2sch2ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_florence_hsofs_atm2sch2ww3
+export CNTL_DIR=coastal_sandy_shinnecock_atm2sch2ww3
 
 export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000000_2.nc \
@@ -14,18 +14,26 @@ export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000001_2.nc \
                    outputs/schout_000002_1.nc \
                    outputs/schout_000002_2.nc \
-                   outputs/schout_000003_1.nc \
-                   outputs/schout_000003_2.nc"
+                   20080824.000000.out_grd.ww3.nc \
+                   20080825.000000.out_grd.ww3.nc \
+                   20080826.000000.out_grd.ww3.nc \
+                   20080827.000000.out_grd.ww3.nc \
+                   20080828.000000.out_grd.ww3.nc \
+                   ufs.cpld.cpl.hi.2008-08-24-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-25-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-26-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-27-00000.nc \
+                   ufs.cpld.cpl.hi.2008-08-28-00000.nc"
 
 # deafult options
 export_coastal
 
 # model_configure
-export SYEAR=2018
-export SMONTH=09
-export SDAY=07
+export SYEAR=2008
+export SMONTH=08
+export SDAY=23
 export SHOUR=00
-export FHMAX=6
+export FHMAX=120
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -53,32 +61,34 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
-if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
+if [[ " hera orion hercules gaea jet frontera " =~ " ${MACHINE_ID} " ]] ; then
   ZSTANDARD_LEVEL=5
 fi
 
 # datm
 export DATM_CDEPS=true
+export DATM_STREAM_CONFIGURE=datm.streams.coastal.IN
 export atm_datamode="ATMMESH"
-export MESH_ATM="INPUT_DATM/Florence_CFS_ESMFmesh.nc"
-export ATM_NX_GLB=264
-export ATM_NY_GLB=201
+export MESH_ATM="wind_atm_fin_ch_time_vec_ESMFmesh.nc"
+export ATM_NX_GLB=101
+export ATM_NY_GLB=101
 export EXPORT_ALL=.true.
 export FILENAME_BASE='atmmesh.'
 export STREAM_VECTORS="null"
-export stream_files="\"INPUT_DATM/Florence_CFS.nc\""
-export stream_variables="\"U_GRD_L103 Sa_u10m\" \"V_GRD_L103 Sa_v10m\" \"PRES_L1 Sa_pslv\""
+export stream_files="\"INPUT/wind_atm_fin_ch_time_vec_STR_fixed.nc\""
+export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5
 export STREAM_OFFSET=0
 
 # datm/ocean
-export HURR="Florence"
-export CPL_CONF="atm2sch2ww3"
+export HURR="Sandy"
+export CPL_CONF="atm2sch2wav"
 
 # pes
-export ATM_compute_tasks=16
-export OCN_tasks=149
+export ATM_compute_tasks=8
+export OCN_tasks=8
+export WAV_tasks=64
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
@@ -86,6 +96,7 @@ export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
 export med_model=cmeps
 export atm_model=datm
 export ocn_model=schism
+export wav_model=ww3
 export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup

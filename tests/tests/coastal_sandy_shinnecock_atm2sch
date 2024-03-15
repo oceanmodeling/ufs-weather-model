@@ -14,14 +14,14 @@ export LIST_FILES="outputs/schout_000000_1.nc \
                    outputs/schout_000001_2.nc \
                    outputs/schout_000002_1.nc \
                    outputs/schout_000002_2.nc \
-                   ufs.cpld.cpl.hi.2012-10-24-00000.nc"
+                   ufs.cpld.cpl.hi.2008-08-24-00000.nc"
 
 # deafult options
 export_coastal
 
 # model_configure
-export SYEAR=2012
-export SMONTH=10
+export SYEAR=2008
+export SMONTH=08
 export SDAY=23
 export SHOUR=00
 export FHMAX=24
@@ -60,13 +60,13 @@ fi
 export DATM_CDEPS=true
 export DATM_STREAM_CONFIGURE=datm.streams.coastal.IN
 export atm_datamode="ATMMESH"
-export MESH_ATM="Wind_Pressure_HWRF_Sandy_Shinnecock_ESMFmesh.nc"
-export ATM_NX_GLB=200
-export ATM_NY_GLB=200
+export MESH_ATM="wind_atm_fin_ch_time_vec_ESMFmesh.nc"
+export ATM_NX_GLB=101
+export ATM_NY_GLB=101
 export EXPORT_ALL=.true.
 export FILENAME_BASE='atmmesh.'
 export STREAM_VECTORS="null"
-export stream_files="\"INPUT/Wind_Pressure_HWRF_Sandy_Shinnecock.nc\""
+export stream_files="\"INPUT/wind_atm_fin_ch_time_vec_STR_fixed.nc\""
 export stream_variables="\"uwnd Sa_u10m\" \"vwnd Sa_v10m\" \"P Sa_pslv\""
 export mapalgo=redist
 export dtlimit=1.5
