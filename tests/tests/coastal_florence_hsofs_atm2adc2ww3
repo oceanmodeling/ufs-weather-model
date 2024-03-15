@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# ADCIRC coupled florence_shinnecock_atm2adc configuration
+# ADCIRC coupled florence_hsofs_atm2adc2ww3 configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare florence_shinnecock_atm2adc results with previous trunk version"
+export TEST_DESCR="Compare florence_hsofs_atm2adc2ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_florence_hsofs_atm2adc
+export CNTL_DIR=coastal_florence_hsofs_atm2adc2ww3
 
 export LIST_FILES="fort.74.nc \
                    fort.73.nc \
@@ -74,7 +74,7 @@ export STREAM_OFFSET=0
 
 # datm/ocean
 export HURR="Florence"
-export CPL_CONF="atm2adc"
+export CPL_CONF="atm2adc2ww3"
 
 # pes
 export ATM_compute_tasks=16
@@ -82,7 +82,7 @@ export OCN_tasks=149
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
 export med_model=cmeps
 export atm_model=datm
 export ocn_model=adcirc
@@ -93,4 +93,4 @@ export CPLMODE=coastal
 export meshloc=element
 
 # input files
-export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"
+export FV3_RUN="coastal_datm_atmmesh.IN coastal_schism_run.IN coastal_ww3_run.IN"
