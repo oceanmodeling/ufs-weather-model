@@ -21,11 +21,12 @@ export LIST_FILES="outputs/schout_000000_1.nc \
 export_coastal
 
 # model_configure
-export SYEAR=2008
-export SMONTH=08
+export SYEAR=2012
+export SMONTH=10
 export SDAY=23
 export SHOUR=00
-export FHMAX=24
+export FHMAX=24  # One day for testing
+#export FHMAX=168 # Full simulation for the hurricane period
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -66,8 +67,6 @@ export OCN_tasks=4
 export MODEL_CONFIGURE=model_configure.IN
 export UFS_CONFIGURE=ufs.configure.coastal_ocn.IN
 export ocn_model=schism
-export ocn_petlist_bounds="0 3"
-export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
 
 # input files
