@@ -53,6 +53,9 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
+if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
+  ZSTANDARD_LEVEL=5
+fi
 
 # ocean
 export HURR="Idealized"
@@ -66,7 +69,6 @@ export OCN_tasks=4
 export MODEL_CONFIGURE=model_configure.IN
 export UFS_CONFIGURE=ufs.configure.coastal_ocn.IN
 export ocn_model=schism
-export ocn_petlist_bounds="0 3"
 export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
 

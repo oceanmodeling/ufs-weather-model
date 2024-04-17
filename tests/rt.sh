@@ -391,8 +391,8 @@ elif [[ $MACHINE_ID = hercules ]]; then
   ECFLOW_START=/work/noaa/epic/role-epic/spack-stack/hercules/ecflow-5.8.4/bin/ecflow_start.sh
   ECF_PORT=$(( $(id -u) + 1500 ))
 
-  QUEUE=windfall
-  COMPILE_QUEUE=windfall
+  QUEUE=batch
+  COMPILE_QUEUE=batch
   PARTITION=hercules
   dprefix=/work2/noaa/stmp/${USER}
   DISKNM=/work/noaa/epic/hercules/UFS-WM_RT
@@ -652,8 +652,8 @@ if [[ $ROCOTO == true ]]; then
     COMPILE_QUEUE=batch
     ROCOTO_SCHEDULER=slurm
   elif [[ $MACHINE_ID = hercules ]]; then
-    QUEUE=windfall
-    COMPILE_QUEUE=windfall
+    QUEUE=batch
+    COMPILE_QUEUE=batch
     ROCOTO_SCHEDULER=slurm
   elif [[ $MACHINE_ID = s4 ]]; then
     QUEUE=s4
@@ -744,7 +744,7 @@ EOF
   elif [[ $MACHINE_ID = orion ]]; then
     QUEUE=batch
   elif [[ $MACHINE_ID = hercules ]]; then
-    QUEUE=windfall
+    QUEUE=batch
   elif [[ $MACHINE_ID = jet ]]; then
     QUEUE=batch
   elif [[ $MACHINE_ID = s4 ]]; then
