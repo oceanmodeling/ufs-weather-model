@@ -79,18 +79,18 @@ export CPL_CONF="atm2ww3"
 export ATM_compute_tasks=12
 export WAV_tasks=12
 
+export WLCLK=60
+
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
 export UFS_CONFIGURE=ufs.configure.coastal_datm_wav.IN
 export med_model=cmeps
-export med_petlist_bounds="0 11"
 export med_omp_num_threads=1
 export atm_model=datm
-export atm_petlist_bounds="0 11"
 export atm_omp_num_threads=1
 export wav_model=ww3
-export wav_petlist_bounds="0 11"
 export wav_omp_num_threads=1
+export MESH_WAV="mesh.shinnecock.cdf5.nc"
 export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup

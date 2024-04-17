@@ -13,9 +13,9 @@ export LIST_FILES="fort.74.nc \
                    fort.64.nc \
                    fort.63.nc \
                    fort.61.nc \
-                   ufs.cpld.cpl.hi.2018-09-07-00000.nc \
-                   ufs.cpld.cpl.hi.2018-09-08-00000.nc \
-                   ufs.cpld.cpl.hi.2018-09-09-00000.nc"
+                   ufs.cpld.cpl.hi.2018-09-10-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-11-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-12-00000.nc"
 
 # deafult options
 export_coastal
@@ -59,8 +59,10 @@ fi
 
 # pes
 export ATM_compute_tasks=1
-export OCN_tasks=149
-export WAV_tasks=350
+export OCN_tasks=240
+export WAV_tasks=480
+
+export WLCLK=120
 
 # configuration
 export HURR="Florence"
@@ -68,17 +70,14 @@ export CPL_CONF="pam2adc2ww3"
 export MODEL_CONFIGURE=model_configure.IN
 export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
 export med_model=cmeps
-export med_petlist_bounds="0 499"
 export med_omp_num_threads=1
 export atm_model=pahm
-export atm_petlist_bounds="0 499"
 export atm_omp_num_threads=1
 export ocn_model=adcirc
-export ocn_petlist_bounds="0 499"
 export ocn_omp_num_threads=1
 export wav_model=ww3
-export wav_petlist_bounds="0 499"
 export wav_omp_num_threads=1
+export MESH_WAV="HSOFS_ESMFmesh.nc"
 export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup
