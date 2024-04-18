@@ -1,27 +1,31 @@
 ###############################################################################
 #
-# WW3 coupled ike_shinnecock_ww3 configuration
+# SCHISM standalone idealized_shinnecock_sch configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare ike_shinnecock_ww3 results with previous trunk version"
+export TEST_DESCR="Compare idealized_shinnecock_sch results with previous trunk version"
 
-export CNTL_DIR=coastal_ike_shinnecock_ww3
+export CNTL_DIR=coastal_idealized_shinnecock_sch
 
-export LIST_FILES="20080905.000000.out_grd.ww3.nc \
-                   20080906.000000.out_grd.ww3.nc \
-                   20080905.000000.restart.ww3 \
-                   20080906.000000.restart.ww3"
+export LIST_FILES="outputs/schout_000000_1.nc \
+                   outputs/schout_000000_2.nc \
+                   outputs/schout_000001_1.nc \
+                   outputs/schout_000001_2.nc \
+                   outputs/schout_000002_1.nc \
+                   outputs/schout_000002_2.nc \
+                   outputs/schout_000003_1.nc \
+                   outputs/schout_000003_2.nc"
 
 # deafult options
 export_coastal
 
 # model_configure
 export SYEAR=2008
-export SMONTH=09
-export SDAY=04
-export SHOUR=12
-export FHMAX=36
+export SMONTH=08
+export SDAY=23
+export SHOUR=00
+export FHMAX=24
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -49,25 +53,24 @@ export JMO=190
 export WRITE_NSFLIP=.false.
 export OUTPUT_FH="12 -1"
 export IAU_OFFSET=0
-if [[ " hera orion hercules gaea jet frontera " =~ " ${MACHINE_ID} " ]] ; then
+if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
   ZSTANDARD_LEVEL=5
 fi
 
-# wav
-export HURR="Ike"
-export CPL_CONF="ww3"
-export WAV_STANDALONE=.true.
+# ocean
+export HURR="Idealized"
+export CPL_CONF="sch"
 
 # pes
 export ATM_compute_tasks=0
-export WAV_tasks=12
+export OCN_tasks=4
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export UFS_CONFIGURE=ufs.configure.coastal_wav.IN
-export wav_model=ww3
-export wav_petlist_bounds="0 11"
-export wav_omp_num_threads=1
+export UFS_CONFIGURE=ufs.configure.coastal_ocn.IN
+export ocn_model=schism
+export ocn_omp_num_threads=1
 export coupling_interval_slow_sec=3600
+
 # input files
-export FV3_RUN="coastal_ww3_run.IN"
+export FV3_RUN="coastal_schism_run.IN"

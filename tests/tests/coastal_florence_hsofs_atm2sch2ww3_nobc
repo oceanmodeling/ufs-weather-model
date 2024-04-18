@@ -1,0 +1,20 @@
+###############################################################################
+#
+# SCHISM coupled florence_hsofs_atm2sch2ww3_nobc configuration
+#
+###############################################################################
+
+# Inherit the basic configuration from: coastal_florence_hsofs_atm2sch2ww3
+source tests/coastal_florence_hsofs_atm2sch2ww3
+
+
+export TEST_DESCR="Compare florence_hsofs_atm2sch2ww3_nobc results with previous trunk version"
+
+export CNTL_DIR=coastal_florence_hsofs_atm2sch2ww3_nobc
+
+
+# datm/ocean
+export CPL_CONF="atm2sch2ww3_nobc"
+
+# configuration
+export MESH_WAV="HSOFS_hgrid_nobc_ESMFmesh.nc"

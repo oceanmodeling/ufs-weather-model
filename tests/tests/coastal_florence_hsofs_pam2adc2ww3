@@ -1,21 +1,21 @@
 ###############################################################################
 #
-# ADCIRC coupled florence_shinnecock_atm2adc configuration
+# ADCIRC coupled florence_hsofs_pam2adc2ww3 configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare florence_shinnecock_atm2adc results with previous trunk version"
+export TEST_DESCR="Compare florence_hsofs_pam2adc2ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_florence_hsofs_atm2adc
+export CNTL_DIR=coastal_florence_hsofs_pam2adc2ww3
 
 export LIST_FILES="fort.74.nc \
                    fort.73.nc \
                    fort.64.nc \
                    fort.63.nc \
                    fort.61.nc \
-                   ufs.cpld.cpl.hi.2018-09-07-00000.nc \
-                   ufs.cpld.cpl.hi.2018-09-08-00000.nc \
-                   ufs.cpld.cpl.hi.2018-09-09-00000.nc"
+                   ufs.cpld.cpl.hi.2018-09-10-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-11-00000.nc \
+                   ufs.cpld.cpl.hi.2018-09-12-00000.nc"
 
 # deafult options
 export_coastal
@@ -57,35 +57,27 @@ if [[ " hera orion hercules gaea jet " =~ " ${MACHINE_ID} " ]] ; then
   ZSTANDARD_LEVEL=5
 fi
 
-# datm
-export DATM_CDEPS=true
-export atm_datamode="ATMMESH"
-export MESH_ATM="INPUT_DATM/Florence_CFS_ESMFmesh.nc"
-export ATM_NX_GLB=264
-export ATM_NY_GLB=201
-export EXPORT_ALL=.true.
-export FILENAME_BASE='atmmesh.'
-export STREAM_VECTORS="null"
-export stream_files="\"INPUT_DATM/Florence_CFS.nc\""
-export stream_variables="\"U_GRD_L103 Sa_u10m\" \"V_GRD_L103 Sa_v10m\" \"PRES_L1 Sa_pslv\""
-export mapalgo=redist
-export dtlimit=1.5
-export STREAM_OFFSET=0
-
-# datm/ocean
-export HURR="Florence"
-export CPL_CONF="atm2adc"
-
 # pes
-export ATM_compute_tasks=16
-export OCN_tasks=149
+export ATM_compute_tasks=1
+export OCN_tasks=240
+export WAV_tasks=480
+
+export WLCLK=120
 
 # configuration
+export HURR="Florence"
+export CPL_CONF="pam2adc2ww3"
 export MODEL_CONFIGURE=model_configure.IN
-export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
 export med_model=cmeps
-export atm_model=datm
+export med_omp_num_threads=1
+export atm_model=pahm
+export atm_omp_num_threads=1
 export ocn_model=adcirc
+export ocn_omp_num_threads=1
+export wav_model=ww3
+export wav_omp_num_threads=1
+export MESH_WAV="HSOFS_ESMFmesh.nc"
 export coupling_interval_slow_sec=3600
 export RESTART_N=12
 export RUNTYPE=startup
@@ -93,4 +85,4 @@ export CPLMODE=coastal
 export meshloc=element
 
 # input files
-export FV3_RUN="coastal_datm_atmmesh.IN coastal_adcirc_run.IN"
+export FV3_RUN="coastal_schism_run.IN coastal_pahm_run.IN coastal_ww3_run.IN"

@@ -21,7 +21,7 @@ WAV_attributes::
   DumpFields = false
   ProfileMemory = false
   merge_import = .false.
-  mesh_wav = mesh.shinnecock.cdf5.nc
+  mesh_wav = @[MESH_WAV]
   multigrid = false
   gridded_netcdfout = true
   diro = "."
