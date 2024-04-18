@@ -82,7 +82,7 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/SCHISM/cmake/modules")
 add_subdirectory(SCHISM/src)
 
-if(BUILD_TOOLS)
+if(BUILD_UTILS)
   add_subdirectory(SCHISM/src/Utility)
 endif()
 
