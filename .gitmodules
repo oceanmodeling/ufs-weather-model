@@ -5,7 +5,7 @@
 [submodule "WW3"]
   path = WW3
   url = https://github.com/oceanmodeling/WW3
-  branch = feature/coastalapp
+  branch = dev/ufs-coastal
 [submodule "stochastic_physics"]
   path = stochastic_physics
   url = https://github.com/NOAA-PSL/stochastic_physics
