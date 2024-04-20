@@ -283,7 +283,7 @@ fi
 if [[ ${DATM_CDEPS} = 'true' ]] || [[ ${S2S} = 'true' ]]; then
   if [[ ${HAFS} = 'false' ]] && [[ ${COASTAL} = 'false' ]] ; then
     atparse < "${PATHRT}"/parm/ice_in.IN > ice_in
-    atparse < "${PATHRT}"/parm/"${MOM6_INPUT:-MOM_input_$OCNRES.IN}" > INPUT/MOM_input
+    atparse < "${PATHRT}"/parm/"${MOM6_INPUT:-MOM_input_${OCNRES}.IN}" > INPUT/MOM_input
     atparse < "${PATHRT}"/parm/diag_table/"${DIAG_TABLE:-diag_table_template}" > diag_table
     atparse < "${PATHRT}"/parm/MOM6_data_table.IN > data_table
   fi
