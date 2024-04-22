@@ -990,8 +990,8 @@ case ${MACHINE_ID} in
     if [[ "${ECFLOW:-false}" == true ]] ; then
       ECFLOW_START=
     fi
-    QUEUE=flex
-    COMPILE_QUEUE=flex
+    QUEUE=development
+    COMPILE_QUEUE=development
     PARTITION=
     dprefix="${SCRATCH}/frontera"
     DISKNM="/work2/01118/tg803972/frontera/RT"

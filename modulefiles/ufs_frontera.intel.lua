@@ -23,6 +23,9 @@ load("ufs_common")
 stack_python_ver=os.getenv("stack_python_ver") or "3.9.12"
 load(pathJoin("stack-python", stack_python_ver))
 
+nccmp_ver=os.getenv("nccmp_ver") or "1.9.0.1"
+load(pathJoin("nccmp", nccmp_ver))
+
 setenv("CC", "mpiicc")
 setenv("CXX", "mpiicpc")
 setenv("FC", "mpiifort")
