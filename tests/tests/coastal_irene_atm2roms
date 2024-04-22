@@ -95,3 +95,4 @@ export CPLMODE=coastal
 export coupling_config=roms_cmeps_era5.yaml
 # input files
 export FV3_RUN="coastal_roms_run.IN"
+export CMP_DATAONLY=true
