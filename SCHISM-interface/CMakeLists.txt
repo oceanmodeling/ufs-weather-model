@@ -21,6 +21,7 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
 else()
   message(WARNING "Fortran compiler with ID ${CMAKE_Fortran_COMPILER_ID} will be used with CMake default options")
 endif()
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 ###############################################################################
 ### Add module directory
