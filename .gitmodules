@@ -53,7 +53,7 @@
 [submodule "SCHISM"]
   path = SCHISM-interface/SCHISM
   url = https://github.com/schism-dev/schism.git
-  branch = cmmb
+  branch = master
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/oceanmodeling/schism-esmf
