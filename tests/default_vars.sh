@@ -1450,6 +1450,8 @@ export_coastal ()
   export AQM=false
   export DATM_CDEPS=false
   export DOCN_CDEPS=false
+  export DICE_CDEPS=false
+  export CICE_PRESCRIBED=false
   
   export CPL=.false.
   export CPLCHM=.false.
