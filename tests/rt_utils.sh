@@ -6,6 +6,8 @@ if [[ "$0" = "${BASH_SOURCE[0]}" ]]; then
   exit 1
 fi
 
+ECFLOW_RUNNING=false
+
 # Note: this file must only contain subroutines, and variables that
 # are not dependent on the caller. Most regression test variables
 # (such as ACCNR) are not set until after rt.sh sources this file.
@@ -13,9 +15,7 @@ fi
 jobid=0
 
 function compute_petbounds_and_tasks() {
-  echo "rt_utils.sh: ${TEST_ID}: Computing PET bounds and tasks."
-  [[ -o xtrace ]] && set_x='set -x' || set_x='set +x'
-  set +x
+
   # each test MUST define ${COMPONENT}_tasks variable for all components it is using
   # and MUST NOT define those that it's not using or set the value to 0.
 
@@ -95,13 +95,10 @@ function compute_petbounds_and_tasks() {
 
   # TASKS is now set to UFS_TASKS
   export TASKS=${UFS_tasks}
-  eval "${set_x}"
 }
 
 interrupt_job() {
-  echo "rt_utils.sh: Job ${jobid} interupted"
-  set -x
-  #echo "run_util.sh: interrupt_job called | Job#: ${jobid}"
+  echo "rt_utils.sh: Job ${jobid} interrupted"
   case ${SCHEDULER} in
     pbs)
       qdel "${jobid}"
@@ -118,9 +115,6 @@ interrupt_job() {
 submit_and_wait() {
   echo "rt_utils.sh: Submitting job on scheduler: ${SCHEDULER}"
   [[ -z $1 ]] && exit 1
-
-  [[ -o xtrace ]] && set_x='set -x' || set_x='set +x'
-  set +x
 
   local -r job_card=$1
 
@@ -155,9 +149,9 @@ submit_and_wait() {
   do
     case ${SCHEDULER} in
       pbs)
-	set +e
+        set +e
         job_info=$( qstat "${jobid}" )
-	set -e
+        set -e
         ;;
       slurm)
         job_info=$( squeue -u "${USER}" -j "${jobid}" )
@@ -184,9 +178,9 @@ submit_and_wait() {
   do
     case ${SCHEDULER} in
       pbs)
-	set +e
+        set +e
         job_info=$( qstat "${jobid}" )
-	set -e
+        set -e
         ;;
       slurm)
         job_info=$( squeue -u "${USER}" -j "${jobid}" )
@@ -227,17 +221,16 @@ submit_and_wait() {
         echo "rt_utils.sh: *** WARNING ***: Job in a HELD state. Might want to stop manually."
         ;;
       #fail/completed cases
-      #pbs: E
       #slurm: F/FAILED TO/TIMEOUT CA/CANCELLED
-      E|F|TO|CA|FAILED|TIMEOUT|CANCELLED)
+      F|TO|CA|FAILED|TIMEOUT|CANCELLED)
         echo "rt_utils.sh: !!!!!!!!!!JOB TERMINATED!!!!!!!!!!"
         job_running=false #Trip the loop to end with these status flags
         interrupt_job
         exit 1
         ;;
       #completed
-      #pbs only: C
-      C)
+      #pbs only: C-Complete E-Exiting
+      C|E)
         status_label='Completed'
         ;;
       *)
@@ -252,14 +245,10 @@ submit_and_wait() {
     (( n=n+1 ))
     sleep 60 & wait $!
   done
-
-  eval "${set_x}"
 }
 
 check_results() {
   echo "rt_utils.sh: Checking results of the regression test: ${TEST_ID}"
-  [[ -o xtrace ]] && set_x='set -x' || set_x='set +x'
-  set +x
 
   ROCOTO=${ROCOTO:-false}
   ECFLOW=${ECFLOW:-false}
@@ -270,7 +259,7 @@ check_results() {
   #sleep 60
 
   {
-  echo                                                                      
+  echo
   echo "baseline dir = ${RTPWD}/${CNTL_DIR}_${RT_COMPILER}"
   echo "working dir  = ${RUNDIR}"
   echo "Checking test ${TEST_ID} results ...."
@@ -390,8 +379,6 @@ check_results() {
       exit 1
     fi
   fi
-
-  eval "${set_x}"
 }
 
 
@@ -410,7 +397,7 @@ kill_job() {
 
 rocoto_create_compile_task() {
   echo "rt_utils.sh: ${COMPILE_ID}: Creating ROCOTO compile task."
-  #new_compile=true
+  new_compile=true
   if [[ ${in_metatask} == true ]]; then
     in_metatask=false
     echo "  </metatask>" >> "${ROCOTO_XML}"
@@ -526,8 +513,7 @@ rocoto_kill() {
 }
 
 rocoto_step() {
-    echo "rt_utils.sh: Runnung one iteration of rocotorun and rocotostat..."
-    set -e
+    echo "rt_utils.sh: Running one iteration of rocotorun and rocotostat..."
     echo "Unknown" > rocoto_workflow.state
     # Run one iteration of rocotorun and rocotostat.
     ${ROCOTORUN} -v 10 -w "${ROCOTO_XML}" -d "${ROCOTO_DB}"
@@ -565,19 +551,15 @@ rocoto_run() {
           set -e
 
           if [[ "${state:-Unknown}" == Done ]] ; then
-              set +x
               echo "Rocoto workflow has completed."
-              set -x
               return 0
           elif [[ ${result} == 0 ]] ; then
               break # rocoto_step succeeded
           elif (( now_time-start_time > max_time || step_attempts >= max_step_attempts )) ; then
-              set +x
               hostnamein=$(hostname)
               echo "Rocoto commands have failed ${step_attempts} times, for $(( (now_time-start_time+30)/60 )) minutes."
               echo "There may be something wrong with the ${hostnamein} node or the batch system."
               echo "I'm giving up. Sorry."
-              set -x
               return 2
           fi
           sleep $(( naptime * 2**((step_attempts-1)%4) * RANDOM/32767 ))
@@ -590,7 +572,6 @@ rocoto_run() {
 ecflow_create_compile_task() {
   echo "rt_utils.sh: ${COMPILE_ID}: Creating ECFLOW compile task"
   export new_compile=true
-
 
   cat << EOF > "${ECFLOW_RUN}/${ECFLOW_SUITE}/compile_${COMPILE_ID}.ecf"
 %include <head.h>
@@ -624,7 +605,7 @@ EOF
   else
     echo "      trigger compile_${COMPILE_ID} == complete" >> "${ECFLOW_RUN}/${ECFLOW_SUITE}.def"
   fi
-  
+
 }
 
 ecflow_run() {
@@ -632,7 +613,7 @@ ecflow_run() {
   # NOTE: ECFLOW IS NOT SAFE TO RUN WITH set -e, PLEASE AVOID
   #ECF_HOST="${ECF_HOST:-${HOSTNAME}}"
 
-  
+
   # Make sure ECF_HOST and ECF_PORT are set/ready on systems that have an
   # explicit ecflow node
   if [[ ${MACHINE_ID} == wcoss2 || ${MACHINE_ID} == acorn ]]; then
@@ -659,51 +640,59 @@ ecflow_run() {
   fi
 
   # Start the ecflow_server
+  echo "rt_utils.sh: Checking status of the ecflow_server..."
   set +e
   ecflow_client --ping --host="${ECF_HOST}" --port="${ECF_PORT}"
   not_running=$?
   set -e
-  
+
   if [[ ${not_running} -eq 1 ]]; then
-    echo "ecflow_server is NOT running on ${ECF_HOST}:${ECF_PORT}"
-    
-    if [[ ${MACHINE_ID} == wcoss2 || ${MACHINE_ID} == acorn ]]; then
-      #shellcheck disable=SC2029
-      ssh "${ECF_HOST}" "bash -l -c \"module load ecflow && ${ECFLOW_START} -p ${ECF_PORT}\""
-    elif [[ ${MACHINE_ID} == hera || ${MACHINE_ID} == jet ]]; then
-      #shellcheck disable=SC2029
-      ssh "${ECF_HOST}" "bash -l -c \"module load ecflow && ${ECFLOW_START} -d ${RUNDIR_ROOT}/ecflow_server\""
-    else
-      ${ECFLOW_START} -p "${ECF_PORT}" -d "${RUNDIR_ROOT}/ecflow_server"
-    fi
-    echo "Since this script is starting the ecflow_server, we will stop it at the end"
-    export STOP_ECFLOW_AT_END=true
+    echo "rt_utils.sh: ecflow_server is not running on ${ECF_HOST}:${ECF_PORT}"
+    echo "rt_utils.sh: attempting to start ecflow_server..."
+
+    save_traps=$(trap)
+    trap "" SIGINT  # Ignore INT signal during ecflow startup
+    case ${MACHINE_ID} in
+      wcoss2|acorn|hera|jet)
+        #shellcheck disable=SC2029
+        ssh "${ECF_HOST}" "bash -l -c \"module load ecflow && ${ECFLOW_START} -p ${ECF_PORT}\""
+        ;;
+      *)
+        ${ECFLOW_START} -p "${ECF_PORT}" -d "${RUNDIR_ROOT}/ecflow_server"
+        ;;
+    esac
+
+    ECFLOW_RUNNING=true
+    eval "${save_traps}"
     # Try pinging ecflow server now, and erroring out if not there.
     set +e
     ecflow_client --ping --host="${ECF_HOST}" --port="${ECF_PORT}"
     not_running=$?
     set -e
-    
+
     if [[ ${not_running} -eq 1 ]]; then
-      echo "ERROR: Failure to start ecflow, exiting..."
+      echo "rt_utils.sh: ERROR -- Failure to start ecflow. Exiting..."
       exit 1
     fi
   else
-    echo "ecflow_server is already running on ${ECF_HOST}:${ECF_PORT}"
+    echo "rt_utils.sh: Confirmed: ecflow_server is running on ${ECF_HOST}:${ECF_PORT}"
+    ECFLOW_RUNNING=true
   fi
-  
-  ECFLOW_RUNNING=true
+
+  echo "rt_utils.sh: Starting ECFLOW tasks..."
   set +e
   ecflow_client --load="${ECFLOW_RUN}/${ECFLOW_SUITE}.def" --host="${ECF_HOST}" --port="${ECF_PORT}"
   ecflow_client --begin="${ECFLOW_SUITE}" --host="${ECF_HOST}" --port="${ECF_PORT}"
   ecflow_client --restart --host="${ECF_HOST}" --port="${ECF_PORT}"
   set -e
+  sleep 10
 
   active_tasks=1
-  sleep 10
   max_active_tasks=$( ecflow_client --get_state "/${ECFLOW_SUITE}" )
   max_active_tasks=$( grep "task " <<< "${max_active_tasks}" )
   max_active_tasks=$( grep -cP 'state:active|state:submitted|state:queued' <<< "${max_active_tasks}" )
+  echo "rt_utils.sh: Total number of tasks processed -- ${max_active_tasks}"
+  prev_active_tasks=${active_tasks}
   while [[ "${active_tasks}" -ne 0 ]]
   do
     sleep 10 & wait $!
@@ -712,11 +701,18 @@ ecflow_run() {
     active_tasks=$( grep "task " <<< "${active_tasks}" )
     active_tasks=$( grep -cP 'state:active|state:submitted|state:queued' <<< "${active_tasks}" )
     set -e
-    echo "ECFLOW Tasks Remaining: ${active_tasks}/${max_active_tasks}"
+    if [[ ${active_tasks} -ne ${prev_active_tasks} ]]; then
+      echo
+      echo -n "ECFLOW Tasks Remaining: ${active_tasks}/${max_active_tasks} "
+      prev_active_tasks=${active_tasks}
+    else
+      echo -n "."
+    fi
     "${PATHRT}/abort_dep_tasks.py"
   done
 
   sleep 65 # wait one ECF_INTERVAL plus 5 seconds
+  echo "rt_utils.sh: ECFLOW tasks completed, cleaning up suite"
   set +e
   ecflow_client --delete=force yes "/${ECFLOW_SUITE}"
   set -e
@@ -724,39 +720,30 @@ ecflow_run() {
 }
 
 ecflow_kill() {
-  echo "rt_utils.sh: Killing ECFLOW Workflow..."
-   [[ ${ECFLOW_RUNNING:-false} == true ]] || return
-   set +e
-   ecflow_client --suspend "/${ECFLOW_SUITE}"
-   ecflow_client --kill "/${ECFLOW_SUITE}"
-   sleep 20
-   ecflow_client --delete=force yes "/${ECFLOW_SUITE}"
-   set -e
+  [[ ${ECFLOW_RUNNING:-false} == true ]] || return
+  echo "rt_utils.sh: Deleting ECFLOW suite: ${ECFLOW_SUITE}"
+  set +e
+  ecflow_client --suspend "/${ECFLOW_SUITE}"
+  ecflow_client --kill "/${ECFLOW_SUITE}"
+  sleep 20
+  ecflow_client --delete=force yes "/${ECFLOW_SUITE}"
+  set -e
 }
 
 ecflow_stop() {
-  echo "rt_utils.sh: Stopping ECFLOW Workflow..."
   [[ ${ECFLOW_RUNNING:-false} == true ]] || return
+  echo "rt_utils.sh: Checking whether to stop ecflow_server..."
   set +e
   SUITES=$( ecflow_client --get )
   SUITES=$( grep "^suite" <<< "${SUITES}" )
-  echo "SUITES=${SUITES}"
   if [[ -z "${SUITES}" ]]; then
+    echo "rt_utils.sh: No other suites running, stopping ecflow_server"
     ecflow_client --halt=yes
     ecflow_client --check_pt
     ecflow_client --terminate=yes
-  fi
-  if [[ ${STOP_ECFLOW_AT_END} == true ]]; then
-    echo "rt_utils.sh: Stopping ECFLOW Server..."
-    case ${MACHINE_ID} in
-      wcoss2|acorn|hera|jet)
-        #shellcheck disable=SC2029
-        ssh "${ECF_HOST}" "bash -l -c \"${ECFLOW_STOP} -p ${ECF_PORT}\""
-        ;;
-      *)
-        ${ECFLOW_STOP} -p "${ECF_PORT}"
-        ;;
-    esac
+  else
+    echo "rt_utils.sh: Active suites running, NOT stopping ecflow_server..."
+    echo "SUITES are: ${SUITES}"
   fi
   set -e
 }
