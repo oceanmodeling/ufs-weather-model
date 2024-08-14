@@ -4,8 +4,8 @@
   branch = develop
 [submodule "WW3"]
   path = WW3
-  url = https://github.com/oceanmodeling/WW3
-  branch = dev/ufs-coastal
+  url = https://github.com/DeniseWorthen/WW3
+  branch = feature/addflds4schism
 [submodule "stochastic_physics"]
   path = stochastic_physics
   url = https://github.com/NOAA-PSL/stochastic_physics
@@ -17,7 +17,8 @@
 [submodule "CMEPS"]
   path = CMEPS-interface/CMEPS
   url = https://github.com/oceanmodeling/CMEPS
-  branch = feature/coastalapp
+  #branch = feature/coastalapp
+  branch = feature/schism_3d
 [submodule "HYCOM"]
   path = HYCOM-interface/HYCOM
   url = https://github.com/NOAA-EMC/HYCOM-src
@@ -53,11 +54,13 @@
 [submodule "SCHISM"]
   path = SCHISM-interface/SCHISM
   url = https://github.com/oceanmodeling/schism
-  branch = master
+  #branch = master
+  branch = feature/schism_3d
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/oceanmodeling/schism-esmf
-  branch = master
+  #branch = master
+  branch = feature/schism_3d
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
   url = https://github.com/oceanmodeling/FVCOM
