@@ -49,6 +49,7 @@ case $(hostname -f) in
   login[1-4].stampede2.tacc.utexas.edu) MACHINE_ID=stampede ;; ### stampede1-4
 
   login[1-4].frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera1-4
+  c*.frontera.tacc.utexas.edu) MACHINE_ID=frontera ;; ### frontera compute 
 
   login0[1-2].expanse.sdsc.edu) MACHINE_ID=expanse ;; ### expanse1-2
 
@@ -86,7 +87,8 @@ elif [[ -d /scratch1 ]]; then
   MACHINE_ID=hera
 elif [[ -d /work ]]; then
   # We are on MSU Orion or Hercules
-  if [[ -d /apps/other ]]; then
+  mount=$(findmnt -n -o SOURCE /home)   
+  if [[ ${mount} =~ "hercules" ]]; then
     # We are on Hercules
     MACHINE_ID=hercules
   else
