@@ -1,0 +1,113 @@
+matchedNode = []
+generateBaselineNode = []
+for (label in pullRequest.labels) {
+   listOfLabelNodeNames = jenkins.model.Jenkins.instance.nodes.collect {
+   node -> node.getLabelString().contains(label) ? node.name : null
+
+   if ((label.matches(node.getLabelString()+"-(.*)"))) {
+     matchedNode += node.getLabelString()
+   }
+
+   if ((label.matches(node.getLabelString()+"(.*)-BL"))) {
+     generateBaselineNode += node.getLabelString() 
+   }
+ }
+}
+
+modifiedLabels = matchedNode.collect{"'" + it + "'"} 
+baselineLabels = generateBaselineNode.collect{"'" + it + "'"} 
+def generateStage(nodeLabel) {
+    return {
+        stage("Running on ${nodeLabel}") {
+            node(nodeLabel) {
+               cleanWs()
+               checkout scm
+               script {
+                 try {
+                    echo "Running on ${nodeLabel}"
+                    if (baselineLabels.contains(nodeLabel)) {
+                       sh '''
+                       git submodule update --init --recursive
+                       cd tests
+		       pwd
+		       export BL_DATE=$(cat bl_date.conf | cut -d '=' -f2)
+                       export machine=${NODE_NAME}
+                       export PATH=$PATH:~/bin
+                       echo $CHANGE_ID
+                       export SSH_ORIGIN=$(curl --silent https://api.github.com/repos/ufs-community/ufs-weather-model/pulls/$CHANGE_ID | jq -r '.head.repo.ssh_url')
+                       export FORK_BRANCH=$(curl --silent https://api.github.com/repos/ufs-community/ufs-weather-model/pulls/$CHANGE_ID | jq -r '.head.ref')
+                         
+                          if [[ $machine =~ "Hercules" ]]
+                            echo "Running on $machine"
+                          then
+                          else
+                            echo "Invalid $machine"
+                          fi
+                    }
+                        
+                  }
+                  catch(err) {
+                  }
+                }
+              }
+           }
+       }
+}
+
+def parallelStagesMap = modifiedLabels.collectEntries {
+    ["${it}" : generateStage(it)]
+}
+
+pipeline {
+    agent none
+    environment {
+        ACCNR = 'epic'
+        AWS_PROD_ACCOUNT_ID = credentials('AWS_PROD_ACCOUNT_ID')
+        AWS_PROD_SNS_TOPIC = credentials('AWS_PROD_SNS_TOPIC')
+        GITHUB_TOKEN = credentials('GithubJenkinsNew')
+        GIT_URL = 'https://github.com/ufs-community/ufs-weather-model.git'
+    }
+    stages {
+        stage('Launch SonarQube') {
+            steps {
+                script {
+                    echo "BRANCH_NAME=${env.CHANGE_BRANCH}"
+                    echo "FORK_NAME=${env.CHANGE_FORK}"
+                    echo "CHANGE_URL=${env.CHANGE_URL}"
+                    echo "CHANGE_ID=${env.CHANGE_ID}"
+                    build job: '/ufs-weather-model/ufs-wm-sonarqube', parameters: [
+                        string(name: 'BRANCH_NAME', value: env.CHANGE_BRANCH ?: 'develop'),
+                        string(name: 'FORK_NAME', value: env.CHANGE_FORK ?: ''),
+                        string(name: 'CHANGE_URL', value: env.CHANGE_URL ?: ''),
+                        string(name: 'CHANGE_ID', value: env.CHANGE_ID ?: '')
+                    ], wait: false
+                }
+            }
+        }
+        stage('Run Regression Tests in Parallel') {
+            steps {
+                script {
+                    parallel parallelStagesMap
+                }
+            }
+        }       
+    }   
+        post {
+         success {
+             node('built-in') {
+                echo 'This will run only if successful.'
+                sh '''
+                  aws sns publish --topic-arn "arn:aws:sns:us-east-1:${AWS_PROD_ACCOUNT_ID}:${AWS_PROD_SNS_TOPIC}" --region us-east-1 --message '{"version":"1.0","source":"custom","content":{"description":":sunny: Jenkins build *'"$JOB_NAME"' '"$BUILD_NUMBER"'* with *PR-'"$CHANGE_ID"'*  *succeeded*"}}'
+               '''
+             }
+         }
+         failure {
+             node('built-in') {
+                echo 'This will run only if the run was marked as unstable.'
+                sh '''
+                  aws sns publish --topic-arn "arn:aws:sns:us-east-1:${AWS_PROD_ACCOUNT_ID}:${AWS_PROD_SNS_TOPIC}" --region us-east-1 --message '{"version":"1.0","source":"custom","content":{"description":":warning: Jenkins build *'"$JOB_NAME"' '"$BUILD_NUMBER"'* with *PR-'"$CHANGE_ID"'*  *failed!*"}}'
+               '''
+             }
+         }
+     } 
+}
