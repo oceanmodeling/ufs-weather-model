@@ -8,14 +8,17 @@ export TEST_DESCR="Compare coastal_sandy_duck_atm2sch results with previous trun
 
 export CNTL_DIR=coastal_sandy_duck_atm2sch
 
-export LIST_FILES="outputs/schout_000000_1.nc \
-                   outputs/schout_000000_2.nc \
-                   outputs/schout_000001_1.nc \
-                   outputs/schout_000001_2.nc \
-                   outputs/schout_000002_1.nc \
-                   outputs/schout_000002_2.nc"
-# \
-#                   ufs.cpld.cpl.hi.2008-08-24-00000.nc"
+lst=""
+for n in `seq -f "%06g" 0 159`
+do
+  if [ $n == 0 ]; then
+    lst="outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
+  else
+    lst="$lst outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
+  fi
+done
+
+export LIST_FILES="${lst} ufs.cpld.cpl.hi.2012-10-27-21600.nc"
 
 # default options
 export_coastal
