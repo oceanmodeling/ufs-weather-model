@@ -1050,6 +1050,12 @@ else
 fi
 
 if [[ "${CREATE_BASELINE}" == false ]] ; then
+  echo ""
+  echo "line 1053"
+  echo "RTPWD = ${RTPWD}"
+  echo "find ${RTPWD}/ -type d -prune -empty"
+  echo find ${RTPWD}/ -type d -prune -empty
+  echo ""
   EMPTY_CHECK=$(find "${RTPWD}/" -type d -prune -empty)
   if [[ ! -d "${RTPWD}" ]] ; then
     echo "Baseline directory does not exist:"
