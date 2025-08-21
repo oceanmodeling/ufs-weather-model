@@ -58,7 +58,7 @@ WAV_attributes::
   Verbosity = 0
   DumpFields = false
   ProfileMemory = false
-  mesh_wav = mesh.shinnecock.cdf5.nc
+  mesh_wav = @[wav_mesh] 
   multigrid = false
   user_histname = 'false'
   use_historync = 'true'

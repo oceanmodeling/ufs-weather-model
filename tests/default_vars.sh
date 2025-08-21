@@ -1742,6 +1742,7 @@ export_hafs_docn_cdeps ()
   export CMEPS_PIO_ROOT=-99
   export DOCN_IN_CONFIGURE=docn_in.IN
   export DOCN_STREAM_CONFIGURE=hafs_docn.streams.IN
+  export EXPORT_ALL=.false.
 }
 
 export_hafs_regional ()
