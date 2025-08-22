@@ -6,17 +6,7 @@
 
 export TEST_DESCR="Compare coastal_sandy_duck_atm2ocn2ww3 results with previous trunk version"
 
-export CNTL_DIR=coastal_sandy_duck_atm2sch
-
-#lst=""
-#for n in `seq -f "%06g" 0 159`
-#do
-#  if [ $n == 0 ]; then
-#    lst="outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
-#  else
-#    lst="$lst outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
-#  fi
-#done
+export CNTL_DIR=coastal_sandy_duck_atm2ocn2ww3
 
 export LIST_FILES="20121027.010000.out_grd.ww3.nc \
                    20121027.060000.out_grd.ww3.nc \
