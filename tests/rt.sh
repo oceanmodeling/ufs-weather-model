@@ -6,7 +6,7 @@ SECONDS=0
 
 hostname
 
-die() { echo "$@" >&2; exit 1; }
+die() { echo "$@" >&2; echo "exit 1"; exit 1; }
 
 usage() {
   set +x #No reason to print out a bunch of echo statements here
@@ -146,6 +146,7 @@ update_rtconf() {
 
   if [[ ! -s ${RT_TEMP_CONF} ]]; then
     echo "The tests listed/chosen do not exist or cannot be run on ${MACHINE_ID}"
+    echo "exit 1"
     exit 1
   else
     TESTS_FILE=${RT_TEMP_CONF}
@@ -538,6 +539,7 @@ cleanup() {
   [[ ${ECFLOW:-false} == true ]] && ecflow_stop
   trap 0
   echo "rt.sh: Exiting."
+  echo "exit 0"
   exit
 }
 
@@ -545,7 +547,7 @@ trap '{ echo "rt.sh interrupted"; rt_trap ; }' INT
 trap '{ echo "rt.sh quit"; rt_trap ; }' QUIT
 trap '{ echo "rt.sh terminated"; rt_trap ; }' TERM
 trap '{ handle_error $? $LINENO ; }' ERR
-trap '{ echo "rt.sh finished"; cleanup ; }' EXIT
+trap '{ echo "rt.sh finished"; cleanup ; echo "exit 0" ; }' EXIT
 
 
 # PATHRT - Path to regression tests directory
@@ -564,6 +566,7 @@ if mkdir "${LOCKDIR}" ; then
   echo "${HOSTNAME_IN}" $$ > "${LOCKDIR}/PID"
 else
   echo "Only one instance of rt.sh can be running at a time"
+  echo "exit 1"
   exit 1
 fi
 
@@ -683,6 +686,7 @@ fi
 
 if [[ -z "${ACCNR}" ]]; then
   echo "Please use -a <account> to set group account to use on HPC"
+  echo "exit 1"
   exit 1
 fi
 
@@ -884,6 +888,7 @@ case ${MACHINE_ID} in
     echo "=======Running on ${CurJetOS}======="
     if [[ ${CurJetOS} == "CentOS" ]]; then
     echo "=======Please, move to Rocky8 node fe[5-8]======="
+    echo "exit 1"
     exit 1
     fi
 
@@ -1054,10 +1059,12 @@ if [[ "${CREATE_BASELINE}" == false ]] ; then
   if [[ ! -d "${RTPWD}" ]] ; then
     echo "Baseline directory does not exist:"
     echo "   ${RTPWD}"
+    echo "exit 1"
     exit 1
   elif [[ -n ${EMPTY_CHECK} ]] ; then
     echo "Baseline directory is empty:"
     echo "   ${RTPWD}"
+    echo "exit 1"
     exit 1
   fi
 fi
@@ -1230,6 +1237,7 @@ while read -r line || [[ -n "${line}" ]]; do
     set +u
     if [[ -n ${compiles[${COMPILE_ID}]} ]] ; then
         echo "Error! Duplicated compilation ${COMPILE_NAME} for compiler ${RT_COMPILER}!"
+        echo "exit 1"
         exit 1
     fi
     set -u
