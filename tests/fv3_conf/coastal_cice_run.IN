@@ -1,0 +1,13 @@
+if [ ! -d "INPUT" ]; then
+  mkdir INPUT 
+fi
+if [ ! -d "OUTPUT" ]; then
+  mkdir OUTPUT
+fi
+if [ ! -d "RESTART" ]; then
+  mkdir RESTART
+fi
+
+cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Grid INPUT/.
+cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Boundary INPUT/.
+cp @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/ice_in .

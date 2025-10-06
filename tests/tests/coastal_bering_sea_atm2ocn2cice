@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# WW3 coupled coastal_sandy_duck_atm2ocn2ww3 configuration
+# CICE coupled coastal_bering_sea_atm2ocn2cice configuration
 #
 ###############################################################################
 
-export TEST_DESCR="Compare coastal_sandy_duck_atm2ocn2ww3 results with previous trunk version"
+export TEST_DESCR="Compare coastal_bering_sea_atm2ocn2cice results with previous trunk version"
 
-export CNTL_DIR=coastal_sandy_duck_atm2ocn2ww3
+export CNTL_DIR=coastal_bering_sea_atm2ocn2cice
 
 export LIST_FILES="20121027.010000.out_grd.ww3.nc \
                    20121027.060000.out_grd.ww3.nc \
@@ -20,9 +20,9 @@ export LIST_FILES="20121027.010000.out_grd.ww3.nc \
 export_coastal
 
 # model_configure
-export SYEAR=2012
-export SMONTH=10
-export SDAY=27
+export SYEAR=2018
+export SMONTH=12
+export SDAY=01
 export SHOUR=00
 export FHMAX=6
 export FHROT=0
@@ -58,59 +58,66 @@ fi
 
 # datm
 export DATM_CDEPS=true
-export DATM_STREAM_CONFIGURE=datm.streams.coastal.IN
-export atm_datamode="ATMMESH"
-export MESH_ATM="era5_data_19941012_19941014_rot_fix_SCRIP_ESMF.nc"
-export ATM_NX_GLB=1440
-export ATM_NY_GLB=721
+export DATM_STREAM_CONFIGURE=datm.streams.coastal.multi.IN
+export atm_datamode="ERA5"
+export MESH_ATM="ERA5_BerSea_ESMFmesh.nc"
+export ATM_NX_GLB=203
+export ATM_NY_GLB=75
 export EXPORT_ALL=.true.
-export FILENAME_BASE='atmmesh.'
+export FILENAME_BASE='era5.'
 export STREAM_VECTORS="null"
-export stream_files="\"INPUT/era5_data_30min_obs_wind_rot_fix_filled.nc\""
-export stream_variables="\"u10 Sa_u10m\" \"v10 Sa_v10m\" \"msl Sa_pslv\""
+export mapalgo01=redist
+export tinterpalgo01=linear
+export STREAM_OFFSET01=-300
+export stream_files01="\"INPUT/ERA5_forcing_2018_2019.nc\""
+export stream_variables01="\"Tair Sa_tbot\" \"Pair Sa_pbot\" \"Qair Sa_shum\" \"Uwind Sa_u\" \"Vwind Sa_v\" \"rain Faxa_rain\" \"lwrad_down Faxa_lwdn\""
+export mapalgo02=redist
+export tinterpalgo02=coszen
+export STREAM_OFFSET02=-1200
+export stream_files02="\"INPUT/ERA5_forcing_2018_2019.nc\""
+export stream_variables02="\"swrad Faxa_swvdr\""
 export mapalgo=redist
 export dtlimit=1.5
-export STREAM_OFFSET=0
 
 # docn
 export DOCN_CDEPS=true
 export DOCN_STREAM_CONFIGURE=docn.streams.coastal.IN
 export ocn_datamode="sstdata"
-export MESH_OCN="era5_data_19941012_19941014_rot_fix_SCRIP_ESMF.nc"
-export ocn_nx_global=1440
-export ocn_ny_global=721
+export MESH_OCN="mesh.cice.4km.nc"
+export ocn_nx_global=730
+export ocn_ny_global=478
 export EXPORT_ALL=.true.
-export FILENAME_BASE='era5.'
+export FILENAME_BASE='sst.'
 export STREAM_VECTORS="null"
-export taxmode=limit
-export stream_files="\"INPUT/wlv_clean.nc\""
-export stream_variables="\"So_h So_h\""
+export taxmode=cycle
+export stream_files="\"INPUT/ROMS_2018_2019.nc\""
+export stream_variables="\"qdp Fioo_q\" \"U So_u\" \"V So_v\" \"S So_s\" \"T So_t\" \"dhdy So_dhdy\" \"dhdx So_dhdx\" \"hblt So_h\""
 export mapalgo=redist
-export dtlimit=1.5
-export STREAM_OFFSET=0
+export dtlimit=2.0
+export STREAM_OFFSET=-1200
 
-# datm/ocean
-export HURR="Sandy"
-export CPL_CONF="atm2ocn2ww3"
+# datm/docn
+export HURR="Bering"
+export CPL_CONF="atm2ocn2cice"
 
 # pes
 export ATM_compute_tasks=18
 export OCN_tasks=18
-export WAV_tasks=128
+export ICE_tasks=230
 
 # configuration
 export MODEL_CONFIGURE=model_configure.IN
-export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_wav.IN
+export UFS_CONFIGURE=ufs.configure.coastal_datm_ocn_cice.IN
 export med_model=cmeps
 export atm_model=datm
 export ocn_model=docn
-export wav_model=ww3
-export wav_mesh=duck_ESMFmesh.nc
-export coupling_interval_slow_sec=1800
+export ice_model=cice6
+export mesh_ice=INPUT/Grid/ESMF_MESH/mesh.cice.4km.nc
+export coupling_interval_slow_sec=1200
 export RESTART_N=6
 export RUNTYPE=startup
 export CPLMODE=coastal
 export meshloc=element
 
 # input files
-export FV3_RUN="coastal_datm.IN coastal_docn.IN coastal_ww3_run.IN"
+export FV3_RUN="coastal_datm.IN coastal_docn.IN coastal_cice_run.IN"
