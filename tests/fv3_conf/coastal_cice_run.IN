@@ -7,6 +7,9 @@ fi
 if [ ! -d "RESTART" ]; then
   mkdir RESTART
 fi
+if [ ! -d "history" ]; then
+  mkdir history
+fi
 
 cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Grid INPUT/.
 cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Boundary INPUT/.
