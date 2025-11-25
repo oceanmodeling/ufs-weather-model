@@ -26,6 +26,20 @@ done
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/ww3_* .
 cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/mod_def.* .
 
+# Copy nest.ww3 if it exists
+for IFILE in @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.ww3; do
+  if [ -f "$IFILE" ]; then
+    cp $IFILE .
+  fi
+done
+
+# Copy namelists.nml if it exists
+for IFILE in @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/namelists.nml; do
+  if [ -f "$IFILE" ]; then
+    cp $IFILE .
+  fi
+done
+
 if [[ $CPL_CONF == 'ww3' ]]; then
   cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/nest.inlet .
   cp @[INPUTDATA_ROOT]/WW3/$HURR/$CPL_CONF/wind.inlet .
