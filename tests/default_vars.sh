@@ -2192,6 +2192,7 @@ export_coastal ()
   export DOCN_CDEPS=false
   export DICE_CDEPS=false
   export CICE_PRESCRIBED=false
+  export USE_FV3_ROUTEHANDLES=.false.
   
   export CPL=.false.
   export CPLCHM=.false.
