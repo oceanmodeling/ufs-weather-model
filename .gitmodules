@@ -29,7 +29,7 @@
 [submodule "CICE"]
   path = CICE-interface/CICE
   url = https://github.com/oceanmodeling/CICE
-  branch = feature/coastalapp
+  branch = feature/coastal_app
 [submodule "CDEPS"]
   path = CDEPS-interface/CDEPS
   url = https://github.com/oceanmodeling/CDEPS
