@@ -55,5 +55,5 @@ endif()
 # This must be last, to override all other optimization settings.
 if(DISABLE_FMA)
   set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -no-fma")
-  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -no-fma")
+  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -no-fma")
 endif()
