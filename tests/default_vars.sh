@@ -2188,6 +2188,7 @@ export_hafs_regional ()
 export_coastal ()
 {
   export FV3=false
+  export MPAS=false
   export S2S=false
   export HAFS=false
   export COASTAL=true
