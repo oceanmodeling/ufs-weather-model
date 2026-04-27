@@ -65,8 +65,7 @@
 [submodule "SCHISM-ESMF"]
   path = SCHISM-interface/SCHISM-ESMF
   url = https://github.com/oceanmodeling/schism-esmf
-  #branch = feature/coastal_app
-  branch = feature/decomp
+  branch = master 
 [submodule "FVCOM"]
   path = FVCOM-interface/FVCOM
   url = https://github.com/oceanmodeling/FVCOM
