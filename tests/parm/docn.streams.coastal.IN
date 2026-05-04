@@ -1,5 +1,5 @@
 stream_info:               @[FILENAME_BASE]01
-taxmode01:                 limit
+taxmode01:                 @[taxmode] 
 mapalgo01:                 @[mapalgo]
 tInterpAlgo01:             linear
 readMode01:                single

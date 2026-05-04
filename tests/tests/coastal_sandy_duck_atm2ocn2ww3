@@ -82,6 +82,7 @@ export ocn_ny_global=721
 export EXPORT_ALL=.true.
 export FILENAME_BASE='era5.'
 export STREAM_VECTORS="null"
+export taxmode=limit
 export stream_files="\"INPUT/wlv_clean.nc\""
 export stream_variables="\"So_h So_h\""
 export mapalgo=redist
@@ -112,4 +113,4 @@ export CPLMODE=coastal
 export meshloc=element
 
 # input files
-export FV3_RUN="coastal_datm_atmmesh.IN coastal_docn.IN coastal_ww3_run.IN"
+export FV3_RUN="coastal_datm.IN coastal_docn.IN coastal_ww3_run.IN"
