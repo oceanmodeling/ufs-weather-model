@@ -114,7 +114,7 @@ pipeline {
         AWS_PROD_SNS_TOPIC = credentials('AWS_PROD_SNS_TOPIC')
         GITHUB_TOKEN = credentials('GithubJenkinsNew')
         GIT_URL = 'https://github.com/oceanmodeling/ufs-weather-model.git'
-    } environment
+    } // environment
     stages {
         stage('Run Regression Tests in Parallel') {
             steps {
