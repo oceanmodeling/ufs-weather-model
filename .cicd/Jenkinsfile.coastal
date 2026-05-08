@@ -84,7 +84,6 @@ def generateStage(nodeLabel) {
 
                           cd ${WORKSPACE}/tests && tar --create --gzip --verbose --dereference --file "${ufs_machine}.tgz" ${WORKSPACE}/tests/logs/*.log
                
-
                           RESULTS=`grep 'Result:' logs/RegressionTests_$ufs_machine.log | awk '{print $2}'` 
                              if [[ $RESULTS == "FAILURE" ]] ; then
                                 echo "Regression tests failed on ${NODE_NAME}!"
