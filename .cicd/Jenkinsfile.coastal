@@ -30,6 +30,7 @@ def generateStage(nodeLabel) {
                           GIT_REPO_NAME=$(echo $GIT_URL | cut -d '/' -f5 | cut -d '.' -f1) 
                           
                           echo $CHANGE_ID
+                          export CHANGE_FORK=arbetter
 
                           export ufs_machine=hercules
                           pwd
