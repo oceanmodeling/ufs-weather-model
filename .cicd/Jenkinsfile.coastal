@@ -1,13 +1,15 @@
 matchedNode = []
+
 for (label in pullRequest.labels) {
    listOfLabelNodeNames = jenkins.model.Jenkins.instance.nodes.collect {
    node -> node.getLabelString().contains(label) ? node.name : null
 
    if ((label.matches(node.getLabelString()+"-nos(.*)"))) {
      matchedNode += node.getLabelString()+"-nos"
-   }
- }
-}
+   } //if
+
+ } //list
+} //for
 
 modifiedLabels = matchedNode.collect{"'" + it + "'"} 
 
@@ -28,6 +30,7 @@ def generateStage(nodeLabel) {
                           GIT_REPO_NAME=$(echo $GIT_URL | cut -d '/' -f5 | cut -d '.' -f1) 
                           
                           echo $CHANGE_ID
+                          export CHANGE_FORK=arbetter
 
                           export ufs_machine=hercules
                           pwd
@@ -81,28 +84,26 @@ def generateStage(nodeLabel) {
 
                           cd ${WORKSPACE}/tests && tar --create --gzip --verbose --dereference --file "${ufs_machine}.tgz" ${WORKSPACE}/tests/logs/*.log
                
-
                           RESULTS=`grep 'Result:' logs/RegressionTests_$ufs_machine.log | awk '{print $2}'` 
                              if [[ $RESULTS == "FAILURE" ]] ; then
                                 echo "Regression tests failed on ${NODE_NAME}!"
                                 exit 1
 
                             fi
-
                        '''
-                    }
+                    } // if
                     else {
                        echo "${NODE_NAME} not supported yet."
-                    }
-                }
-              }
-           }
-       }
-}
+                    } // else
+                } //script
+              } // node
+           } // stage
+       } //return
+} //def generateStage
 
 def parallelStagesMap = modifiedLabels.collectEntries {
     ["${it}" : generateStage(it)]
-}
+} //def parallelStages
 
 pipeline {
     agent none
@@ -112,41 +113,41 @@ pipeline {
         AWS_PROD_SNS_TOPIC = credentials('AWS_PROD_SNS_TOPIC')
         GITHUB_TOKEN = credentials('GithubJenkinsNew')
         GIT_URL = 'https://github.com/oceanmodeling/ufs-weather-model.git'
-    }
+    } // environment
     stages {
         stage('Run Regression Tests in Parallel') {
             steps {
                 script {
                     parallel parallelStagesMap
+                } //script
+            } // steps
+
+            post {
+             // Specifically triggered if the build is aborted (often by timeout) 
+              aborted {
+                slackSend (
+                 channel: '#nos-notifications',
+                  color: 'warning',
+                  message: "*TIMEOUT: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}* <${env.BUILD_URL}|Open Build>"
+                    )
+                  } 
+               success {
+                 slackSend (
+                  channel: '#nos-notifications',
+                  color: 'good',
+                  message: "*SUCCESS: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
+                   )
+                  }
+
+              failure {
+                slackSend (
+                 channel: '#nos-notifications',
+                  color: 'danger',
+                  message: "*FAILURE: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
+                  )
                 }
-            }
-        }       
-    }   
-        post {
-         always {
-             node('hercules-nos') {
-               s3Upload consoleLogLevel: 'INFO', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'noaa-epic-prod-jenkins-artifacts/NOS', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: true, noUploadOnFailure: false, selectedRegion: 'us-east-1', showDirectlyInBrowser: false, sourceFile: "**/*tgz*", storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'main', userMetadata: []
-            }
-         }
-         success {
-             node('built-in') {
-                echo 'This will run only if successful.'
+           } // post
+        }  //stage
 
-                sh '''
-                  aws sns publish --topic-arn "arn:aws:sns:us-east-1:${AWS_PROD_ACCOUNT_ID}:${AWS_PROD_SNS_TOPIC}" --region us-east-1 --message '{"version":"1.0","source":"custom","content":{"description":":sunny: Jenkins build *'"$JOB_NAME"' '"$BUILD_NUMBER"'* with *PR-'"$CHANGE_ID"'*  *succeeded*"}}'
-
-               '''
-
-             }
-         }
-         failure {
-             node('built-in') {
-                echo 'This will run only if the run was marked as unstable.'
-                sh '''
-                  aws sns publish --topic-arn "arn:aws:sns:us-east-1:${AWS_PROD_ACCOUNT_ID}:${AWS_PROD_SNS_TOPIC}" --region us-east-1 --message '{"version":"1.0","source":"custom","content":{"description":":warning: Jenkins build *'"$JOB_NAME"' '"$BUILD_NUMBER"'* with *PR-'"$CHANGE_ID"'*  *failed!*"}}'
-               '''
-
-             }
-         }
-     } 
-}
+    }  // stages 
+} // pipeline
