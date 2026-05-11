@@ -121,8 +121,7 @@ pipeline {
                     parallel parallelStagesMap
                 } //script
             } // steps
-        }  //stage     
-    }  // stages 
+        }  //stage
 post {      
             // Specifically triggered if the build is aborted (often by timeout)        
         aborted {
@@ -149,4 +148,5 @@ post {      
 
         }
     } // post
+    }  // stages 
 } // pipeline
