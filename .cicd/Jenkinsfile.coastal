@@ -121,6 +121,7 @@ pipeline {
                     parallel parallelStagesMap
                 } //script
             } // steps
+
             post {
              // Specifically triggered if the build is aborted (often by timeout) 
               aborted {
