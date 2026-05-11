@@ -121,32 +121,31 @@ pipeline {
                     parallel parallelStagesMap
                 } //script
             } // steps
-post {      
-            // Specifically triggered if the build is aborted (often by timeout)        
-        aborted {
-              slackSend (
-                  channel: '#nos-notifications',
-                  color: 'warning',
-                  message: "*TIMEOUT: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}* <${env.BUILD_URL}|Open Build>"
-              )
-        }        
-        success {
-              slackSend (
-                  channel: '#nos-notifications',
-                  color: 'good',
-                  message: "*SUCCESS: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
-              )
-        }
-        
-        failure {
-              slackSend (
-                  channel: '#nos-notifications',
-                  color: 'danger',
-                  message: "*FAILURE: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
-              )
+            post {
+             // Specifically triggered if the build is aborted (often by timeout) 
+              aborted {
+                slackSend (
+                 channel: '#nos-notifications',
+                  color: 'warning',
+                  message: "*TIMEOUT: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}* <${env.BUILD_URL}|Open Build>"
+                    )
+                  } 
+               success {
+                 slackSend (
+                  channel: '#nos-notifications',
+                  color: 'good',
+                  message: "*SUCCESS: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
+                   )
+                  }
 
-        }
-    } // post
+              failure {
+                slackSend (
+                 channel: '#nos-notifications',
+                  color: 'danger',
+                  message: "*FAILURE: Build ${env.JOB_NAME} #${env.BUILD_NUMBER}*  <${env.BUILD_URL}|Open Build>"
+                  )
+                }
+           } // post
         }  //stage
 
     }  // stages 
