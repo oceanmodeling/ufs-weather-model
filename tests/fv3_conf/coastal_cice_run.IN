@@ -14,3 +14,12 @@ fi
 cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Grid INPUT/.
 cp -r @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/Boundary INPUT/.
 cp @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/ice_in .
+
+if [ -f "@[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/ice.restart_file" ]; then
+  cp @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/ice.restart_file .
+fi
+
+RFILE=iced.${RESTART_FILE_SUFFIX_SECS}.nc
+if [ -f "@[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/$RFILE" ]; then
+  cp @[INPUTDATA_ROOT]/CICE/$HURR/$CPL_CONF/$RFILE RESTART/.
+fi

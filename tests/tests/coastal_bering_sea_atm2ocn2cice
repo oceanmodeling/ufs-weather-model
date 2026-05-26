@@ -8,23 +8,20 @@ export TEST_DESCR="Compare coastal_bering_sea_atm2ocn2cice results with previous
 
 export CNTL_DIR=coastal_bering_sea_atm2ocn2cice
 
-export LIST_FILES="20121027.010000.out_grd.ww3.nc \
-                   20121027.060000.out_grd.ww3.nc \
-                   ufs.cpld.datm.r.2012-10-27-21600.nc \
-                   ufs.cpld.docn.r.2012-10-27-21600.nc \
-                   ufs.cpld.ww3.r.2012-10-27-21600.nc \
-                   ufs.cpld.cpl.hi.2012-10-27-03600.nc \
-                   ufs.cpld.cpl.hi.2012-10-27-21600.nc"
+export LIST_FILES="history/iceh_12h.2019-02-07-43200.nc \
+                   ufs.cpld.datm.r.2019-02-07-43200.nc \
+                   ufs.cpld.docn.r.2019-02-07-43200.nc \
+                   ufs.cpld.cpl.hi.2019-02-07-43200.nc"
 
 # default options
 export_coastal
 
 # model_configure
-export SYEAR=2018
-export SMONTH=12
-export SDAY=01
+export SYEAR=2019
+export SMONTH=02
+export SDAY=07
 export SHOUR=00
-export FHMAX=6
+export FHMAX=12
 export FHROT=0
 # not used
 export DT_ATMOS=720
@@ -69,12 +66,12 @@ export STREAM_VECTORS="null"
 export mapalgo01=redist
 export tinterpalgo01=linear
 export STREAM_OFFSET01=-300
-export stream_files01="\"INPUT/ERA5_forcing_2018_2019.nc\""
+export stream_files01="\"INPUT/ERA5_forcing_201902.nc\""
 export stream_variables01="\"Tair Sa_tbot\" \"Pair Sa_pbot\" \"Qair Sa_shum\" \"Uwind Sa_u\" \"Vwind Sa_v\" \"rain Faxa_rain\" \"lwrad_down Faxa_lwdn\""
 export mapalgo02=redist
 export tinterpalgo02=coszen
 export STREAM_OFFSET02=-1200
-export stream_files02="\"INPUT/ERA5_forcing_2018_2019.nc\""
+export stream_files02="\"INPUT/ERA5_forcing_201902.nc\""
 export stream_variables02="\"swrad Faxa_swvdr\""
 export mapalgo=redist
 export dtlimit=1.5
@@ -83,14 +80,15 @@ export dtlimit=1.5
 export DOCN_CDEPS=true
 export DOCN_STREAM_CONFIGURE=docn.streams.coastal.IN
 export ocn_datamode="sstdata"
-export MESH_OCN="mesh.cice.4km.nc"
+#export MESH_OCN="INPUT/Grid/ESMF_MESH/mesh.cice.4km.nc"
+export MESH_OCN="INPUT/Grid/ESMF/mesh.cice.4km.nc"
 export ocn_nx_global=730
 export ocn_ny_global=478
 export EXPORT_ALL=.true.
 export FILENAME_BASE='sst.'
 export STREAM_VECTORS="null"
 export taxmode=cycle
-export stream_files="\"INPUT/ROMS_2018_2019.nc\""
+export stream_files="\"INPUT/ROMS_2019.nc\""
 export stream_variables="\"qdp Fioo_q\" \"U So_u\" \"V So_v\" \"S So_s\" \"T So_t\" \"dhdy So_dhdy\" \"dhdx So_dhdx\" \"hblt So_h\""
 export mapalgo=redist
 export dtlimit=2.0
@@ -112,12 +110,14 @@ export med_model=cmeps
 export atm_model=datm
 export ocn_model=docn
 export ice_model=cice6
-export mesh_ice=INPUT/Grid/ESMF_MESH/mesh.cice.4km.nc
+#export mesh_ice=INPUT/Grid/ESMF_MESH/mesh.cice.4km.nc
+export mesh_ice=INPUT/Grid/ESMF/mesh.cice.4km.nc
 export coupling_interval_slow_sec=1200
 export RESTART_N=6
 export RUNTYPE=startup
 export CPLMODE=coastal
 export meshloc=element
+export RESTART_FILE_SUFFIX_SECS="${SYEAR}-${SMONTH}-${SDAY}-$(printf "%05d" $(( (${FHROT}+ ${SHOUR})*3600 )))"
 
 # input files
 export FV3_RUN="coastal_datm.IN coastal_docn.IN coastal_cice_run.IN"

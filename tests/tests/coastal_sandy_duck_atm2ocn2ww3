@@ -91,7 +91,7 @@ export STREAM_OFFSET=0
 
 # datm/ocean
 export HURR="Sandy"
-export CPL_CONF="atm2ocn2ww3"
+export CPL_CONF="atm2ocn2wav"
 
 # pes
 export ATM_compute_tasks=18
