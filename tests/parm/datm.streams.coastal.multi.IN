@@ -10,7 +10,7 @@ yearFirst01:               @[SYEAR]
 yearLast01:                @[SYEAR]
 yearAlign01:               @[SYEAR]
 stream_vectors01:          @[STREAM_VECTORS]
-stream_mesh_file01:        "INPUT/@[MESH_ATM]"
+stream_mesh_file01:        @[MESH_ATM]
 stream_lev_dimname01:      null
 stream_data_files01:       @[stream_files01]
 stream_data_variables01:   @[stream_variables01]
@@ -25,7 +25,7 @@ yearFirst02:               @[SYEAR]
 yearLast02:                @[SYEAR]
 yearAlign02:               @[SYEAR]
 stream_vectors02:          @[STREAM_VECTORS]
-stream_mesh_file02:        "INPUT/@[MESH_ATM]"
+stream_mesh_file02:        @[MESH_ATM]
 stream_lev_dimname02:      null
 stream_data_files02:       @[stream_files02]
 stream_data_variables02:   @[stream_variables02]

@@ -62,9 +62,10 @@ fi
 
 # datm
 export DATM_CDEPS=true
+export DATM_IN_CONFIGURE=datm_in.coastal.IN
 export DATM_STREAM_CONFIGURE=datm.streams.coastal.IN
 export atm_datamode="ATMMESH"
-export MESH_ATM="era5_data_19941012_19941014_rot_fix_SCRIP_ESMF.nc"
+export MESH_ATM="\"INPUT/era5_data_19941012_19941014_rot_fix_SCRIP_ESMF.nc\""
 export ATM_NX_GLB=1440
 export ATM_NY_GLB=721
 export EXPORT_ALL=.true.
