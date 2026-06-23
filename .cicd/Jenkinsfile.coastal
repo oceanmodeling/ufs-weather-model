@@ -5,9 +5,9 @@ for (label in pullRequest.labels) {
 
    if ((label.matches(node.getLabelString()+"-nos(.*)"))) {
      matchedNode += node.getLabelString()+"-nos"
-   }
- }
-}
+   } //if
+ } //list
+} //for
 
 modifiedLabels = matchedNode.collect{"'" + it + "'"} 
 
@@ -90,19 +90,19 @@ def generateStage(nodeLabel) {
                             fi
 
                        '''
-                    }
+                    } // if
                     else {
                        echo "${NODE_NAME} not supported yet."
-                    }
-                }
-              }
-           }
-       }
-}
+                    } // else
+                } //script
+              } // node
+           } // stage
+       } //return
+} //def generateStage
 
 def parallelStagesMap = modifiedLabels.collectEntries {
     ["${it}" : generateStage(it)]
-}
+} //def parallelStages
 
 pipeline {
     agent none
@@ -112,22 +112,22 @@ pipeline {
         AWS_PROD_SNS_TOPIC = credentials('AWS_PROD_SNS_TOPIC')
         GITHUB_TOKEN = credentials('GithubJenkinsNew')
         GIT_URL = 'https://github.com/oceanmodeling/ufs-weather-model.git'
-    }
+    } environment
     stages {
         stage('Run Regression Tests in Parallel') {
             steps {
                 script {
                     parallel parallelStagesMap
-                }
-            }
-        }       
-    }   
+                } //script
+            } // steps
+        }  //stage     
+    }  // stages 
         post {
          always {
              node('hercules-nos') {
                s3Upload consoleLogLevel: 'INFO', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'noaa-epic-prod-jenkins-artifacts/NOS', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: true, noUploadOnFailure: false, selectedRegion: 'us-east-1', showDirectlyInBrowser: false, sourceFile: "**/*tgz*", storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'main', userMetadata: []
-            }
-         }
+            } // node
+         } // always
          success {
              node('built-in') {
                 echo 'This will run only if successful.'
@@ -137,8 +137,8 @@ pipeline {
 
                '''
 
-             }
-         }
+             } // node
+         } // success
          failure {
              node('built-in') {
                 echo 'This will run only if the run was marked as unstable.'
@@ -146,7 +146,7 @@ pipeline {
                   aws sns publish --topic-arn "arn:aws:sns:us-east-1:${AWS_PROD_ACCOUNT_ID}:${AWS_PROD_SNS_TOPIC}" --region us-east-1 --message '{"version":"1.0","source":"custom","content":{"description":":warning: Jenkins build *'"$JOB_NAME"' '"$BUILD_NUMBER"'* with *PR-'"$CHANGE_ID"'*  *failed!*"}}'
                '''
 
-             }
-         }
-     } 
-}
+             } // node
+         } // failure
+     } // post
+} // pipeline
