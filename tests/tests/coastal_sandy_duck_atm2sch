@@ -11,7 +11,7 @@ export CNTL_DIR=coastal_sandy_duck_atm2sch
 lst=""
 for n in `seq -f "%06g" 0 159`
 do
-  if [ $n == 0 ]; then
+  if [ "$n" == "000000" ]; then
     lst="outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
   else
     lst="$lst outputs/schout_${n}_1.nc outputs/schout_${n}_2.nc"
