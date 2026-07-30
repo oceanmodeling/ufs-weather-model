@@ -278,7 +278,7 @@ if(WW3)
 endif()
 
 ###############################################################################
-### Marine Components [MOM6, CICE6, ADCIRC, SCHISM, ROMS]
+### Marine Components [MOM6, CICE6, ADCIRC, FVCOM, SCHISM, ROMS]
 ###############################################################################
 if(MOM6)
   add_subdirectory(MOM6-interface)
