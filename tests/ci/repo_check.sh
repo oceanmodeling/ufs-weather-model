@@ -26,6 +26,7 @@ get_shas () {
 }
 
 
+
 declare -A urls branches paths
 # UPP, ccpp-framework, and gocart are intentionally excluded because they update at a different cadence 
 # and periodically bring in changes. 
@@ -104,7 +105,6 @@ urls[catchem]='https://github.com/ufs-community/CATChem'
 branches[catchem]='develop'
 paths[catchem]='CATChem'
 
->>>>>>> origin/develop
 
 for submodule in $submodules; do
     url=${urls[$submodule]}

@@ -359,7 +359,7 @@ The input files containing grid information and the initial conditions for globa
      - vertical coordinate thickness defining 25 vertical levels
      - 9.00, 5.00
      -
-   * - hycom1_75_800m.nc 
+   * - hycom1_75_800m.nc
      - vertical coordinate level thickness
      - 1.00, 0.50, 0.25
      -
