@@ -167,7 +167,9 @@ fi
 
 if [[ ${DATM_CDEPS} = 'true' ]] || [[ ${FV3} = 'true' ]] || [[ ${S2S} = 'true' ]] || [[ ${MPAS} = 'true' ]]; then
   if [[ ${HAFS} = 'false' ]] || [[ ${FV3} = 'true' && ${HAFS} = 'true' ]]; then
-    atparse < "${PATHRT}/parm/${INPUT_NML:-input.nml.IN}" > input.nml
+    if [[ ${COASTAL} = 'false' ]]; then
+      atparse < "${PATHRT}/parm/${INPUT_NML:-input.nml.IN}" > input.nml
+    fi
   fi
 fi
 
@@ -322,7 +324,7 @@ fi
 #TODO: this logic needs to be cleaned up for datm applications w/o
 #ocean or ice
 if [[ ${DATM_CDEPS} = 'true' ]] || [[ ${S2S} = 'true' ]]; then
-  if [[ ${HAFS} = 'false' ]]; then
+  if [[ ${HAFS} = 'false' ]] && [[ ${COASTAL} = 'false' ]]; then
     atparse < "${PATHRT}/parm/ice_in.IN" > ice_in
     atparse < "${PATHRT}/parm/${MOM6_INPUT:-MOM_input_${OCNRES}.IN}" > INPUT/MOM_input
     atparse < "${PATHRT}/parm/diag_table/${DIAG_TABLE:-diag_table_template.IN}" > diag_table
