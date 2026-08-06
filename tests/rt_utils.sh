@@ -148,7 +148,7 @@ function compute_petbounds_and_tasks_esmf_threading() {
   # ATM is a special case since it is running on the sum of compute and io tasks.
   # CHM component and mediator are running on ATM compute tasks only.
 
-  if [[ ${DATM_CDEPS} = 'false' ]] && [[ ${MPAS} = 'true' || ${FV3} = 'true' ]]; then
+  if [[ ${DATM_CDEPS} = 'false' && ( ${MPAS} = 'true' || ${FV3} = 'true' ) ]]; then
     if [[ ${ATM_compute_tasks:-0} -eq 0 ]]; then
       ATM_compute_tasks=$((INPES * JNPES * NTILES))
     fi
