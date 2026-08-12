@@ -374,7 +374,7 @@ EOF
         fi
         if [[ ${TEST_RESULT} == "PASS" ]]; then
           TIME_FILE="${LOG_DIR}/run_${TEST_NAME}_${COMPILER}_timestamp.txt"
-          GETMEMFROMLOG=$(grep "The maximum resident set size" "${LOG_DIR}/rt_${TEST_NAME}_${COMPILER}.log")
+          GETMEMFROMLOG=$(grep "The maximum resident set size" "${LOG_DIR}/rt_${TEST_NAME}_${COMPILER}.log" || true)
           RT_TEST_MEM=$(echo "${GETMEMFROMLOG:9:${#GETMEMFROMLOG}-1}" | tr -dc '0-9')
           RT_TEST_MEM=$((RT_TEST_MEM/1000))
           if [[ -f "${TIME_FILE}" ]]; then
