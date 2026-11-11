@@ -1,0 +1,83 @@
+###############################################################################
+#
+# SCHISM coupled ike_shinnecock_atm2sch configuration
+#
+###############################################################################
+
+TEST_DESCR="Compare ike_shinnecock_atm2sch results with previous trunk version"
+
+CNTL_DIR=coastal_ike_shinnecock_atm2sch
+
+LIST_FILES="outputs/schout_000000_1.nc \
+            outputs/schout_000000_2.nc \
+            outputs/schout_000001_1.nc \
+            outputs/schout_000001_2.nc \
+            outputs/schout_000002_1.nc \
+            outputs/schout_000002_2.nc \
+            ufs.cpld.cpl.hi.2008-08-24-00000.nc"
+
+# deafult options
+export_coastal
+WLCLK=60
+
+# model_configure
+SYEAR=2021
+SMONTH=06
+SDAY=01
+SHOUR=00
+FHMAX=24
+FHROT=0
+# not used
+DT_ATMOS=720
+RESTART_INTERVAL=0
+QUILTING=.true.
+QUILTING_RESTART=.false.
+WRITE_GROUP=1
+WRTTASK_PER_GROUP=6
+ITASKS=1
+OUTPUT_HISTORY=.true.
+WRITE_DOPOST=.false.
+NUM_FILES=2
+FILENAME_BASE="'atm' 'sfc'"
+OUTPUT_GRID="'cubed_sphere_grid'"
+OUTPUT_FILE="'netcdf'"
+IDEFLATE=0
+NBITS=0
+ICHUNK2D=0
+JCHUNK2D=0
+ICHUNK3D=0
+JCHUNK3D=0
+KCHUNK3D=0
+IMO=384
+JMO=190
+WRITE_NSFLIP=.false.
+OUTPUT_FH="12 -1"
+IAU_OFFSET=0
+ZSTANDARD_LEVEL=5
+
+# nwm/ocean
+HURR="None"
+CPL_CONF="nwm2sch"
+
+# pes
+ATM_compute_tasks=0
+OCN_tasks=4
+ROF_tasks=4
+
+# configuration
+MODEL_CONFIGURE=model_configure.IN
+UFS_CONFIGURE=ufs.configure.coastal_nwm_ocn.IN
+ocn_model=schism
+ocn_petlist_bounds="0 3"
+ocn_omp_num_threads=1
+rof_model=schism
+rof_petlist_bounds="4 7"
+rof_omp_num_threads=1
+coupling_interval_slow_sec=3600
+RESTART_N=12
+RUNTYPE=startup
+CPLMODE=coastal
+meshloc=element
+
+# input files
+FV3_RUN="coastal_nwm.IN coastal_schism_run.IN"

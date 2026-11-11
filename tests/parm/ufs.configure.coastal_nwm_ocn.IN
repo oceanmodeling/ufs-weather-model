@@ -1,0 +1,70 @@
+#############################################
+####  NEMS Run-Time Configuration File  #####
+#############################################
+
+# ESMF #
+logKindFlag:            ESMF_LOGKIND_MULTI
+globalResourceControl:  true
+
+# EARTH #
+EARTH_component_list: OCN ROF
+EARTH_attributes::
+  Verbosity = 0
+::
+
+# OCN #
+OCN_model:                      @[ocn_model]
+OCN_petlist_bounds:             @[ocn_petlist_bounds]
+OCN_omp_num_threads:            @[ocn_omp_num_threads]
+OCN_attributes::
+  Verbosity = 0
+  DumpFields = false
+  ProfileMemory = false
+  OverwriteSlice = true
+  meshloc = @[meshloc]
+  CouplingConfig = @[coupling_config]
+::
+
+# ROF #
+ROF_model:                      @[rof_model] 
+ROF_petlist_bounds:             @[rof_petlist_bounds]
+ROF_omp_num_threads:            @[rof_omp_num_threads]
+ROF_attributes::
+  Verbosity = 0
+  HydroConfigFile = hydro_config.yaml
+  ExportType = 'mesh'
+  ExportMeshFile = hgrid_ESMF.nc
+  ExportFields = Fall_roff
+::
+
+# Run Sequence # 
+runSeq::
+@@[coupling_interval_slow_sec]
+  ROF geogate_phases_hydro
+  ROF -> OCN :remapMethod=redist
+  OCN
+@
+::
+
+ALLCOMP_attributes::
+  ScalarFieldCount = 3
+  ScalarFieldIdxGridNX = 1
+  ScalarFieldIdxGridNY = 2
+  ScalarFieldIdxNextSwCday = 3
+  ScalarFieldName = cpl_scalars
+  start_type = @[RUNTYPE] 
+  restart_dir = RESTART/
+  case_name = @[casename]
+  restart_n = @[RESTART_N]
+  restart_option = nhours
+  restart_ymd = -999
+  orb_eccen = 1.e36
+  orb_iyear = 2000
+  orb_iyear_align = 2000
+  orb_mode = fixed_year
+  orb_mvelp = 1.e36
+  orb_obliq = 1.e36
+  stop_n = @[FHMAX]
+  stop_option = nhours
+  stop_ymd = -999
+::
