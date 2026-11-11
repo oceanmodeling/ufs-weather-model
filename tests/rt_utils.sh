@@ -94,6 +94,9 @@ function compute_petbounds_and_tasks_traditional_threading() {
      fi
   fi
 
+  # ROF
+  rof_petlist_bounds="0 $((ROF_compute_tasks - 1))"
+
   # CHM
   chm_petlist_bounds="0 $((ATM_compute_tasks - 1))"
 

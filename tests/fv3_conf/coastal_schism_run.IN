@@ -34,3 +34,7 @@ for IFILE in @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/*.prop; do
     cp $IFILE .
   fi
 done
+
+if [ -d "sflux" ]; then
+  ln -sf @[INPUTDATA_ROOT]/SCHISM/$HURR/$CPL_CONF/sflux .
+fi
