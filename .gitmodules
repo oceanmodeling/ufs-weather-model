@@ -77,4 +77,4 @@
 [submodule "GeoGate"]
   path = GeoGate
   url = https://github.com/geogate-io/GeoGate
-  branch = main
+  branch = feature/nwm 
